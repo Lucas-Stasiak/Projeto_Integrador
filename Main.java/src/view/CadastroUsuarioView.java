@@ -18,6 +18,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
      */
     public CadastroUsuarioView() {
         initComponents();
+        this.setLocationRelativeTo(null);  //centraliza tela do cadastro        
     }
 
     /**
@@ -200,4 +201,5 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+
 }
