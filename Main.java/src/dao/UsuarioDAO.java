@@ -17,8 +17,16 @@ public class UsuarioDAO {
     public UsuarioDAO(Connection connection) {
         this.connection = connection;
     }
+
+    public UsuarioDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public void insert(Usuario usuario) {
-        // mandar comando para criar usuarios no banco de dados
+       
     }
+    
+    
 }
+
+

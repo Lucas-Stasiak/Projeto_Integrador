@@ -44,7 +44,7 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel2.setText("Senha");
 
-        FuncionarioAdm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Administrador"}));
+        FuncionarioAdm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Administrador", "Teste","login","rs"}));
         FuncionarioAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FuncionarioAdmActionPerformed(evt);

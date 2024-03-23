@@ -90,7 +90,7 @@
     <Component class="javax.swing.JComboBox" name="FuncionarioAdm">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Funcion&#xe1;rio&quot;, &quot;Administrador&quot;})" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Funcion&#xe1;rio&quot;, &quot;Administrador&quot;, &quot;Teste&quot;,&quot;login&quot;,&quot;rs&quot;})" type="code"/>
         </Property>
       </Properties>
       <Events>
