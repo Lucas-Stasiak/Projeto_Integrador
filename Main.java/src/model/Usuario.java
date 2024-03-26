@@ -16,6 +16,11 @@ public class Usuario {
     private String telefone;
     private boolean admin;
 
+    public Usuario(String cpf, String senha) {
+        this.senha = senha;
+        this.cpf = cpf;
+    }
+
     public Usuario(String nome, String senha, String cpf, String telefone, boolean admin) {
         this.nome = nome;
         this.senha = senha;

@@ -41,7 +41,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         CampoTextoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +73,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jLabel2.setText("CPF");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Telefone:");
 
         jLabel4.setText("Senha:");
 
