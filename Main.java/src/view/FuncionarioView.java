@@ -14,7 +14,11 @@ public class FuncionarioView extends javax.swing.JFrame {
      * Creates new form FuncionarioView
      */
     public FuncionarioView() {
+        this.setUndecorated(true);   //fullscreen
+        
         initComponents();
+        this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
+        
     }
 
     /**
@@ -27,16 +31,17 @@ public class FuncionarioView extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(960, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         pack();

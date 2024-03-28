@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package controller;
 
 import dao.Conexao;
@@ -48,8 +45,9 @@ public class LoginController {
                 admin = UsuarioDao.verificaAdmin (usuarioAutenticar);
                 
                 //Aparece a tela com base no true or false da váriavel admin
-                JFrame tela = admin ? new AdmView() : new FuncionarioView();
-                tela.setVisible(true);
+                JFrame telaMenu = admin ? new AdmView() : new FuncionarioView();
+                telaMenu.setVisible(true);//torna a tela do menuvisivel
+                view.dispose();//fecha tela login
             }
             
             //Caso não existe é inserida uma mensagem no console

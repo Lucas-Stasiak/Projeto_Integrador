@@ -10,15 +10,22 @@ package view;
  */
 public class AdmView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormAdmView
-     */
+    UsuarioPanel usuarioPanel = new UsuarioPanel();
+    PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
+    
     public AdmView() {
-        this.setUndecorated(true);   //fullscream
+        this.setUndecorated(true);   //fullscreen
+      
         initComponents();
-        this.setExtendedState(AdmView.MAXIMIZED_BOTH);    //resolução do monitor
+        this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
+        
+        MainPane.add(usuarioPanel);
+        MainPane.add(menuPrincipal);
+     
+        menuPrincipal.setVisible(true);
+        usuarioPanel.setVisible(false);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,57 +35,52 @@ public class AdmView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        BotaoCadastroUsuario = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        BotaoFecharSistema = new javax.swing.JButton();
+        BotaoAbrirPaneUsuario = new javax.swing.JButton();
+        CampoAbrirPaneProduto = new javax.swing.JButton();
+        BotaoAbrirPaneClientes = new javax.swing.JButton();
+        BotaoAbrirPaneHistorico = new javax.swing.JButton();
+        BotaoAbrirPaneVenda = new javax.swing.JButton();
+        MainPane = new javax.swing.JLayeredPane();
+        BotaoAbrirPaneHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setPreferredSize(new java.awt.Dimension(960, 540));
 
-        jLabel1.setText("Tela Administrador");
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {  };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        BotaoCadastroUsuario.setText("Cadastrar Funcionário");
-        BotaoCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
+        BotaoFecharSistema.setText("X");
+        BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoCadastroUsuarioActionPerformed(evt);
+                BotaoFecharSistemaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Excluir Funcionário");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        BotaoAbrirPaneUsuario.setText("Usuarios");
+        BotaoAbrirPaneUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                BotaoAbrirPaneUsuarioActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Funcionários cadastrados");
-
-        jLabel3.setText("Nome");
-
-        jLabel4.setText("Vendas");
-
-        jLabel5.setText("Data da contratação");
-
-        jLabel6.setText("Histórico");
-
-        jButton3.setText("X");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        CampoAbrirPaneProduto.setText("Produtos");
+        CampoAbrirPaneProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                CampoAbrirPaneProdutoActionPerformed(evt);
+            }
+        });
+
+        BotaoAbrirPaneClientes.setText("Clientes");
+
+        BotaoAbrirPaneHistorico.setText("Histórico de vendas");
+
+        BotaoAbrirPaneVenda.setText("Iniciar uma venda");
+
+        MainPane.setLayout(new java.awt.CardLayout());
+
+        BotaoAbrirPaneHome.setText("Home");
+        BotaoAbrirPaneHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneHomeActionPerformed(evt);
             }
         });
 
@@ -86,76 +88,65 @@ public class AdmView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(BotaoCadastroUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                                        .addGap(142, 142, 142)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                        .addGap(168, 168, 168)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(328, 328, 328)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(45, 45, 45)))
-                        .addGap(103, 103, 103))))
+                    .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(106, 106, 106)
+                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .addGap(140, 140, 140)
+                .addComponent(BotaoFecharSistema)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton3))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BotaoFecharSistema)
+                .addGap(141, 141, 141)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BotaoCadastroUsuario)
-                        .addGap(67, 67, 67)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
-                .addGap(56, 56, 56))
+                        .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MainPane))
+                .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void BotaoCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroUsuarioActionPerformed
-        CadastroUsuarioView view = new CadastroUsuarioView();
-        view.setVisible(true);
-    }//GEN-LAST:event_BotaoCadastroUsuarioActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_BotaoFecharSistemaActionPerformed
+
+    private void BotaoAbrirPaneUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneUsuarioActionPerformed
+        usuarioPanel.setVisible(true);
+        menuPrincipal.setVisible(false);
+    }//GEN-LAST:event_BotaoAbrirPaneUsuarioActionPerformed
+
+    private void CampoAbrirPaneProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoAbrirPaneProdutoActionPerformed
+        usuarioPanel.setVisible(false);
+        menuPrincipal.setVisible(false);
+    }//GEN-LAST:event_CampoAbrirPaneProdutoActionPerformed
+
+    private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
+        usuarioPanel.setVisible(false);
+        menuPrincipal.setVisible(true);
+    }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,19 +182,16 @@ public class AdmView extends javax.swing.JFrame {
                 new AdmView().setVisible(true);
             }
         });
-    }
-
+    } 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoCadastroUsuario;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton BotaoAbrirPaneClientes;
+    private javax.swing.JButton BotaoAbrirPaneHistorico;
+    private javax.swing.JButton BotaoAbrirPaneHome;
+    private javax.swing.JButton BotaoAbrirPaneUsuario;
+    private javax.swing.JButton BotaoAbrirPaneVenda;
+    private javax.swing.JButton BotaoFecharSistema;
+    private javax.swing.JButton CampoAbrirPaneProduto;
+    private javax.swing.JLayeredPane MainPane;
     // End of variables declaration//GEN-END:variables
+
 }

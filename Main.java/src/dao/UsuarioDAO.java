@@ -27,8 +27,23 @@ public class UsuarioDAO {
         this.connection = connection;
     }
     
-    public void insert(Usuario usuario) {
+    //Esta comentada para evitar ficar inserindo usuario atoa
+    public void insert(Usuario usuario) throws SQLException {
+       /*String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
        
+       PreparedStatement statement = connection.prepareStatement(sql);
+       statement.setString(1, usuario.getNome());
+       statement.setString(2, usuario.getCpf());
+       statement.setString(3, usuario.getSenha());
+       statement.setString(4, usuario.getTelefone());
+       statement.setBoolean(5, usuario.isAdmin());
+       statement.execute();*/
+    }
+    
+    public void update(Usuario usuario){
+        //String sql = "UPDATE usuario ";
+        
+        
     }
 
     public boolean verificaLoginPorCPFeSenha(Usuario usuario) throws SQLException {
@@ -42,7 +57,17 @@ public class UsuarioDAO {
         ResultSet resultSet = statement.getResultSet();
 
         return resultSet.next();    
-
+    }
+    
+    public boolean verificaExistencia(Usuario usuario) throws SQLException{
+        String sql = "select * from usuario where cpf = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, usuario.getCpf());
+        statement.execute();
+        
+        ResultSet resultSet = statement.getResultSet();
+        
+        return resultSet.next();
     }
     
     public boolean verificaAdmin(Usuario usuario) throws SQLException{
@@ -59,5 +84,7 @@ public class UsuarioDAO {
         }
             return admin;
     }
+    
+    
 
 }

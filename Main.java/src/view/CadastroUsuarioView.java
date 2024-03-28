@@ -4,14 +4,20 @@
  */
 package view;
 
-import dao.UsuarioDAO;
-import model.Usuario;
+import controller.CadastroController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author lab8309
  */
 public class CadastroUsuarioView extends javax.swing.JFrame {
+    private final CadastroController controller;
 
     /**
      * Creates new form CadastroUsuarioView
@@ -19,6 +25,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     public CadastroUsuarioView() {
         initComponents();
         this.setLocationRelativeTo(null);  //centraliza tela do cadastro        
+        controller = new CadastroController(this);
     }
 
     /**
@@ -33,13 +40,14 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         CampoTextoNome = new javax.swing.JTextField();
         CampoTextoCpf = new javax.swing.JTextField();
         CampoTextoTelefone = new javax.swing.JTextField();
-        CampoTextoSenha = new javax.swing.JTextField();
-        CheckAdmin = new javax.swing.JCheckBox();
         BotaoCadastro = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        CampoTextoSenhaUsuario = new javax.swing.JPasswordField();
+        CampoTextoConfirmaSenhaUsuario = new javax.swing.JPasswordField();
+        CheckAdmin = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -52,13 +60,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         CampoTextoCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoTextoCpfActionPerformed(evt);
-            }
-        });
-
-        CheckAdmin.setText("Admin");
-        CheckAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckAdminActionPerformed(evt);
             }
         });
 
@@ -77,6 +78,25 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jLabel4.setText("Senha:");
 
+        CampoTextoSenhaUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoTextoSenhaUsuarioActionPerformed(evt);
+            }
+        });
+
+        CampoTextoConfirmaSenhaUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoTextoConfirmaSenhaUsuarioActionPerformed(evt);
+            }
+        });
+
+        CheckAdmin.setText("Admin");
+        CheckAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckAdminActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,23 +106,24 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(CampoTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(74, 74, 74)
-                                .addComponent(CheckAdmin))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CampoTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CampoTextoNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CampoTextoSenhaUsuario, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(59, 59, 59)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CampoTextoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(61, 61, 61)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel4)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(CampoTextoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2))
+                                        .addGap(61, 61, 61)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(CheckAdmin)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(320, 320, 320)
                         .addComponent(BotaoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -125,9 +146,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CampoTextoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CampoTextoSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CheckAdmin))
-                .addGap(75, 75, 75)
+                .addGap(18, 18, 18)
+                .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(BotaoCadastro)
                 .addContainerGap(239, Short.MAX_VALUE))
         );
@@ -135,15 +158,66 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CheckAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckAdminActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CheckAdminActionPerformed
+
+
+
+    public JPasswordField getCampoTextoConfirmaSenhaUsuario() {
+        return CampoTextoConfirmaSenhaUsuario;
+    }
+
+    public JCheckBox getCheckAdmin() {
+        return CheckAdmin;
+    }
+
+    public void setCheckAdmin(JCheckBox CheckAdmin) {
+        this.CheckAdmin = CheckAdmin;
+    }
+
+    public void setCampoTextoConfirmaSenhaUsuario(JPasswordField CampoConfirmaSenhaUsuario) {
+        this.CampoTextoConfirmaSenhaUsuario = CampoConfirmaSenhaUsuario;
+    }
+
+    public JPasswordField getCampoTextoSenhaUsuario() {
+        return CampoTextoSenhaUsuario;
+    }
+
+    public void setCampoTextoSenhaUsuario(JPasswordField CampoSenhaUsuario) {
+        this.CampoTextoSenhaUsuario = CampoSenhaUsuario;
+    }
+
+
+    public JTextField getCampoTextoCpf() {
+        return CampoTextoCpf;
+    }
+
+    public void setCampoTextoCpf(JTextField CampoTextoCpf) {
+        this.CampoTextoCpf = CampoTextoCpf;
+    }
+
+    public JTextField getCampoTextoNome() {
+        return CampoTextoNome;
+    }
+
+    public void setCampoTextoNome(JTextField CampoTextoNome) {
+        this.CampoTextoNome = CampoTextoNome;
+    }
+
+    public JTextField getCampoTextoTelefone() {
+        return CampoTextoTelefone;
+    }
+
+    public void setCampoTextoTelefone(JTextField CampoTextoTelefone) {
+        this.CampoTextoTelefone = CampoTextoTelefone;
+    }
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
-        //Criando a interação com o banco de dados, ainda não funcional
-        //UsuarioDAO usuarioDao = new UsuarioDAO();
-        //Usuario usuario = new Usuario();
-        //usuarioDao.insert();
+        try {
+            //Criando a interação com o banco de dados, ainda não funcional
+            controller.cadastrarUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_BotaoCadastroActionPerformed
 
     private void CampoTextoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoNomeActionPerformed
@@ -153,6 +227,18 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void CampoTextoCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoCpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoTextoCpfActionPerformed
+
+    private void CampoTextoSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoSenhaUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoTextoSenhaUsuarioActionPerformed
+
+    private void CampoTextoConfirmaSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoConfirmaSenhaUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoTextoConfirmaSenhaUsuarioActionPerformed
+
+    private void CheckAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckAdminActionPerformed
+        
+    }//GEN-LAST:event_CheckAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,9 +277,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoCadastro;
+    private javax.swing.JPasswordField CampoTextoConfirmaSenhaUsuario;
     private javax.swing.JTextField CampoTextoCpf;
     private javax.swing.JTextField CampoTextoNome;
-    private javax.swing.JTextField CampoTextoSenha;
+    private javax.swing.JPasswordField CampoTextoSenhaUsuario;
     private javax.swing.JTextField CampoTextoTelefone;
     private javax.swing.JCheckBox CheckAdmin;
     private javax.swing.JLabel jLabel1;
