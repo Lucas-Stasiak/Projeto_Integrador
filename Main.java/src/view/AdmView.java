@@ -46,7 +46,6 @@ public class AdmView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(960, 540));
 
         BotaoFecharSistema.setText("X");
         BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {

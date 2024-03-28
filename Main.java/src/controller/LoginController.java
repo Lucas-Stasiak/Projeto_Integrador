@@ -3,9 +3,11 @@ package controller;
 
 import dao.Conexao;
 import dao.UsuarioDAO;
+import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import model.Usuario;
 import view.LoginView;
 import view.FuncionarioView;
@@ -52,7 +54,7 @@ public class LoginController {
             
             //Caso não existe é inserida uma mensagem no console
             else{
-                System.out.println("Usuario ou senha incorreto");
+                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro de login", JOptionPane.ERROR_MESSAGE);
             }
     }
 }
