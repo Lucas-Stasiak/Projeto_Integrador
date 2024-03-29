@@ -38,13 +38,27 @@ public class UsuarioDAO {
        statement.setString(4, usuario.getTelefone());
        statement.setBoolean(5, usuario.isAdmin());
        statement.execute();*/
+       
     }
     
-    public void update(Usuario usuario){
-        //String sql = "UPDATE usuario ";
+    
+    public void update(Usuario usuario) throws SQLException{                                                   
+        String sql = "update usuario set nome_usuario = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
         
+        PreparedStatement statement = connection.prepareCall(sql);
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getCpf());
+        statement.setString(3, usuario.getSenha());
+        statement.setString(4, usuario.getTelefone());
+        statement.setBoolean(5, usuario.isAdmin());
+        statement.setString(6, usuario.getCpf());
         
+        statement.execute();
+        
+  
     }
+    
+
 
     public boolean verificaLoginPorCPFeSenha(Usuario usuario) throws SQLException {
         String sql = "select * from usuario where cpf = ? and senha = ? ";
@@ -59,8 +73,11 @@ public class UsuarioDAO {
         return resultSet.next();    
     }
     
+    
+    
     public boolean verificaExistencia(Usuario usuario) throws SQLException{
         String sql = "select * from usuario where cpf = ?";
+        
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, usuario.getCpf());
         statement.execute();

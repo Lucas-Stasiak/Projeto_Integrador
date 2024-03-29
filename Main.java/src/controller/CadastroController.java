@@ -56,15 +56,15 @@ public class CadastroController {
                 else {
                     JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-            } //Caso o usuário não existe ele informa o usuário
+            } //Caso o usuário já existe ele informa ao usuário
             else {
                 int resposta = JOptionPane.showConfirmDialog(null, "Usuario ja existe! Deseja atualizar o usuario?", "Alerta", JOptionPane.YES_NO_OPTION);
 
                 //Caso o usuario aperte o botão yes, ele fará o update
                 if (resposta == JOptionPane.YES_OPTION) {
                     if (senhaCorreta) {
-                        //usuarioDao.update(usuarioCadastrar);
-                        JOptionPane.showMessageDialog(null, "Usuário foi cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        usuarioDao.update(usuarioCadastrar);
+                        JOptionPane.showMessageDialog(null, "Usuário foi atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
                     }

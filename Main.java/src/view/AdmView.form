@@ -32,13 +32,16 @@
                   <Component id="BotaoAbrirPaneUsuario" max="32767" attributes="0"/>
                   <Component id="CampoAbrirPaneProduto" max="32767" attributes="0"/>
                   <Component id="BotaoAbrirPaneClientes" max="32767" attributes="0"/>
-                  <Component id="BotaoAbrirPaneHistorico" max="32767" attributes="0"/>
+                  <Component id="BotaoAbrirPaneHistorico" pref="150" max="32767" attributes="0"/>
                   <Component id="BotaoAbrirPaneVenda" max="32767" attributes="0"/>
-                  <Component id="BotaoAbrirPaneHome" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component id="BotaoAbrirPaneHome" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
               <Component id="MainPane" pref="487" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="BotaoFecharSistema" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -57,7 +60,7 @@
                       <Component id="BotaoAbrirPaneVenda" min="-2" pref="37" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BotaoAbrirPaneUsuario" min="-2" pref="37" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="CampoAbrirPaneProduto" min="-2" pref="37" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BotaoAbrirPaneClientes" min="-2" pref="37" max="-2" attributes="0"/>
@@ -66,20 +69,12 @@
                   </Group>
                   <Component id="MainPane" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="BotaoFecharSistema">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoFecharSistemaActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="BotaoAbrirPaneUsuario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Usuarios"/>
@@ -100,6 +95,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Clientes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAbrirPaneClientesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BotaoAbrirPaneHistorico">
       <Properties>
@@ -121,6 +119,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAbrirPaneHomeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotaoFecharSistema">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="X"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoFecharSistemaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

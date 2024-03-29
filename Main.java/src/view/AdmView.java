@@ -35,7 +35,6 @@ public class AdmView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        BotaoFecharSistema = new javax.swing.JButton();
         BotaoAbrirPaneUsuario = new javax.swing.JButton();
         CampoAbrirPaneProduto = new javax.swing.JButton();
         BotaoAbrirPaneClientes = new javax.swing.JButton();
@@ -43,16 +42,10 @@ public class AdmView extends javax.swing.JFrame {
         BotaoAbrirPaneVenda = new javax.swing.JButton();
         MainPane = new javax.swing.JLayeredPane();
         BotaoAbrirPaneHome = new javax.swing.JButton();
+        BotaoFecharSistema = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        BotaoFecharSistema.setText("X");
-        BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoFecharSistemaActionPerformed(evt);
-            }
-        });
 
         BotaoAbrirPaneUsuario.setText("Usuarios");
         BotaoAbrirPaneUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -69,6 +62,11 @@ public class AdmView extends javax.swing.JFrame {
         });
 
         BotaoAbrirPaneClientes.setText("Clientes");
+        BotaoAbrirPaneClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneClientesActionPerformed(evt);
+            }
+        });
 
         BotaoAbrirPaneHistorico.setText("Histórico de vendas");
 
@@ -83,6 +81,13 @@ public class AdmView extends javax.swing.JFrame {
             }
         });
 
+        BotaoFecharSistema.setText("X");
+        BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoFecharSistemaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,12 +98,14 @@ public class AdmView extends javax.swing.JFrame {
                     .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(106, 106, 106)
                 .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                .addGap(140, 140, 140)
+                .addGap(169, 169, 169))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BotaoFecharSistema)
                 .addContainerGap())
         );
@@ -115,22 +122,18 @@ public class AdmView extends javax.swing.JFrame {
                         .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
+                        .addGap(18, 18, 18)
                         .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(MainPane))
-                .addGap(53, 53, 53))
+                .addGap(58, 58, 58))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_BotaoFecharSistemaActionPerformed
 
     private void BotaoAbrirPaneUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneUsuarioActionPerformed
         usuarioPanel.setVisible(true);
@@ -146,6 +149,14 @@ public class AdmView extends javax.swing.JFrame {
         usuarioPanel.setVisible(false);
         menuPrincipal.setVisible(true);
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
+
+    private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_BotaoFecharSistemaActionPerformed
+
+    private void BotaoAbrirPaneClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
 
     /**
      * @param args the command line arguments
