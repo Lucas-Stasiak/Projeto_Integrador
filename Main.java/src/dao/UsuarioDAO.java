@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Usuario;
 
 /**
@@ -16,6 +18,7 @@ import model.Usuario;
  */
 public class UsuarioDAO {
     private final Connection connection;
+    public int id;
     public String nome; 
     public String cpf; 
     public String senha; 
@@ -45,7 +48,7 @@ public class UsuarioDAO {
     public void update(Usuario usuario) throws SQLException{                                                   
         String sql = "update usuario set nome_usuario = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
         
-        PreparedStatement statement = connection.prepareCall(sql);
+        PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getCpf());
         statement.setString(3, usuario.getSenha());
@@ -54,8 +57,42 @@ public class UsuarioDAO {
         statement.setString(6, usuario.getCpf());
         
         statement.execute();
-        
   
+    }
+    
+    
+    
+    
+    public ArrayList<Usuario> readUsuario() throws SQLException{
+        
+        String sql = "select * from usuario";
+        
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.execute();
+        ResultSet resultSet = statement.getResultSet();
+        
+        
+        ArrayList<Usuario> usuarios = new ArrayList<>();//Array da várivael usuario
+        
+        
+        //Enquanto tiver resultado do banco de dados ele continia
+        while(resultSet.next()){
+            
+            id = resultSet.getInt("id_usuario");
+            nome = resultSet.getString("nome_usuario");
+            cpf = resultSet.getString("cpf");
+            telefone = resultSet.getString("telefone");
+            admin = resultSet.getBoolean("admin");
+           
+            Usuario usuarioComDadosDoBanco = new Usuario(id, nome, cpf, telefone, admin);//Pega os dados do Banco de dados e envia para um usuario
+            
+            usuarios.add(usuarioComDadosDoBanco);//adiciona o usuario dentro do array
+
+        }
+        
+        return usuarios;
+       
     }
     
 

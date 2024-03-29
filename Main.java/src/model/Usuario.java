@@ -29,8 +29,12 @@ public class Usuario {
         this.admin = admin;
     }
 
-    public Usuario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Usuario(int id, String nome, String cpf, String telefone, boolean admin) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.admin = admin;
     }
 
     public int getId() {

@@ -4,17 +4,33 @@
  */
 package view;
 
+import controller.TabelaController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author luizf
  */
 public class UsuarioPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form UsuarioPanel
-     */
+    private final TabelaController controller;
+    
     public UsuarioPanel() {
         initComponents();
+        controller = new TabelaController(this);
+        
+        try {
+        controller.readTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -33,10 +49,10 @@ public class UsuarioPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         CampoPesquisaId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        BotaoRadioPesquisaAdmin = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaUsuario = new javax.swing.JTable();
         BotaoRemover = new javax.swing.JToggleButton();
+        CheckAdmin = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(673, 377));
@@ -66,27 +82,32 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Id:");
 
-        BotaoRadioPesquisaAdmin.setText("Admin");
-
         TabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "CPF", "Telefone", "Admin"
+                "Id", "Nome", "CPF", "Telefone", "Admin"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaUsuarioMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TabelaUsuario);
 
         BotaoRemover.setText("Remover");
+
+        CheckAdmin.setText("Admin");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,24 +122,24 @@ public class UsuarioPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                                         .addGap(129, 129, 129))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(72, 72, 72)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                                         .addGap(114, 114, 114))
                                     .addComponent(CampoPesquisaNome))
                                 .addGap(149, 149, 149)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                                         .addGap(126, 126, 126))
                                     .addComponent(CampoPesquisaCPF))
-                                .addGap(172, 172, 172)
-                                .addComponent(BotaoRadioPesquisaAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(155, 155, 155)
+                                .addComponent(CheckAdmin)))
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,9 +160,9 @@ public class UsuarioPanel extends javax.swing.JPanel {
                     .addComponent(CampoPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoPesquisaCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotaoRadioPesquisaAdmin))
+                    .addComponent(CheckAdmin))
                 .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,6 +176,46 @@ public class UsuarioPanel extends javax.swing.JPanel {
         view.setVisible(true);
     }//GEN-LAST:event_BotaoCadastrarUsuario1ActionPerformed
 
+    public JTextField getCampoPesquisaCPF() {
+        return CampoPesquisaCPF;
+    }
+
+    public void setCampoPesquisaCPF(JTextField CampoPesquisaCPF) {
+        this.CampoPesquisaCPF = CampoPesquisaCPF;
+    }
+
+    public JTextField getCampoPesquisaId() {
+        return CampoPesquisaId;
+    }
+
+    public void setCampoPesquisaId(JTextField CampoPesquisaId) {
+        this.CampoPesquisaId = CampoPesquisaId;
+    }
+
+    public JTextField getCampoPesquisaNome() {
+        return CampoPesquisaNome;
+    }
+
+    public void setCampoPesquisaNome(JTextField CampoPesquisaNome) {
+        this.CampoPesquisaNome = CampoPesquisaNome;
+    }
+
+    public JCheckBox getCheckAdmin() {
+        return CheckAdmin;
+    }
+
+    public void setCheckAdmin(JCheckBox CheckAdmin) {
+        this.CheckAdmin = CheckAdmin;
+    }
+
+    public JTable getTabelaUsuario() {
+        return TabelaUsuario;
+    }
+
+    public void setTabelaUsuario(JTable TabelaUsuario) {
+        this.TabelaUsuario = TabelaUsuario;
+    }
+
     private void CampoPesquisaCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoPesquisaCPFActionPerformed
@@ -163,14 +224,18 @@ public class UsuarioPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoPesquisaIdActionPerformed
 
+    private void TabelaUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaUsuarioMouseClicked
+
+    }//GEN-LAST:event_TabelaUsuarioMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoCadastrarUsuario1;
-    private javax.swing.JRadioButton BotaoRadioPesquisaAdmin;
     private javax.swing.JToggleButton BotaoRemover;
     private javax.swing.JTextField CampoPesquisaCPF;
     private javax.swing.JTextField CampoPesquisaId;
     private javax.swing.JTextField CampoPesquisaNome;
+    private javax.swing.JCheckBox CheckAdmin;
     private javax.swing.JTable TabelaUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
