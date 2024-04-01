@@ -10,8 +10,9 @@ package view;
  */
 public class AdmView extends javax.swing.JFrame {
 
-    UsuarioPanel usuarioPanel = new UsuarioPanel();
+    UsuarioPanel usuarioPane = new UsuarioPanel();
     PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
+    ProdutoPane produtoPane = new ProdutoPane();
     
     public AdmView() {
         this.setUndecorated(true);   //fullscreen
@@ -19,11 +20,13 @@ public class AdmView extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
         
-        MainPane.add(usuarioPanel);
+        MainPane.add(usuarioPane);
         MainPane.add(menuPrincipal);
+        MainPane.add(produtoPane);
      
         menuPrincipal.setVisible(true);
-        usuarioPanel.setVisible(false);
+        usuarioPane.setVisible(false);
+        produtoPane.setVisible(false);
     }
     
     /**
@@ -136,18 +139,21 @@ public class AdmView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotaoAbrirPaneUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneUsuarioActionPerformed
-        usuarioPanel.setVisible(true);
+        usuarioPane.setVisible(true);
         menuPrincipal.setVisible(false);
+        produtoPane.setVisible(false);
     }//GEN-LAST:event_BotaoAbrirPaneUsuarioActionPerformed
 
     private void CampoAbrirPaneProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoAbrirPaneProdutoActionPerformed
-        usuarioPanel.setVisible(false);
+        usuarioPane.setVisible(false);
         menuPrincipal.setVisible(false);
+        produtoPane.setVisible(true);
     }//GEN-LAST:event_CampoAbrirPaneProdutoActionPerformed
 
     private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
-        usuarioPanel.setVisible(false);
+        usuarioPane.setVisible(false);
         menuPrincipal.setVisible(true);
+        produtoPane.setVisible(false);
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
 
     private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
