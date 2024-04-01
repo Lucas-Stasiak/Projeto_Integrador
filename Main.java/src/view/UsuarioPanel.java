@@ -4,11 +4,13 @@
  */
 package view;
 
+import com.sun.source.doctree.IdentifierTree;
 import controller.TabelaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +29,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
         controller = new TabelaController(this);
         
         try {
-        controller.readTabela();
+        controller.readTabelaUsuario();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,8 +53,12 @@ public class UsuarioPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaUsuario = new javax.swing.JTable();
-        BotaoRemover = new javax.swing.JToggleButton();
         CheckAdmin = new javax.swing.JCheckBox();
+        BotaoAtualizarUsuario = new javax.swing.JButton();
+        CampoPesquisaTelefone = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        BotaoAtualizarTabela = new javax.swing.JButton();
+        BotaoRemoverUsuario = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(673, 377));
@@ -74,6 +80,9 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
         jLabel2.setText("CPF:");
 
+        CampoPesquisaId.setEditable(false);
+        CampoPesquisaId.setBackground(new java.awt.Color(220, 220, 220));
+        CampoPesquisaId.setFocusable(false);
         CampoPesquisaId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoPesquisaIdActionPerformed(evt);
@@ -105,9 +114,35 @@ public class UsuarioPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TabelaUsuario);
 
-        BotaoRemover.setText("Remover");
-
         CheckAdmin.setText("Admin");
+
+        BotaoAtualizarUsuario.setText("Atualizar");
+        BotaoAtualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAtualizarUsuarioActionPerformed(evt);
+            }
+        });
+
+        CampoPesquisaTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoPesquisaTelefoneActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Telefone:");
+
+        BotaoAtualizarTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAtualizarTabelaActionPerformed(evt);
+            }
+        });
+
+        BotaoRemoverUsuario.setText("Remover");
+        BotaoRemoverUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoRemoverUsuarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -117,56 +152,76 @@ public class UsuarioPanel extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                                        .addGap(129, 129, 129))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(72, 72, 72)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                        .addGap(114, 114, 114))
-                                    .addComponent(CampoPesquisaNome))
-                                .addGap(149, 149, 149)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                                        .addGap(126, 126, 126))
-                                    .addComponent(CampoPesquisaCPF))
-                                .addGap(155, 155, 155)
-                                .addComponent(CheckAdmin)))
-                        .addGap(71, 71, 71))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(BotaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotaoAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                                .addGap(129, 129, 129))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                                .addGap(114, 114, 114))
+                            .addComponent(CampoPesquisaNome))
+                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                                .addGap(126, 126, 126))
+                            .addComponent(CampoPesquisaTelefone))
+                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                .addGap(126, 126, 126))
+                            .addComponent(CampoPesquisaCPF))
+                        .addGap(65, 65, 65)
+                        .addComponent(CheckAdmin)))
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CampoPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoPesquisaCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CheckAdmin))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CampoPesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CampoPesquisaCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CheckAdmin)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CampoPesquisaTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -208,6 +263,14 @@ public class UsuarioPanel extends javax.swing.JPanel {
         this.CheckAdmin = CheckAdmin;
     }
 
+    public JTextField getCampoPesquisaTelefone() {
+        return CampoPesquisaTelefone;
+    }
+
+    public void setCampoPesquisaTelefone(JTextField CampoPesquisaTelefone) {
+        this.CampoPesquisaTelefone = CampoPesquisaTelefone;
+    }
+
     public JTable getTabelaUsuario() {
         return TabelaUsuario;
     }
@@ -225,21 +288,64 @@ public class UsuarioPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_CampoPesquisaIdActionPerformed
 
     private void TabelaUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaUsuarioMouseClicked
-
+        //Preencher campos com os dados da linha
+        if(TabelaUsuario.getSelectedRow() != -1){
+            CampoPesquisaId.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 0).toString());
+            CampoPesquisaNome.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 1).toString());
+            CampoPesquisaCPF.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 2).toString());   
+            CampoPesquisaTelefone.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 3).toString());
+            CheckAdmin.setSelected((boolean) TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 4));
+            
+        }
     }//GEN-LAST:event_TabelaUsuarioMouseClicked
+
+    private void BotaoAtualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarUsuarioActionPerformed
+
+    }//GEN-LAST:event_BotaoAtualizarUsuarioActionPerformed
+
+    private void CampoPesquisaTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoPesquisaTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoPesquisaTelefoneActionPerformed
+
+    private void BotaoAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarTabelaActionPerformed
+        try {
+            controller.apagarCampos();
+            controller.readTabelaUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BotaoAtualizarTabelaActionPerformed
+
+    private void BotaoRemoverUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverUsuarioActionPerformed
+        if(CampoPesquisaId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Nenhum usuário selecionado!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        else{    
+            try {
+                controller.removerUsuario();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+     
+    }//GEN-LAST:event_BotaoRemoverUsuarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotaoAtualizarTabela;
+    private javax.swing.JButton BotaoAtualizarUsuario;
     private javax.swing.JButton BotaoCadastrarUsuario1;
-    private javax.swing.JToggleButton BotaoRemover;
+    private javax.swing.JButton BotaoRemoverUsuario;
     private javax.swing.JTextField CampoPesquisaCPF;
     private javax.swing.JTextField CampoPesquisaId;
     private javax.swing.JTextField CampoPesquisaNome;
+    private javax.swing.JTextField CampoPesquisaTelefone;
     private javax.swing.JCheckBox CheckAdmin;
     private javax.swing.JTable TabelaUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

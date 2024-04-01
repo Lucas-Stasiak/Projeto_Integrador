@@ -52,6 +52,7 @@ public class CadastroController {
                 if (senhaCorreta) {
                     usuarioDao.insert(usuarioCadastrar);
                     JOptionPane.showMessageDialog(null, "Usuário foi cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    view.dispose();//fecha a tela de cadastro
                 } //Se as senhas não estiverem iguais informar o usuário
                 else {
                     JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -65,6 +66,7 @@ public class CadastroController {
                     if (senhaCorreta) {
                         usuarioDao.update(usuarioCadastrar);
                         JOptionPane.showMessageDialog(null, "Usuário foi atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        view.dispose();//fecha a tela de cadastro
                     } else {
                         JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
