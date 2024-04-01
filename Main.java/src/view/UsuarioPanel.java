@@ -60,6 +60,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         BotaoAtualizarTabela = new javax.swing.JButton();
         BotaoRemoverUsuario = new javax.swing.JButton();
+        BotaoBuscarUsuario = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(673, 377));
@@ -145,6 +146,18 @@ public class UsuarioPanel extends javax.swing.JPanel {
             }
         });
 
+        BotaoBuscarUsuario.setText("Buscar");
+        BotaoBuscarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BotaoBuscarUsuarioMouseClicked(evt);
+            }
+        });
+        BotaoBuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoBuscarUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,6 +171,8 @@ public class UsuarioPanel extends javax.swing.JPanel {
                         .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoAtualizarTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -222,7 +237,8 @@ public class UsuarioPanel extends javax.swing.JPanel {
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -332,10 +348,23 @@ public class UsuarioPanel extends javax.swing.JPanel {
      
     }//GEN-LAST:event_BotaoRemoverUsuarioActionPerformed
 
+    private void BotaoBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoBuscarUsuarioActionPerformed
+
+    private void BotaoBuscarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoBuscarUsuarioMouseClicked
+        try {
+            controller.buscarUsuario(getCampoPesquisaId().getText(),getCampoPesquisaNome().getText(),getCampoPesquisaCPF().getText(),getCampoPesquisaTelefone().getText(),getCheckAdmin().isSelected());
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BotaoBuscarUsuarioMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoAtualizarTabela;
     private javax.swing.JButton BotaoAtualizarUsuario;
+    private javax.swing.JButton BotaoBuscarUsuario;
     private javax.swing.JButton BotaoCadastrarUsuario1;
     private javax.swing.JButton BotaoRemoverUsuario;
     private javax.swing.JTextField CampoPesquisaCPF;

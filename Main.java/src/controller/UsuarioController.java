@@ -1,4 +1,3 @@
-
 package controller;
 
 import dao.Conexao;
@@ -15,9 +14,8 @@ import model.Usuario;
 import view.CadastroUsuarioView;
 import view.UsuarioPanel;
 
-
 public class UsuarioController {
-    
+
     private UsuarioPanel view;
     private CadastroUsuarioView viewCadastro;
 
@@ -27,30 +25,28 @@ public class UsuarioController {
     }
 
     //Leitura da tabela
-    public void readTabelaUsuario() throws SQLException{
-        
-        
+    public void readTabelaUsuario() throws SQLException {
+
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
         modelo.setNumRows(0);
         view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
-        
-        
+
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
-        
-        
+
         //Chama a função de leitura de usuario e adiciona nas linhas e colunas
-        for(Usuario usuario: usuarioDao.readUsuario()){
-            
+        for (Usuario usuario : usuarioDao.readUsuario()) {
+
             modelo.addRow(new Object[]{
-            usuario.getId(),
-            usuario.getNome(),
-            usuario.getCpf(),
-            usuario.getTelefone(),
-            usuario.isAdmin()
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getCpf(),
+                usuario.getTelefone(),
+                usuario.isAdmin()
             });
         }
+<<<<<<< Updated upstream
         }
     
     
@@ -58,31 +54,44 @@ public class UsuarioController {
     public void removerUsuario() throws SQLException{
         
         
+=======
+    }
+
+    public void removerUsuario() throws SQLException {
+
+>>>>>>> Stashed changes
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o usuario " + view.getCampoPesquisaNome().getText(), "Alerta", JOptionPane.YES_NO_OPTION);
-        
-        if(resposta == JOptionPane.YES_OPTION){
-            int id = Integer.parseInt(view.getCampoPesquisaId().getText()); 
-        
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            int id = Integer.parseInt(view.getCampoPesquisaId().getText());
+
             Usuario usuarioParaRemover = new Usuario(id);
-        
+
             //Realiza a conexao
             Connection conexao = new Conexao().getConnection();
             UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
-        
+
             usuarioDao.delete(usuarioParaRemover); // Chama função para deletar usuário
             readTabelaUsuario(); // Releitura da tabela
             apagarCampos(); // Apaga os campos de pesquisa
             JOptionPane.showMessageDialog(null, "Usuario foi removido com sucesso!", "sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+<<<<<<< Updated upstream
     
     //Apaga campos de pesquisa do Usuario Pane
     public void apagarCampos(){
         
+=======
+
+    public void apagarCampos() {
+
+>>>>>>> Stashed changes
         view.getCampoPesquisaId().setText("");
         view.getCampoPesquisaNome().setText("");
         view.getCampoPesquisaCPF().setText("");
         view.getCampoPesquisaTelefone().setText("");
+<<<<<<< Updated upstream
         view.getCheckAdmin().setSelected(false);             
         }    
     
@@ -177,4 +186,31 @@ public class UsuarioController {
         return false;
     }
     
+=======
+        view.getCheckAdmin().setSelected(false);
+>>>>>>> Stashed changes
     }
+
+    public void buscarUsuario(String id, String nome, String cpf, String telefone, boolean adm ) throws SQLException {
+
+        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
+        modelo.setNumRows(0);
+        view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
+
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
+
+        //Chama a função de leitura de usuario e adiciona nas linhas e colunas
+        for (Usuario usuario : usuarioDao.buscarUsuario(id, nome, cpf, telefone, adm)) {
+
+            modelo.addRow(new Object[]{
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getCpf(),
+                usuario.getTelefone(),
+                usuario.isAdmin()
+            });
+        }
+    }
+}
