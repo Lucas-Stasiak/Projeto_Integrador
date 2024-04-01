@@ -32,11 +32,7 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-<<<<<<< Updated upstream
-       /*String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
-=======
         /*  String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
->>>>>>> Stashed changes
        
        PreparedStatement statement = connection.prepareStatement(sql);
        statement.setString(1, usuario.getNome());
@@ -44,31 +40,17 @@ public class UsuarioDAO {
        statement.setString(3, usuario.getSenha());
        statement.setString(4, usuario.getTelefone());
        statement.setBoolean(5, usuario.isAdmin());
-<<<<<<< Updated upstream
-       statement.execute();*/
-       
-    }
-    
-    
-    public void delete(Usuario usuario) throws SQLException{
-        String sql = "delete from usuario where id_usuario = ?";
-=======
        statement.execute();
          */
     }
 
     public void delete(Usuario usuario) throws SQLException {
         /*  String sql = "delete from usuario where id_usuario = ?";
->>>>>>> Stashed changes
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, usuario.getId());
         statement.execute();
-<<<<<<< Updated upstream
-               
-=======
          */
->>>>>>> Stashed changes
     }
 
     public void update(Usuario usuario) throws SQLException {
