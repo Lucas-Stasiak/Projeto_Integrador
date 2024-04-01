@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.CadastroController;
+import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,15 +17,15 @@ import javax.swing.JTextField;
  * @author lab8309
  */
 public class CadastroUsuarioView extends javax.swing.JFrame {
-    private final CadastroController controller;
 
+    private UsuarioController controller;
+    
     /**
      * Creates new form CadastroUsuarioView
      */
     public CadastroUsuarioView() {
         initComponents();
-        this.setLocationRelativeTo(null);  //centraliza tela do cadastro        
-        controller = new CadastroController(this);
+        this.setLocationRelativeTo(null);  //centraliza tela do cadastro 
     }
 
     /**
@@ -180,9 +180,13 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public UsuarioController getController() {
+        return controller;
+    }
 
-
-
+    public void setController(UsuarioController controller) {
+        this.controller = controller;
+    }
     public JPasswordField getCampoTextoConfirmaSenhaUsuario() {
         return CampoTextoConfirmaSenhaUsuario;
     }
@@ -235,6 +239,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
         try {
             controller.cadastrarUsuario();
+            controller.readTabelaUsuario();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
         }

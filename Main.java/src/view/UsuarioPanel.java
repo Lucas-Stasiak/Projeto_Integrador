@@ -23,10 +23,11 @@ import javax.swing.table.TableRowSorter;
 public class UsuarioPanel extends javax.swing.JPanel {
 
     private final UsuarioController controller;
+    CadastroUsuarioView view = new CadastroUsuarioView();
     
     public UsuarioPanel() {
         initComponents();
-        controller = new UsuarioController(this);
+        controller = new UsuarioController(this, view);//Construtor envia duas views, (UsuarioPanel e CadastroUsuarioView)
         
         try {
         controller.readTabelaUsuario();
@@ -227,8 +228,9 @@ public class UsuarioPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotaoCadastrarUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarUsuario1ActionPerformed
-        CadastroUsuarioView view = new CadastroUsuarioView();
-        view.setVisible(true);
+        //seta o controller do view cadastro e torna ele visivel
+        view.setController(controller);
+        view.setVisible(true); 
     }//GEN-LAST:event_BotaoCadastrarUsuario1ActionPerformed
 
     public JTextField getCampoPesquisaCPF() {
