@@ -5,7 +5,7 @@
 package view;
 
 import com.sun.source.doctree.IdentifierTree;
-import controller.TabelaController;
+import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +22,11 @@ import javax.swing.table.TableRowSorter;
  */
 public class UsuarioPanel extends javax.swing.JPanel {
 
-    private final TabelaController controller;
+    private final UsuarioController controller;
     
     public UsuarioPanel() {
         initComponents();
-        controller = new TabelaController(this);
+        controller = new UsuarioController(this);
         
         try {
         controller.readTabelaUsuario();

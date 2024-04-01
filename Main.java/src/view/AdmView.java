@@ -4,12 +4,15 @@
  */
 package view;
 
+import controller.MenuAdmController;
+
 /**
  *
  * @author Th3Br
  */
 public class AdmView extends javax.swing.JFrame {
 
+    private final MenuAdmController controller;
     UsuarioPanel usuarioPane = new UsuarioPanel();
     PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
     ProdutoPane produtoPane = new ProdutoPane();
@@ -23,10 +26,9 @@ public class AdmView extends javax.swing.JFrame {
         MainPane.add(usuarioPane);
         MainPane.add(menuPrincipal);
         MainPane.add(produtoPane);
-     
-        menuPrincipal.setVisible(true);
-        usuarioPane.setVisible(false);
-        produtoPane.setVisible(false);
+        
+        controller = new MenuAdmController(this);
+        controller.menuPrincipal();    
     }
     
     /**
@@ -138,22 +140,40 @@ public class AdmView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public UsuarioPanel getUsuarioPane() {
+        return usuarioPane;
+    }
+
+    public void setUsuarioPane(UsuarioPanel usuarioPane) {
+        this.usuarioPane = usuarioPane;
+    }
+
+    public PrincipalMenuPane getMenuPrincipal() {
+        return menuPrincipal;
+    }
+
+    public void setMenuPrincipal(PrincipalMenuPane menuPrincipal) {
+        this.menuPrincipal = menuPrincipal;
+    }
+
+    public ProdutoPane getProdutoPane() {
+        return produtoPane;
+    }
+
+    public void setProdutoPane(ProdutoPane produtoPane) {
+        this.produtoPane = produtoPane;
+    }
+
     private void BotaoAbrirPaneUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneUsuarioActionPerformed
-        usuarioPane.setVisible(true);
-        menuPrincipal.setVisible(false);
-        produtoPane.setVisible(false);
+        controller.usuarioPane();
     }//GEN-LAST:event_BotaoAbrirPaneUsuarioActionPerformed
 
     private void CampoAbrirPaneProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoAbrirPaneProdutoActionPerformed
-        usuarioPane.setVisible(false);
-        menuPrincipal.setVisible(false);
-        produtoPane.setVisible(true);
+        controller.produtoPane();
     }//GEN-LAST:event_CampoAbrirPaneProdutoActionPerformed
 
     private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
-        usuarioPane.setVisible(false);
-        menuPrincipal.setVisible(true);
-        produtoPane.setVisible(false);
+        controller.menuPrincipal();
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
 
     private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed

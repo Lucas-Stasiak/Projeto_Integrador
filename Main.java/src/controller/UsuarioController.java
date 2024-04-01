@@ -15,11 +15,11 @@ import model.Usuario;
 import view.UsuarioPanel;
 
 
-public class TabelaController {
+public class UsuarioController {
     
     private UsuarioPanel view;
 
-    public TabelaController(UsuarioPanel view) {
+    public UsuarioController(UsuarioPanel view) {
         this.view = view;
     }
     
@@ -72,8 +72,6 @@ public class TabelaController {
             apagarCampos(); // Apaga os campos de pesquisa
             JOptionPane.showMessageDialog(null, "Usuario foi removido com sucesso!", "sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
     }
     
     public void apagarCampos(){
