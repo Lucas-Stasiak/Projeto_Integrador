@@ -10,13 +10,35 @@ package model;
  */
 public class Usuario {
     private int id;
-    private String usuario;
+    private String nome;
     private String senha;
+    private String cpf;
+    private String telefone;
+    private boolean admin;
 
-    public Usuario(int id, String usuario, String senha) {
-        this.id = id;
-        this.usuario = usuario;
+    public Usuario(String cpf, String senha) {
         this.senha = senha;
+        this.cpf = cpf;
+    }
+
+    public Usuario(int id) {
+        this.id = id;
+    }
+
+    public Usuario(String nome, String senha, String cpf, String telefone, boolean admin) {
+        this.nome = nome;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.admin = admin;
+    }
+
+    public Usuario(int id, String nome, String cpf, String telefone, boolean admin) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.admin = admin;
     }
 
     public int getId() {
@@ -27,12 +49,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getSenha() {
@@ -41,5 +63,29 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
