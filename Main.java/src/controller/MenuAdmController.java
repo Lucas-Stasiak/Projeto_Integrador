@@ -23,19 +23,28 @@ public class MenuAdmController {
         view.getMenuPrincipal().setVisible(true);
         view.getUsuarioPane().setVisible(false);
         view.getProdutoPane().setVisible(false);
+        view.getClientePane().setVisible(false);
     }
     
     public void usuarioPane(){
         view.getUsuarioPane().setVisible(true);
         view.getMenuPrincipal().setVisible(false);
         view.getProdutoPane().setVisible(false);
+        view.getClientePane().setVisible(false);
     }
     
     public void produtoPane(){
         view.getProdutoPane().setVisible(true);
         view.getUsuarioPane().setVisible(false);
         view.getMenuPrincipal().setVisible(false);
-        
+        view.getClientePane().setVisible(false);  
+    }
+    
+    public void clientePane(){
+        view.getClientePane().setVisible(true);  
+        view.getProdutoPane().setVisible(false);
+        view.getUsuarioPane().setVisible(false);
+        view.getMenuPrincipal().setVisible(false);
     }
         
 }

@@ -16,6 +16,7 @@ public class AdmView extends javax.swing.JFrame {
     UsuarioPanel usuarioPane = new UsuarioPanel();
     PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
     ProdutoPane produtoPane = new ProdutoPane();
+    ClientePane clientePane = new ClientePane();
     
     public AdmView() {
       
@@ -25,6 +26,7 @@ public class AdmView extends javax.swing.JFrame {
         MainPane.add(usuarioPane);
         MainPane.add(menuPrincipal);
         MainPane.add(produtoPane);
+        MainPane.add(clientePane);
         
         controller = new MenuAdmController(this);
         controller.menuPrincipal();    
@@ -125,6 +127,14 @@ public class AdmView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public ClientePane getClientePane() {
+        return clientePane;
+    }
+
+    public void setClientePane(ClientePane clientePane) {
+        this.clientePane = clientePane;
+    }
+
     public UsuarioPanel getUsuarioPane() {
         return usuarioPane;
     }
@@ -162,7 +172,7 @@ public class AdmView extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
 
     private void BotaoAbrirPaneClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneClientesActionPerformed
-        // TODO add your handling code here:
+        controller.clientePane();
     }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
 
     /**
