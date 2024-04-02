@@ -4,17 +4,7 @@
  */
 package view;
 
-import controller.LoginController;
-import dao.Conexao;
-import dao.UsuarioDAO;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import model.Usuario;
 
 /**
  *
@@ -22,35 +12,11 @@ import model.Usuario;
  */
 public class LoginView extends javax.swing.JFrame {
 
-    private final LoginController controller;
-
     /**
      * Creates new form LoginView
      */
-    
     public LoginView() {
         initComponents();
-        this.setLocationRelativeTo(null);  //centraliza tela do login
-        
-        controller = new LoginController(this); //variável controller para LoginController, ela envia a classe LoginView
-       
-        
-    }
-
-    public JPasswordField getCampoSenhaLogin() {
-        return CampoSenhaLogin;
-    }
-
-    public void setCampoSenhaLogin(JPasswordField CampoSenhaLogin) {
-        this.CampoSenhaLogin = CampoSenhaLogin;
-    }
-
-    public JTextField getCampoCPFLogin() {
-        return CampoCPFLogin;
-    }
-
-    public void setCampoCPFLogin(JTextField CampoUsuarioLogin) {
-        this.CampoCPFLogin = CampoUsuarioLogin;
     }
 
     /**
@@ -63,28 +29,33 @@ public class LoginView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        CampoCPFLogin = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        CampoSenhaLogin = new javax.swing.JPasswordField();
-        BotaoLoginEntrar = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        FuncionarioAdm = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("CPF");
-
-        CampoCPFLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoCPFLoginActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Usuário");
 
         jLabel2.setText("Senha");
 
-        BotaoLoginEntrar.setText("Entrar");
-        BotaoLoginEntrar.addActionListener(new java.awt.event.ActionListener() {
+        FuncionarioAdm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Administrador"}));
+        FuncionarioAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoLoginEntrarActionPerformed(evt);
+                FuncionarioAdmActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Funcionário/Adm");
+
+        jButton1.setText("Entrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -96,58 +67,59 @@ public class LoginView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(132, 132, 132)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(CampoSenhaLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(CampoCPFLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(jLabel1)
-                            .addComponent(BotaoLoginEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(145, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addComponent(FuncionarioAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(138, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(45, 45, 45)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CampoCPFLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CampoSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(BotaoLoginEntrar)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FuncionarioAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BotaoLoginEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLoginEntrarActionPerformed
-      
-        //Chama a classe LoginController pela váriavel controller
-        try {
-            controller.autenticarUsuario();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+    private void FuncionarioAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuncionarioAdmActionPerformed
+        
+    }//GEN-LAST:event_FuncionarioAdmActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (FuncionarioAdm.getSelectedItem() == "Administrador") {
+            AdmView telaAdm = new AdmView();
+            telaAdm.setVisible(true);
+        } else {
+            System.out.println("Funcionario");
         }
-
-
-
-   
-    }//GEN-LAST:event_BotaoLoginEntrarActionPerformed
-
-    private void CampoCPFLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoCPFLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CampoCPFLoginActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,16 +157,13 @@ public class LoginView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoLoginEntrar;
-    private javax.swing.JTextField CampoCPFLogin;
-    private javax.swing.JPasswordField CampoSenhaLogin;
+    private javax.swing.JComboBox<String> FuncionarioAdm;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-    private void usuario(String cpf, String senha) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }
