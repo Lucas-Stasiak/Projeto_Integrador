@@ -13,14 +13,16 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
-    private String ddd;
+    private String cep;
+    private String numero;
 
-    public Endereco(String logradouro, String bairro, String cidade, String estado, String ddd) {
+    public Endereco(String logradouro, String bairro, String cidade, String estado, String cep, String numero) {
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
-        this.ddd = ddd;
+        this.cep = cep;
+        this.numero = numero;
     }
 
     public String getLogradouro() {
@@ -55,14 +57,23 @@ public class Endereco {
         this.estado = estado;
     }
 
-    public String getDdd() {
-        return ddd;
+    public String getCep() {
+        return cep;
     }
 
-    public void setDdd(String ddd) {
-        this.ddd = ddd;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    
     
     
 }

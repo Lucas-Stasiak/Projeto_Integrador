@@ -68,6 +68,7 @@ public class ClienteEnderecoController {
             String cidade = null;
             String estado = null;
             String cep = null;
+            String numero = null;
             for (String line : lines) {
                 if (line.contains("\"logradouro\"")) {
                     logradouro = line.split(":")[1].replaceAll("\"", "").trim();
@@ -79,11 +80,19 @@ public class ClienteEnderecoController {
                     estado = line.split(":")[1].replaceAll("\"", "").trim();
                 } else if (line.contains("\"cep\"")) {
                     cep = line.split(":")[1].replaceAll("\"", "").trim();
+                } else if (line.contains("\"complemento\"")) {
+                    String complemento = line.split(":")[1].replaceAll("\"", "").trim();
+                    // Verifica se o complemento é composto apenas por dígitos
+                    if (complemento.matches("\\d+")) {
+                        numero = complemento;
+                    }
                 }
             }
 
-            endereco = new Endereco(logradouro, bairro, cidade, estado, cep);
-        } catch (Exception e) {
+            endereco = new Endereco(logradouro, bairro, cidade, estado, cep, numero);
+        } catch (NumberFormatException e) {
+            // Trate a exceção adequadamente
+
         }
         return endereco;
     }
@@ -95,12 +104,14 @@ public class ClienteEnderecoController {
             view.getCampoCidade().setText(endereco.getCidade());
             view.getCampoEstado().setText(endereco.getEstado());
             view.getCampoLogradouro().setText(endereco.getLogradouro());
+            view.getCampoNumero().setText(endereco.getNumero());
         } else {
             // Se o endereço não for encontrado, limpe os campos
             view.getCampoBairro().setText("");
             view.getCampoCidade().setText("");
             view.getCampoEstado().setText("");
             view.getCampoLogradouro().setText("");
+            view.getCampoNumero().setText("");
         }
     }
 }

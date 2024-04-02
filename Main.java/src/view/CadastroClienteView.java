@@ -5,7 +5,6 @@
 package view;
 
 import controller.ClienteEnderecoController;
-import dao.ClienteDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -336,11 +335,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
         });
     }
 
-    public CadastroClienteView(JTextField CampoBairro, JTextField CampoCidade, JTextField CampoEstado, JTextField CampoLogradouro) {
+    public CadastroClienteView(JTextField CampoBairro, JTextField CampoCidade, JTextField CampoEstado, JTextField CampoLogradouro, JTextField CampoNumero) {
         this.CampoBairro = CampoBairro;
         this.CampoCidade = CampoCidade;
         this.CampoEstado = CampoEstado;
         this.CampoLogradouro = CampoLogradouro;
+        this.CampoNumero = CampoNumero;
     }
 
     public JTextField getCampoBairro() {
@@ -374,6 +374,15 @@ public class CadastroClienteView extends javax.swing.JFrame {
     public void setCampoLogradouro(JTextField CampoLogradouro) {
         this.CampoLogradouro = CampoLogradouro;
     }
+
+    public JTextField getCampoNumero() {
+        return CampoNumero;
+    }
+
+    public void setCampoNumero(JTextField CampoNumero) {
+        this.CampoNumero = CampoNumero;
+    }
+    
     
     
 
