@@ -18,7 +18,6 @@ public class AdmView extends javax.swing.JFrame {
     ProdutoPane produtoPane = new ProdutoPane();
     
     public AdmView() {
-        this.setUndecorated(true);   //fullscreen
       
         initComponents();
         this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
@@ -47,7 +46,6 @@ public class AdmView extends javax.swing.JFrame {
         BotaoAbrirPaneVenda = new javax.swing.JButton();
         MainPane = new javax.swing.JLayeredPane();
         BotaoAbrirPaneHome = new javax.swing.JButton();
-        BotaoFecharSistema = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -86,13 +84,6 @@ public class AdmView extends javax.swing.JFrame {
             }
         });
 
-        BotaoFecharSistema.setText("X");
-        BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoFecharSistemaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,19 +98,13 @@ public class AdmView extends javax.swing.JFrame {
                     .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(106, 106, 106)
-                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                .addGap(169, 169, 169))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BotaoFecharSistema)
-                .addContainerGap())
+                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addGap(166, 166, 166))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BotaoFecharSistema)
-                .addGap(141, 141, 141)
+                .addGap(170, 170, 170)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,10 +161,6 @@ public class AdmView extends javax.swing.JFrame {
         controller.menuPrincipal();
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
 
-    private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_BotaoFecharSistemaActionPerformed
-
     private void BotaoAbrirPaneClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneClientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
@@ -225,7 +206,6 @@ public class AdmView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoAbrirPaneHome;
     private javax.swing.JButton BotaoAbrirPaneUsuario;
     private javax.swing.JButton BotaoAbrirPaneVenda;
-    private javax.swing.JButton BotaoFecharSistema;
     private javax.swing.JButton CampoAbrirPaneProduto;
     private javax.swing.JLayeredPane MainPane;
     // End of variables declaration//GEN-END:variables

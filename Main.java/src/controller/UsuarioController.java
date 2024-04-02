@@ -4,10 +4,7 @@ import dao.Conexao;
 import dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Usuario;
@@ -19,6 +16,7 @@ public class UsuarioController {
     private UsuarioPanel view;
     private CadastroUsuarioView viewCadastro;
 
+    //Construtor
     public UsuarioController(UsuarioPanel view, CadastroUsuarioView viewCadastro) {
         this.view = view;
         this.viewCadastro = viewCadastro;
@@ -28,7 +26,7 @@ public class UsuarioController {
     public void readTabelaUsuario() throws SQLException {
 
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
-        modelo.setNumRows(0);
+        modelo.setNumRows(0); //Seta o numero de linhas como 0, isso evita a tabela repetir informções quando atualizada
         view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
 
         //Realiza a conexao
@@ -48,6 +46,7 @@ public class UsuarioController {
         }
     }
 
+    //Remove o usuário selecionado na tabela
     public void removerUsuario() throws SQLException {
 
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o usuario " + view.getCampoPesquisaNome().getText(), "Alerta", JOptionPane.YES_NO_OPTION);
@@ -68,13 +67,25 @@ public class UsuarioController {
         }
     }
 
+    //Apaga os campos de pesquisa
     public void apagarCampos() {
-
+        
         view.getCampoPesquisaId().setText("");
         view.getCampoPesquisaNome().setText("");
         view.getCampoPesquisaCPF().setText("");
         view.getCampoPesquisaTelefone().setText("");
         view.getCheckAdmin().setSelected(false);
+    }
+    
+    //Apaga os campos do cadastro
+    public void apagarCamposCadastro(){
+        
+        viewCadastro.getCampoTextoNome().setText("");
+        viewCadastro.getCampoTextoCpf().setText("");
+        viewCadastro.getCampoTextoTelefone().setText("");
+        viewCadastro.getCampoTextoSenhaUsuario().setText("");
+        viewCadastro.getCampoTextoConfirmaSenhaUsuario().setText("");
+        viewCadastro.getCheckAdmin().setSelected(false);
     }
 
     public void buscarUsuario(String id, String nome, String cpf, String telefone, boolean adm ) throws SQLException {
@@ -100,9 +111,6 @@ public class UsuarioController {
         }
     }
     
-    
-    
-
     //Cadastro de usuario
     public void cadastrarUsuario() throws SQLException {
 
@@ -172,7 +180,7 @@ public class UsuarioController {
             return false;
         }
     }
-
+    
     // verifica se a algum campo em branco antes de cadastrar o usuario
     public boolean verificaCampoPreenchido(String nome, String cpf, String senha, String senhaConfirma, String telefone) {
         if (nome.isEmpty()) {

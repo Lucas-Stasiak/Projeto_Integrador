@@ -14,7 +14,6 @@ public class FuncionarioView extends javax.swing.JFrame {
      * Creates new form FuncionarioView
      */
     public FuncionarioView() {
-        this.setUndecorated(true);   //fullscreen
         
         initComponents();
         this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
@@ -30,7 +29,6 @@ public class FuncionarioView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        BotaoFecharSistema = new javax.swing.JButton();
         BotaoAbrirPaneHome = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         BotaoAbrirPaneVenda = new javax.swing.JButton();
@@ -38,13 +36,6 @@ public class FuncionarioView extends javax.swing.JFrame {
         BotaoAbrirPaneSuasVendas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        BotaoFecharSistema.setText("X");
-        BotaoFecharSistema.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoFecharSistemaActionPerformed(evt);
-            }
-        });
 
         BotaoAbrirPaneHome.setText("Home");
         BotaoAbrirPaneHome.addActionListener(new java.awt.event.ActionListener() {
@@ -74,10 +65,6 @@ public class FuncionarioView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BotaoFecharSistema)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -92,9 +79,7 @@ public class FuncionarioView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BotaoFecharSistema)
-                .addGap(141, 141, 141)
+                .addGap(170, 170, 170)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,10 +95,6 @@ public class FuncionarioView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BotaoFecharSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoFecharSistemaActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_BotaoFecharSistemaActionPerformed
 
     private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
         // TODO add your handling code here:
@@ -159,7 +140,6 @@ public class FuncionarioView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoAbrirPaneProdutos;
     private javax.swing.JButton BotaoAbrirPaneSuasVendas;
     private javax.swing.JButton BotaoAbrirPaneVenda;
-    private javax.swing.JButton BotaoFecharSistema;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 }
