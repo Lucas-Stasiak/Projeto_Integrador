@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -38,7 +39,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void initComponents() {
 
         CampoTextoNome = new javax.swing.JTextField();
-        CampoTextoCpf = new javax.swing.JTextField();
         CampoTextoTelefone = new javax.swing.JTextField();
         BotaoCadastro = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -51,18 +51,13 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         BotaoApagarCamposCadastro = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        CampoTextoCpf = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         CampoTextoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoTextoNomeActionPerformed(evt);
-            }
-        });
-
-        CampoTextoCpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoTextoCpfActionPerformed(evt);
             }
         });
 
@@ -112,6 +107,12 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel6.setText("Cadastro de Usuário");
 
+        try {
+            CampoTextoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,8 +133,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2)
                                     .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                    .addComponent(CampoTextoCpf)
-                                    .addComponent(BotaoApagarCamposCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(BotaoApagarCamposCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(CampoTextoCpf))
                                 .addGap(61, 61, 61)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(CheckAdmin)
@@ -156,8 +157,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CampoTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoTextoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CampoTextoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -211,12 +212,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.CampoTextoSenhaUsuario = CampoSenhaUsuario;
     }
 
-
-    public JTextField getCampoTextoCpf() {
+    public JFormattedTextField getCampoTextoCpf() {
         return CampoTextoCpf;
     }
 
-    public void setCampoTextoCpf(JTextField CampoTextoCpf) {
+    public void setCampoTextoCpf(JFormattedTextField CampoTextoCpf) {
         this.CampoTextoCpf = CampoTextoCpf;
     }
 
@@ -249,10 +249,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void CampoTextoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoTextoNomeActionPerformed
-
-    private void CampoTextoCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoCpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CampoTextoCpfActionPerformed
 
     private void CampoTextoSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoSenhaUsuarioActionPerformed
         // TODO add your handling code here:
@@ -309,7 +305,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoApagarCamposCadastro;
     private javax.swing.JButton BotaoCadastro;
     private javax.swing.JPasswordField CampoTextoConfirmaSenhaUsuario;
-    private javax.swing.JTextField CampoTextoCpf;
+    private javax.swing.JFormattedTextField CampoTextoCpf;
     private javax.swing.JTextField CampoTextoNome;
     private javax.swing.JPasswordField CampoTextoSenhaUsuario;
     private javax.swing.JTextField CampoTextoTelefone;
