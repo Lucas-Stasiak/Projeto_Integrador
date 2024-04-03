@@ -31,7 +31,7 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-        /* String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
+       /*String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
        
        PreparedStatement statement = connection.prepareStatement(sql);
        statement.setString(1, usuario.getNome());

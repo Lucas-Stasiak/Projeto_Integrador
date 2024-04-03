@@ -48,7 +48,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         CampoTextoSenhaUsuario = new javax.swing.JPasswordField();
         CampoTextoConfirmaSenhaUsuario = new javax.swing.JPasswordField();
         CheckAdmin = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        BotaoApagarCamposCadastro = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -100,10 +100,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Apagar Campos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BotaoApagarCamposCadastro.setText("Apagar Campos");
+        BotaoApagarCamposCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BotaoApagarCamposCadastroActionPerformed(evt);
             }
         });
 
@@ -133,7 +133,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                                     .addComponent(CampoTextoCpf)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(BotaoApagarCamposCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(61, 61, 61)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(CheckAdmin)
@@ -172,7 +172,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                     .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(BotaoApagarCamposCadastro)
                     .addComponent(BotaoCadastro))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
@@ -266,9 +266,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CheckAdminActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void BotaoApagarCamposCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroActionPerformed
+        controller.apagarCamposCadastro();
+    }//GEN-LAST:event_BotaoApagarCamposCadastroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,6 +306,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotaoApagarCamposCadastro;
     private javax.swing.JButton BotaoCadastro;
     private javax.swing.JPasswordField CampoTextoConfirmaSenhaUsuario;
     private javax.swing.JTextField CampoTextoCpf;
@@ -313,7 +314,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private javax.swing.JPasswordField CampoTextoSenhaUsuario;
     private javax.swing.JTextField CampoTextoTelefone;
     private javax.swing.JCheckBox CheckAdmin;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
