@@ -1,32 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
 
 import controller.LoginController;
-import dao.Conexao;
-import dao.UsuarioDAO;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import model.Usuario;
 
-/**
- *
- * @author Th3Br
- */
+
+
 public class LoginView extends javax.swing.JFrame {
+    
 
     private final LoginController controller;
-
-    /**
-     * Creates new form LoginView
-     */
     
     public LoginView() {
         initComponents();
@@ -34,7 +22,6 @@ public class LoginView extends javax.swing.JFrame {
         
         controller = new LoginController(this); //variável controller para LoginController, ela envia a classe LoginView
        
-        
     }
 
     public JPasswordField getCampoSenhaLogin() {
@@ -45,12 +32,12 @@ public class LoginView extends javax.swing.JFrame {
         this.CampoSenhaLogin = CampoSenhaLogin;
     }
 
-    public JTextField getCampoCPFLogin() {
+    public JFormattedTextField getCampoCPFLogin() {
         return CampoCPFLogin;
     }
 
-    public void setCampoCPFLogin(JTextField CampoUsuarioLogin) {
-        this.CampoCPFLogin = CampoUsuarioLogin;
+    public void setCampoCPFLogin(JFormattedTextField CampoCPFLogin) {
+        this.CampoCPFLogin = CampoCPFLogin;
     }
 
     /**
@@ -63,21 +50,15 @@ public class LoginView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        CampoCPFLogin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         CampoSenhaLogin = new javax.swing.JPasswordField();
         BotaoLoginEntrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        CampoCPFLogin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("CPF");
-
-        CampoCPFLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoCPFLoginActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Senha");
 
@@ -90,6 +71,19 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Portal de Vendas");
+
+        try {
+            CampoCPFLogin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        CampoCPFLogin.setCaretColor(new java.awt.Color(204, 204, 204));
+        CampoCPFLogin.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        CampoCPFLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoCPFLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,9 +99,9 @@ public class LoginView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(CampoSenhaLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(CampoCPFLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                             .addComponent(jLabel1)
-                            .addComponent(BotaoLoginEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(BotaoLoginEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CampoCPFLogin))))
                 .addContainerGap(145, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -186,15 +180,11 @@ public class LoginView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoLoginEntrar;
-    private javax.swing.JTextField CampoCPFLogin;
+    private javax.swing.JFormattedTextField CampoCPFLogin;
     private javax.swing.JPasswordField CampoSenhaLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
-
-    private void usuario(String cpf, String senha) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

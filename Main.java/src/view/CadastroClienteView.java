@@ -65,7 +65,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         BotaoCancelarCadastro = new javax.swing.JButton();
         BotaoApagarCampos = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -281,7 +281,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField9ActionPerformed
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_BotaoCadastroActionPerformed
 
     private void BotaoCancelarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarCadastroActionPerformed
