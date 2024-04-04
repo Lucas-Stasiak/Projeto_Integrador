@@ -53,6 +53,7 @@ public class UsuarioController {
         view.getComboBoxPesquisa().setSelectedIndex(0);
     }
     
+    //Preenche o comboBox com base no tipo de usuario selecionado
     public int comboBoxPreenchimento(){
         if((boolean)view.getTabelaUsuario().getValueAt(view.getTabelaUsuario().getSelectedRow(), 4)){
             return 2;
@@ -73,7 +74,7 @@ public class UsuarioController {
         viewCadastro.getCheckAdmin().setSelected(false);
     }
     
-        //Leitura da tabela
+    //Leitura da tabela
     public void readTabelaUsuario() throws SQLException {
 
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
@@ -97,39 +98,65 @@ public class UsuarioController {
         }
     }
     
+    //Verifica o tipo de usuario selecionado no combobox
     public void comboBoxAdmin(){
-        if(view.getComboBoxPesquisa().getSelectedIndex()==0){
-            
-        }
-        if(view.getComboBoxPesquisa().getSelectedIndex()==1){
-            //return false;
+        if(view.getComboBoxPesquisa().getSelectedIndex()!=0){
+            if(view.getComboBoxPesquisa().getSelectedIndex()==1){
+                pesquisaAdm = false;
+            }
+            if(view.getComboBoxPesquisa().getSelectedIndex()==2){
+                pesquisaAdm = true;
+            }
         }
     }
 
+    //Função para busca de usuário
     public void buscarUsuario() throws SQLException {
-
+        
+        
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
-        modelo.setNumRows(0);
+         modelo.setNumRows(0);
         view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
 
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
-
+        
         Usuario usuarioPesquisa = new Usuario();
+        
         usuarioPesquisa.setNome(view.getCampoPesquisaNome().getText());
         usuarioPesquisa.setCpf(view.getCampoPesquisaCPF().getText());
         
-        //Chama a função de leitura de usuario e adiciona nas linhas e colunas
-        for (Usuario usuario : usuarioDao.buscarUsuarioNOMEeCPF(usuarioPesquisa)) {
+        //Se não for selecionado o tipo de usuario para pesquisa é executado o if
+        if(view.getComboBoxPesquisa().getSelectedIndex()==0){
+        
+            //Chama a função de leitura de usuario e adiciona nas linhas e colunas
+            for (Usuario usuario : usuarioDao.buscarUsuarioNOMEeCPF(usuarioPesquisa)) {
 
-            modelo.addRow(new Object[]{
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getCpf(),
-                usuario.getTelefone(),
-                usuario.isAdmin()
-            });
+                modelo.addRow(new Object[]{
+                    usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getTelefone(),
+                    usuario.isAdmin()
+                });
+            }
+        }
+        //Caso contrário é realizado outro tipo de pesquisa, pelo nome, cpf e adm
+        else{
+            comboBoxAdmin();//Verifica se é admin ou não
+            
+            usuarioPesquisa.setAdmin(pesquisaAdm);
+            
+            for(Usuario usuario : usuarioDao.buscarUsuarioNOMEeCPFeADM(usuarioPesquisa)){
+                modelo.addRow(new Object[]{
+                    usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getCpf(),
+                    usuario.getTelefone(),
+                    usuario.isAdmin()
+                });
+            }
         }
     }
     

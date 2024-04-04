@@ -141,7 +141,7 @@ public class UsuarioDAO {
     public ArrayList<Usuario> buscarUsuarioNOMEeCPF(Usuario usuario) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE nome_usuario LIKE ? and cpf LIKE ?";
 
-        // Construindo a consulta SQL dinamicamente
+        // Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, "%" + usuario.getNome() + "%");
         statement.setString(2, "%" + usuario.getCpf() + "%");
@@ -167,6 +167,37 @@ public class UsuarioDAO {
 
         return usuarios;
 }
+    
+    
+    public ArrayList<Usuario> buscarUsuarioNOMEeCPFeADM(Usuario usuario) throws SQLException{
+        String sql = "SELECT * FROM usuario WHERE admin = ? and nome_usuario LIKE ? and cpf LIKE ?";
+        
+        //Conexao com o bd
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setBoolean(1, usuario.isAdmin());
+        statement.setString(2, "%" + usuario.getNome() + "%");
+        statement.setString(3, "%" + usuario.getCpf() + "%");
+        statement.execute();
+        
+        ResultSet resultSet = statement.executeQuery();
+        
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        
+        // Iterando sobre os resultados
+        while (resultSet.next()) {
+            int idUsuario = resultSet.getInt("id_usuario");
+            String nomeUsuario = resultSet.getString("nome_usuario");
+            String cpfUsuario = resultSet.getString("cpf");
+            String telefoneUsuario = resultSet.getString("telefone");
+            boolean adminUsuario = resultSet.getBoolean("admin");
+
+            Usuario usuarioPesquisado = new Usuario(idUsuario, nomeUsuario, cpfUsuario, telefoneUsuario, adminUsuario);
+            usuarios.add(usuarioPesquisado);
+        }
+        return usuarios;
+        
+    }
+    
 
 
 }
