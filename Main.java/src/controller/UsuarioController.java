@@ -15,35 +15,12 @@ public class UsuarioController {
 
     private UsuarioPanel view;
     private CadastroUsuarioView viewCadastro;
+    private boolean pesquisaAdm;
 
     //Construtor
     public UsuarioController(UsuarioPanel view, CadastroUsuarioView viewCadastro) {
         this.view = view;
         this.viewCadastro = viewCadastro;
-    }
-
-    //Leitura da tabela
-    public void readTabelaUsuario() throws SQLException {
-
-        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
-        modelo.setNumRows(0); //Seta o numero de linhas como 0, isso evita a tabela repetir informções quando atualizada
-        view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
-
-        //Realiza a conexao
-        Connection conexao = new Conexao().getConnection();
-        UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
-
-        //Chama a função de leitura de usuario e adiciona nas linhas e colunas
-        for (Usuario usuario : usuarioDao.readUsuario()) {
-
-            modelo.addRow(new Object[]{
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getCpf(),
-                usuario.getTelefone(),
-                usuario.isAdmin()
-            });
-        }
     }
 
     //Remove o usuário selecionado na tabela
@@ -73,8 +50,16 @@ public class UsuarioController {
         view.getCampoPesquisaId().setText("");
         view.getCampoPesquisaNome().setText("");
         view.getCampoPesquisaCPF().setText("");
-        view.getCampoPesquisaTelefone().setText("");
-        view.getCheckAdmin().setSelected(false);
+        view.getComboBoxPesquisa().setSelectedIndex(0);
+    }
+    
+    public int comboBoxPreenchimento(){
+        if((boolean)view.getTabelaUsuario().getValueAt(view.getTabelaUsuario().getSelectedRow(), 4)){
+            return 2;
+        }
+        else{
+            return 1;
+        }
     }
     
     //Apaga os campos do cadastro
@@ -87,8 +72,41 @@ public class UsuarioController {
         viewCadastro.getCampoTextoConfirmaSenhaUsuario().setText("");
         viewCadastro.getCheckAdmin().setSelected(false);
     }
+    
+        //Leitura da tabela
+    public void readTabelaUsuario() throws SQLException {
 
-    public void buscarUsuario(String id, String nome, String cpf, String telefone, boolean adm ) throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
+        modelo.setNumRows(0); //Seta o numero de linhas como 0, isso evita a tabela repetir informções quando atualizada
+        view.getTabelaUsuario().setRowSorter(new TableRowSorter(modelo)); //Classifica as linha da tabela 
+
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
+
+        //Chama a função de leitura de usuario e adiciona nas linhas e colunas
+        for (Usuario usuario : usuarioDao.readUsuario()) {
+
+            modelo.addRow(new Object[]{
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getCpf(),
+                usuario.getTelefone(),
+                usuario.isAdmin()
+            });
+        }
+    }
+    
+    public void comboBoxAdmin(){
+        if(view.getComboBoxPesquisa().getSelectedIndex()==0){
+            
+        }
+        if(view.getComboBoxPesquisa().getSelectedIndex()==1){
+            //return false;
+        }
+    }
+
+    public void buscarUsuario() throws SQLException {
 
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
         modelo.setNumRows(0);
@@ -98,8 +116,12 @@ public class UsuarioController {
         Connection conexao = new Conexao().getConnection();
         UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
 
+        Usuario usuarioPesquisa = new Usuario();
+        usuarioPesquisa.setNome(view.getCampoPesquisaNome().getText());
+        usuarioPesquisa.setCpf(view.getCampoPesquisaCPF().getText());
+        
         //Chama a função de leitura de usuario e adiciona nas linhas e colunas
-        for (Usuario usuario : usuarioDao.buscarUsuario(id, nome, cpf, telefone, adm)) {
+        for (Usuario usuario : usuarioDao.buscarUsuarioNOMEeCPF(usuarioPesquisa)) {
 
             modelo.addRow(new Object[]{
                 usuario.getId(),

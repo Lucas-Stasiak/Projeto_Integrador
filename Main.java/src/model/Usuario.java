@@ -16,9 +16,15 @@ public class Usuario {
     private String telefone;
     private boolean admin;
 
-    public Usuario(String cpf, String senha) {
-        this.senha = senha;
+    public Usuario(String nome, String cpf, boolean admin) {
+        this.nome = nome;
         this.cpf = cpf;
+        this.admin = admin;
+    }
+
+    public Usuario(String cpf, String senha) {
+        this.cpf = cpf;
+        this.senha = senha;
     }
 
     public Usuario(int id) {
@@ -39,6 +45,9 @@ public class Usuario {
         this.cpf = cpf;
         this.telefone = telefone;
         this.admin = admin;
+    }
+
+    public Usuario() {
     }
 
     public int getId() {

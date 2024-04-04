@@ -67,36 +67,6 @@ public class UsuarioDAO {
 
     }
 
-    //Leitura de todos os usuarios
-    public ArrayList<Usuario> readUsuario() throws SQLException {
-
-        String sql = "select * from usuario";
-
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.execute();
-        ResultSet resultSet = statement.getResultSet();
-
-        ArrayList<Usuario> usuarios = new ArrayList<>();//Array da várivael usuario
-
-        //Enquanto tiver resultado do banco de dados ele continia
-        while (resultSet.next()) {
-
-            id = resultSet.getInt("id_usuario");
-            nome = resultSet.getString("nome_usuario");
-            cpf = resultSet.getString("cpf");
-            telefone = resultSet.getString("telefone");
-            admin = resultSet.getBoolean("admin");
-
-            Usuario usuarioComDadosDoBanco = new Usuario(id, nome, cpf, telefone, admin);//Pega os dados do Banco de dados e envia para um usuario
-
-            usuarios.add(usuarioComDadosDoBanco);//adiciona o usuario dentro do array
-
-        }
-
-        return usuarios;
-
-    }
-
     public boolean verificaLoginPorCPFeSenha(Usuario usuario) throws SQLException {
         String sql = "select * from usuario where cpf = ? and senha = ? ";
 
@@ -136,72 +106,66 @@ public class UsuarioDAO {
         }
         return admin;
     }
+    
+    //Leitura de todos os usuarios
+    public ArrayList<Usuario> readUsuario() throws SQLException {
 
-    public ArrayList<Usuario> buscarUsuario(String id_usuario, String nome_usuario, String cpf, String telefone, boolean adm) throws SQLException {
-    String sql = "SELECT * FROM usuario WHERE ";
-    ArrayList<Usuario> usuarios = new ArrayList<>();
+        String sql = "select * from usuario";
 
-    // Construindo a consulta SQL dinamicamente
-    if (id_usuario != null && !id_usuario.isEmpty()) {
-        sql += "id_usuario = ? AND ";
-    }
-    if (nome_usuario != null && !nome_usuario.isEmpty()) {
-        sql += "nome_usuario = ? AND ";
-    }
-    if (cpf != null && !cpf.isEmpty()) {
-        sql += "cpf = ? AND ";
-    }
-    if (telefone != null && !telefone.isEmpty()) {
-        sql += "telefone = ? AND ";
-    }
-    sql += "admin = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.execute();
+        ResultSet resultSet = statement.getResultSet();
 
-    // Remove o "AND" extra no final da consulta
-    if (sql.endsWith("AND ")) {
-        sql = sql.substring(0, sql.length() - 5); // Remove os últimos 5 caracteres ("AND ")
-    }
+        ArrayList<Usuario> usuarios = new ArrayList<>();//Array da várivael usuario
 
-    // Realiza a conexao
-    Connection conexao = new Conexao().getConnection();
-    PreparedStatement statement = conexao.prepareStatement(sql);
+        //Enquanto tiver resultado do banco de dados ele continia
+        while (resultSet.next()) {
 
-    // Definindo os parâmetros
-    int parametroIndex = 1;
-    if (id_usuario != null && !id_usuario.isEmpty()) {
-        statement.setString(parametroIndex++, id_usuario);
-    }
-    if (nome_usuario != null && !nome_usuario.isEmpty()) {
-        statement.setString(parametroIndex++, nome_usuario);
-    }
-    if (cpf != null && !cpf.isEmpty()) {
-        statement.setString(parametroIndex++, cpf);
-    }
-    if (telefone != null && !telefone.isEmpty()) {
-        statement.setString(parametroIndex++, telefone);
-    }
-    statement.setBoolean(parametroIndex, adm);
+            id = resultSet.getInt("id_usuario");
+            nome = resultSet.getString("nome_usuario");
+            cpf = resultSet.getString("cpf");
+            telefone = resultSet.getString("telefone");
+            admin = resultSet.getBoolean("admin");
 
-    // Executando a consulta
-    ResultSet resultSet = statement.executeQuery();
+            Usuario usuarioComDadosDoBanco = new Usuario(id, nome, cpf, telefone, admin);//Pega os dados do Banco de dados e envia para um usuario
 
-    // Iterando sobre os resultados
-    while (resultSet.next()) {
-        String idUsuario = resultSet.getString("id_usuario");
-        String nomeUsuario = resultSet.getString("nome_usuario");
-        String cpfUsuario = resultSet.getString("cpf");
-        String telefoneUsuario = resultSet.getString("telefone");
-        boolean adminUsuario = resultSet.getBoolean("admin");
+            usuarios.add(usuarioComDadosDoBanco);//adiciona o usuario dentro do array
 
-        Usuario usuario = new Usuario(idUsuario, nomeUsuario, cpfUsuario, telefoneUsuario, adminUsuario);
-        usuarios.add(usuario);
+        }
+
+        return usuarios;
+
     }
 
-    // Fechando recursos
-    resultSet.close();
-    statement.close();
-    conexao.close();
 
-    return usuarios;
+    public ArrayList<Usuario> buscarUsuarioNOMEeCPF(Usuario usuario) throws SQLException {
+        String sql = "SELECT * FROM usuario WHERE nome_usuario LIKE ? and cpf LIKE ?";
+
+        // Construindo a consulta SQL dinamicamente
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, "%" + usuario.getNome() + "%");
+        statement.setString(2, "%" + usuario.getCpf() + "%");
+        statement.execute();
+
+        // Executando a consulta
+        ResultSet resultSet = statement.executeQuery();
+
+    
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+    
+        // Iterando sobre os resultados
+        while (resultSet.next()) {
+            int idUsuario = resultSet.getInt("id_usuario");
+            String nomeUsuario = resultSet.getString("nome_usuario");
+            String cpfUsuario = resultSet.getString("cpf");
+            String telefoneUsuario = resultSet.getString("telefone");
+            boolean adminUsuario = resultSet.getBoolean("admin");
+
+            Usuario usuarioPesquisado = new Usuario(idUsuario, nomeUsuario, cpfUsuario, telefoneUsuario, adminUsuario);
+            usuarios.add(usuarioPesquisado);
+        }
+
+        return usuarios;
 }
 
 
