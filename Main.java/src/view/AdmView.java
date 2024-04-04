@@ -17,7 +17,6 @@ public class AdmView extends javax.swing.JFrame {
     PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
     ProdutoPane produtoPane = new ProdutoPane();
     ClientePane clientePane = new ClientePane();
-    HistoricoVendasPane historicoVenda = new HistoricoVendasPane();
     
     public AdmView() {
       
@@ -28,7 +27,6 @@ public class AdmView extends javax.swing.JFrame {
         MainPane.add(menuPrincipal);
         MainPane.add(produtoPane);
         MainPane.add(clientePane);
-        MainPane.add(historicoVenda);
         
         controller = new MenuAdmController(this);
         controller.menuPrincipal();    
@@ -76,11 +74,6 @@ public class AdmView extends javax.swing.JFrame {
         });
 
         BotaoAbrirPaneHistorico.setText("Histórico de vendas");
-        BotaoAbrirPaneHistorico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoAbrirPaneHistoricoActionPerformed(evt);
-            }
-        });
 
         BotaoAbrirPaneVenda.setText("Iniciar uma venda");
 
@@ -134,14 +127,6 @@ public class AdmView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public HistoricoVendasPane getHistoricoVenda() {
-        return historicoVenda;
-    }
-
-    public void setHistoricoVenda(HistoricoVendasPane historicoVenda) {
-        this.historicoVenda = historicoVenda;
-    }
-
     public ClientePane getClientePane() {
         return clientePane;
     }
@@ -189,10 +174,6 @@ public class AdmView extends javax.swing.JFrame {
     private void BotaoAbrirPaneClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneClientesActionPerformed
         controller.clientePane();
     }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
-
-    private void BotaoAbrirPaneHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHistoricoActionPerformed
-        controller.historicoVenda();
-    }//GEN-LAST:event_BotaoAbrirPaneHistoricoActionPerformed
 
     /**
      * @param args the command line arguments
