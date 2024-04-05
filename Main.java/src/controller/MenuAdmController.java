@@ -24,6 +24,8 @@ public class MenuAdmController {
         view.getUsuarioPane().setVisible(false);
         view.getProdutoPane().setVisible(false);
         view.getClientePane().setVisible(false);
+        view.getHistoricoPane().setVisible(false);
+        view.getVendaPane().setVisible(false);
     }
     
     public void usuarioPane(){
@@ -31,13 +33,17 @@ public class MenuAdmController {
         view.getMenuPrincipal().setVisible(false);
         view.getProdutoPane().setVisible(false);
         view.getClientePane().setVisible(false);
+        view.getHistoricoPane().setVisible(false);
+        view.getVendaPane().setVisible(false);
     }
     
     public void produtoPane(){
         view.getProdutoPane().setVisible(true);
         view.getUsuarioPane().setVisible(false);
         view.getMenuPrincipal().setVisible(false);
-        view.getClientePane().setVisible(false);  
+        view.getClientePane().setVisible(false); 
+        view.getHistoricoPane().setVisible(false);
+        view.getVendaPane().setVisible(false);
     }
     
     public void clientePane(){
@@ -45,6 +51,26 @@ public class MenuAdmController {
         view.getProdutoPane().setVisible(false);
         view.getUsuarioPane().setVisible(false);
         view.getMenuPrincipal().setVisible(false);
+        view.getHistoricoPane().setVisible(false);
+        view.getVendaPane().setVisible(false);
+    }
+    
+    public void historicoPane(){
+        view.getClientePane().setVisible(false);  
+        view.getProdutoPane().setVisible(false);
+        view.getUsuarioPane().setVisible(false);
+        view.getMenuPrincipal().setVisible(false);
+        view.getHistoricoPane().setVisible(true);
+        view.getVendaPane().setVisible(false);
+    }
+    
+    public void vendaPane(){
+        view.getClientePane().setVisible(false);  
+        view.getProdutoPane().setVisible(false);
+        view.getUsuarioPane().setVisible(false);
+        view.getMenuPrincipal().setVisible(false);
+        view.getHistoricoPane().setVisible(false);
+        view.getVendaPane().setVisible(true);
     }
         
 }

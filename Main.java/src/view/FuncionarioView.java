@@ -56,6 +56,11 @@ public class FuncionarioView extends javax.swing.JFrame {
         );
 
         BotaoAbrirPaneVenda.setText("Iniciar uma Venda");
+        BotaoAbrirPaneVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneVendaActionPerformed(evt);
+            }
+        });
 
         BotaoAbrirPaneProdutos.setText("Produtos");
 
@@ -99,6 +104,10 @@ public class FuncionarioView extends javax.swing.JFrame {
     private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed
+
+    private void BotaoAbrirPaneVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoAbrirPaneVendaActionPerformed
 
     /**
      * @param args the command line arguments

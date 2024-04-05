@@ -17,6 +17,8 @@ public class AdmView extends javax.swing.JFrame {
     PrincipalMenuPane menuPrincipal = new PrincipalMenuPane();
     ProdutoPane produtoPane = new ProdutoPane();
     ClientePane clientePane = new ClientePane();
+    HistoricoPane historicoPane = new HistoricoPane();
+    VendaPane vendaPane = new VendaPane();
     
     public AdmView() {
       
@@ -27,6 +29,8 @@ public class AdmView extends javax.swing.JFrame {
         MainPane.add(menuPrincipal);
         MainPane.add(produtoPane);
         MainPane.add(clientePane);
+        MainPane.add(historicoPane);
+        MainPane.add(vendaPane);
         
         controller = new MenuAdmController(this);
         controller.menuPrincipal();    
@@ -74,8 +78,18 @@ public class AdmView extends javax.swing.JFrame {
         });
 
         BotaoAbrirPaneHistorico.setText("Histórico de vendas");
+        BotaoAbrirPaneHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneHistoricoActionPerformed(evt);
+            }
+        });
 
         BotaoAbrirPaneVenda.setText("Iniciar uma venda");
+        BotaoAbrirPaneVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneVendaActionPerformed(evt);
+            }
+        });
 
         MainPane.setLayout(new java.awt.CardLayout());
 
@@ -158,6 +172,22 @@ public class AdmView extends javax.swing.JFrame {
     public void setProdutoPane(ProdutoPane produtoPane) {
         this.produtoPane = produtoPane;
     }
+    
+    public HistoricoPane getHistoricoPane() {
+        return historicoPane;
+    }
+
+    public void setHistoricoPane(HistoricoPane HistoricoPane) {
+        this.historicoPane = historicoPane;
+    }
+    
+    public VendaPane getVendaPane() {
+        return vendaPane;
+    }
+
+    public void setVendaPane(VendaPane vendaPane) {
+        this.vendaPane = vendaPane;
+    }
 
     private void BotaoAbrirPaneUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneUsuarioActionPerformed
         controller.usuarioPane();
@@ -174,6 +204,14 @@ public class AdmView extends javax.swing.JFrame {
     private void BotaoAbrirPaneClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneClientesActionPerformed
         controller.clientePane();
     }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
+
+    private void BotaoAbrirPaneVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneVendaActionPerformed
+        controller.vendaPane();
+    }//GEN-LAST:event_BotaoAbrirPaneVendaActionPerformed
+
+    private void BotaoAbrirPaneHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHistoricoActionPerformed
+        controller.historicoPane();
+    }//GEN-LAST:event_BotaoAbrirPaneHistoricoActionPerformed
 
     /**
      * @param args the command line arguments
