@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.TextoController;
 import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,12 +20,14 @@ import javax.swing.JTextField;
 public class CadastroUsuarioView extends javax.swing.JFrame {
 
     private UsuarioController controller;
+    private TextoController controllerTexto;
     
     /**
      * Creates new form CadastroUsuarioView
      */
     public CadastroUsuarioView() {
         initComponents();
+        controllerTexto = new TextoController();
         this.setLocationRelativeTo(null);  //centraliza tela do cadastro 
     }
 
@@ -63,6 +66,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         CampoTextoCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoTextoCpfActionPerformed(evt);
+            }
+        });
+        CampoTextoCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CampoTextoCpfKeyTyped(evt);
             }
         });
 
@@ -269,6 +277,16 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void BotaoApagarCamposCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroActionPerformed
         controller.apagarCamposCadastro();
     }//GEN-LAST:event_BotaoApagarCamposCadastroActionPerformed
+
+    private void CampoTextoCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoTextoCpfKeyTyped
+        //Verifica validação da escrita no campo do cpf
+        if(controllerTexto.validacaoCPF(evt, getCampoTextoCpf().getText())){
+            CampoTextoCpf.setText(controllerTexto.mascaraCPF(getCampoTextoCpf().getText()));
+        }
+        else{
+            evt.consume();//Consome a letra e evita ela aparecer no campo do texto.
+        }
+    }//GEN-LAST:event_CampoTextoCpfKeyTyped
 
     /**
      * @param args the command line arguments

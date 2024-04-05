@@ -111,6 +111,7 @@
     <Component class="javax.swing.JTextField" name="CampoTextoCpf">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CampoTextoCpfActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CampoTextoCpfKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="CampoTextoTelefone">

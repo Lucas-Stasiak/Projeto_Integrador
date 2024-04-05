@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.TextoController;
 import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,11 +23,14 @@ import javax.swing.table.TableRowSorter;
 public class UsuarioPanel extends javax.swing.JPanel {
 
     private final UsuarioController controller;
-    CadastroUsuarioView view = new CadastroUsuarioView();
+    private final TextoController controllerTexto;
+    CadastroUsuarioView viewCadastrarUsuario = new CadastroUsuarioView();
+    AtualizarUsuarioView viewAtualizarUsuario = new AtualizarUsuarioView();
     
     public UsuarioPanel() {
         initComponents();
-        controller = new UsuarioController(this, view);//Construtor envia duas views, (UsuarioPanel e CadastroUsuarioView)
+        controller = new UsuarioController(this, viewCadastrarUsuario, viewAtualizarUsuario);//Construtor envia duas views, (UsuarioPanel e CadastroUsuarioView)
+        controllerTexto = new TextoController();
         
         
         try { //Realiza a leitura da tabela
@@ -203,7 +207,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
                                 .addGap(258, 258, 258)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(172, 172, 172))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CampoPesquisaCPF)
@@ -258,10 +262,10 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
     private void BotaoCadastrarUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarUsuario1ActionPerformed
         //seta o controller do view cadastro e torna ele visivel
-        view.setController(controller);
+        viewCadastrarUsuario.setController(controller);
         controller.apagarCamposCadastro(); // Antes de ser visivel ele apaga os campos do cadastro
-        view.setLocationRelativeTo(null);
-        view.setVisible(true); 
+        viewCadastrarUsuario.setLocationRelativeTo(null);
+        viewCadastrarUsuario.setVisible(true); 
     }//GEN-LAST:event_BotaoCadastrarUsuario1ActionPerformed
 
     public JTextField getCampoPesquisaCPF() {
@@ -323,7 +327,9 @@ public class UsuarioPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_TabelaUsuarioMouseClicked
 
     private void BotaoAtualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarUsuarioActionPerformed
-
+        viewAtualizarUsuario.setController(this.controller);
+        viewAtualizarUsuario.setLocationRelativeTo(null);//Centraliza
+        viewAtualizarUsuario.setVisible(true);
     }//GEN-LAST:event_BotaoAtualizarUsuarioActionPerformed
 
     private void BotaoRemoverUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverUsuarioActionPerformed
@@ -370,11 +376,12 @@ public class UsuarioPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BotaoApagarCamposActionPerformed
 
     private void CampoPesquisaCPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFKeyTyped
-      if(controller.limiteCPF() && controller.apenasNumero(evt)){
-          controller.mascaraCPF();
+      //Verifica validação da escrita no campo do cpf
+      if(controllerTexto.validacaoCPF(evt, getCampoPesquisaCPF().getText())){
+         CampoPesquisaCPF.setText(controllerTexto.mascaraCPF(getCampoPesquisaCPF().getText()));
       }
       else{
-          evt.consume();
+          evt.consume();//Consome a letra e evita ela aparecer no campo do texto.
       }
     }//GEN-LAST:event_CampoPesquisaCPFKeyTyped
 
