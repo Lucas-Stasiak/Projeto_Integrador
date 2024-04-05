@@ -56,21 +56,21 @@ public class MenuAdmController {
     }
     
     public void historicoPane(){
+        view.getHistoricoPane().setVisible(true);
         view.getClientePane().setVisible(false);  
         view.getProdutoPane().setVisible(false);
         view.getUsuarioPane().setVisible(false);
         view.getMenuPrincipal().setVisible(false);
-        view.getHistoricoPane().setVisible(true);
         view.getVendaPane().setVisible(false);
     }
     
     public void vendaPane(){
+        view.getVendaPane().setVisible(true);
         view.getClientePane().setVisible(false);  
         view.getProdutoPane().setVisible(false);
         view.getUsuarioPane().setVisible(false);
         view.getMenuPrincipal().setVisible(false);
         view.getHistoricoPane().setVisible(false);
-        view.getVendaPane().setVisible(true);
     }
         
 }

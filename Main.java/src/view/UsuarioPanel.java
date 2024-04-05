@@ -8,7 +8,6 @@ import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -74,9 +73,19 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Nome:");
 
+        CampoPesquisaCPF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CampoPesquisaCPFMouseClicked(evt);
+            }
+        });
         CampoPesquisaCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoPesquisaCPFActionPerformed(evt);
+            }
+        });
+        CampoPesquisaCPF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CampoPesquisaCPFKeyTyped(evt);
             }
         });
 
@@ -177,7 +186,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGap(129, 129, 129))
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,14 +196,14 @@ public class UsuarioPanel extends javax.swing.JPanel {
                                         .addGap(24, 24, 24)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(114, 114, 114))
                                     .addComponent(CampoPesquisaNome)
                                     .addComponent(BotaoApagarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(258, 258, 258)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                                         .addGap(172, 172, 172))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CampoPesquisaCPF)
@@ -296,7 +305,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
     }
 
     private void CampoPesquisaCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_CampoPesquisaCPFActionPerformed
 
     private void CampoPesquisaIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoPesquisaIdActionPerformed
@@ -359,6 +368,19 @@ public class UsuarioPanel extends javax.swing.JPanel {
             Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BotaoApagarCamposActionPerformed
+
+    private void CampoPesquisaCPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFKeyTyped
+      if(controller.limiteCPF() && controller.apenasNumero(evt)){
+          controller.mascaraCPF();
+      }
+      else{
+          evt.consume();
+      }
+    }//GEN-LAST:event_CampoPesquisaCPFKeyTyped
+
+    private void CampoPesquisaCPFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFMouseClicked
+
+    }//GEN-LAST:event_CampoPesquisaCPFMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Usuario;
+import org.postgresql.jdbc.EscapedFunctions;
 import view.CadastroUsuarioView;
 import view.UsuarioPanel;
 
@@ -249,7 +250,38 @@ public class UsuarioController {
         }
         return false;
     }
-
     
     
+    
+    //Verifica se o que esta sendo digitado é um numero
+    public boolean apenasNumero(java.awt.event.KeyEvent evt){
+        String caracteresPermitidos = "0123456789";
+        
+        return caracteresPermitidos.contains(evt.getKeyChar() + ""); 
+        
+    }
+    
+    //Define limite para campo do CPF
+    public boolean limiteCPF(){
+        int limite = 13;
+        String cpf = view.getCampoPesquisaCPF().getText();
+        
+        return cpf.length()<=limite;
+     
+    }
+    
+    //Cria uma espécie de mascara para o cpf
+    public void mascaraCPF(){
+        String cpf = view.getCampoPesquisaCPF().getText();
+        int tamanho = cpf.length();
+        
+        if(tamanho == 3 || tamanho == 7){
+            cpf = cpf + ".";
+            view.getCampoPesquisaCPF().setText(cpf);
+        }
+        if(tamanho == 11){
+            cpf = cpf + "-";
+            view.getCampoPesquisaCPF().setText(cpf);
+        }
+        }
 }
