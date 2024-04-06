@@ -31,7 +31,7 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-       /*String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
+      /* String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
        
        PreparedStatement statement = connection.prepareStatement(sql);
        statement.setString(1, usuario.getNome());
@@ -39,12 +39,12 @@ public class UsuarioDAO {
        statement.setString(3, usuario.getSenha());
        statement.setString(4, usuario.getTelefone());
        statement.setBoolean(5, usuario.isAdmin());
-       statement.execute();*/
-         
+       statement.execute();
+         */
     }
 
     public void delete(Usuario usuario) throws SQLException {
-        /*  String sql = "delete from usuario where id_usuario = ?";
+        /*String sql = "delete from usuario where id_usuario = ?";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, usuario.getId());
@@ -56,6 +56,8 @@ public class UsuarioDAO {
         String sql = "update usuario set nome_usuario = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
+        
+        //Evita SQL Injection 
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getCpf());
         statement.setString(3, usuario.getSenha());

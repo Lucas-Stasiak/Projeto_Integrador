@@ -8,7 +8,6 @@ public class TextoController {
         return (limiteCPF(cpf) && apenasNumero(evt));
     }
     
-
     //Verifica se o que esta sendo digitado é um numero
     public boolean apenasNumero(java.awt.event.KeyEvent evt){
         String caracteresPermitidos = "0123456789";
