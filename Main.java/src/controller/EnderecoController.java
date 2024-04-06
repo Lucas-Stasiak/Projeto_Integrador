@@ -1,5 +1,8 @@
 package controller;
 
+import java.sql.Connection;
+import dao.Conexao;
+import dao.EnderecoDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,12 +11,15 @@ import java.net.URL;
 import model.Endereco;
 import view.CadastroClienteView;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.ComboBoxEditor;
+import javax.swing.JTextField;
 
-public class ClienteEnderecoController {
+public class EnderecoController {
 
     private CadastroClienteView view;
 
-    public ClienteEnderecoController(CadastroClienteView view) {
+    public EnderecoController(CadastroClienteView view) {
         this.view = view;
     }
 
@@ -66,7 +72,7 @@ public class ClienteEnderecoController {
             String logradouro = null;
             String bairro = null;
             String cidade = null;
-            String estado = null;
+            String uf = null;
             String cep = null;
             String numero = null;
             for (String line : lines) {
@@ -77,7 +83,7 @@ public class ClienteEnderecoController {
                 } else if (line.contains("\"localidade\"")) {
                     cidade = line.split(":")[1].replaceAll("\"", "").trim();
                 } else if (line.contains("\"uf\"")) {
-                    estado = line.split(":")[1].replaceAll("\"", "").trim();
+                    uf = line.split(":")[1].replaceAll("\"", "").trim();
                 } else if (line.contains("\"cep\"")) {
                     cep = line.split(":")[1].replaceAll("\"", "").trim();
                 } else if (line.contains("\"complemento\"")) {
@@ -89,7 +95,7 @@ public class ClienteEnderecoController {
                 }
             }
 
-            endereco = new Endereco(logradouro, bairro, cidade, estado, cep, numero);
+            endereco = new Endereco(logradouro, bairro, cidade, uf, cep, numero);
         } catch (NumberFormatException e) {
             // Trate a exceção adequadamente
 
@@ -102,16 +108,51 @@ public class ClienteEnderecoController {
             // Define os valores nos campos JTextField com os dados do endereço
             view.getCampoBairro().setText(endereco.getBairro());
             view.getCampoCidade().setText(endereco.getCidade());
-            view.getCampoEstado().setText(endereco.getEstado());
+            view.getComboBoxUF().setSelectedItem(endereco.getSigla());
             view.getCampoLogradouro().setText(endereco.getLogradouro());
             view.getCampoNumero().setText(endereco.getNumero());
         } else {
             // Se o endereço não for encontrado, limpe os campos
             view.getCampoBairro().setText("");
             view.getCampoCidade().setText("");
-            view.getCampoEstado().setText("");
+            view.getComboBoxUF().setSelectedIndex(-1);
             view.getCampoLogradouro().setText("");
             view.getCampoNumero().setText("");
         }
+    }
+    
+    public void estados() throws SQLException{
+        
+        ArrayList<Endereco> listaEstado = new ArrayList<>();//Novo array para listar todos os estados do banco de dados
+        
+        
+        //Realiza a conexao e a envia para 
+        Connection conexao = new Conexao().getConnection();
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+       
+  
+       //Repete até que todos os estados são obtidos
+        for(Endereco estado : enderecoDao.readEstado()){
+            
+            view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
+            view.getComboBoxEstado().addItem(estado.getEstado());  // Adiciona o nome do estado no combo box estado
+            
+            view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
+            view.getComboBoxUF().addItem(estado.getSigla()); // Adiciona a sigla do estado no combo box uf
+        }      
+    }
+    
+    public void pesquisaEstado(){
+        if(view.getSelecionado()>0){
+            if(view.getComboBoxEstado().getSelectedIndex() != view.getSelecionado()){
+                view.getComboBoxEstado().setSelectedIndex(view.getSelecionado());
+            }
+            
+            if(view.getComboBoxUF().getSelectedIndex() != view.getSelecionado()){
+                view.getComboBoxUF().setSelectedIndex(view.getSelecionado());
+            }
+            
+        }
+        
     }
 }

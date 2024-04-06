@@ -15,14 +15,26 @@ public class Endereco {
     private String estado;
     private String cep;
     private String numero;
+    private String uf;
 
-    public Endereco(String logradouro, String bairro, String cidade, String estado, String cep, String numero) {
+    public Endereco(String logradouro, String bairro, String cidade, String uf, String cep, String numero) {
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.estado = estado;
+        this.uf = uf;
         this.cep = cep;
         this.numero = numero;
+    }
+
+    public String getSigla() {
+        return uf;
+    }
+
+    public void setSigla(String sigla) {
+        this.uf = sigla;
+    }
+
+    public Endereco() {
     }
 
     public String getLogradouro() {

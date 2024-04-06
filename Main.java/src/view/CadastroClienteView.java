@@ -4,18 +4,21 @@
  */
 package view;
 
-import controller.ClienteEnderecoController;
+import controller.EnderecoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
  *
  * @author Th3Br
  */
 public class CadastroClienteView extends javax.swing.JFrame {
     
-    private ClienteEnderecoController controller;
+    private EnderecoController controllerEndereco;
+    private int selecionado = -1;
     
     /**
      * Creates new form CadastrarCliente
@@ -23,7 +26,8 @@ public class CadastroClienteView extends javax.swing.JFrame {
     public CadastroClienteView() {
         initComponents();
         this.setLocationRelativeTo(null); //Centraliza o frame na tela
-        this.controller = new ClienteEnderecoController(this);   
+        this.controllerEndereco = new EnderecoController(this);
+        AutoCompleteDecorator.decorate(ComboBoxEstado);
     }
 
     /**
@@ -56,7 +60,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
-        CampoEstado = new javax.swing.JTextField();
         CampoCidade = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -67,6 +70,9 @@ public class CadastroClienteView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel15 = new javax.swing.JLabel();
+        ComboBoxEstado = new javax.swing.JComboBox();
+        ComboBoxUF = new javax.swing.JComboBox();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -164,12 +170,42 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
         jLabel15.setText("Observação(ões):");
 
+        ComboBoxEstado.setEditable(true);
+        ComboBoxEstado.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                ComboBoxEstadoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        ComboBoxEstado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ComboBoxEstadoFocusLost(evt);
+            }
+        });
+        ComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxEstadoActionPerformed(evt);
+            }
+        });
+
+        ComboBoxUF.setEditable(true);
+        ComboBoxUF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxUFActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("UF:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
+                .addGap(152, 152, 152)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addGroup(layout.createSequentialGroup()
@@ -202,29 +238,36 @@ public class CadastroClienteView extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(CampoBairro)
-                                    .addComponent(jLabel9)
-                                    .addComponent(CampoEstado)
-                                    .addComponent(jLabel12))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel10)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(CampoNumero)
-                                        .addComponent(CampoCidade))))
+                                .addComponent(ComboBoxUF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(248, 248, 248))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(BotaoApagarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BotaoCancelarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BotaoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                            .addComponent(jLabel5)
+                                            .addComponent(CampoBairro)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel12)
+                                            .addComponent(ComboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel10)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                                .addComponent(jLabel3)
+                                                .addComponent(CampoNumero)
+                                                .addComponent(CampoCidade))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(BotaoApagarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BotaoCancelarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BotaoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(153, 153, 153))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,11 +310,15 @@ public class CadastroClienteView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CampoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ComboBoxUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoCadastro)
                             .addComponent(BotaoCancelarCadastro)
@@ -319,7 +366,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         String cep = CampoCep.getText();
         if (cep!=null){
         try {
-            controller.buscarEndereco(cep); // Chame o método buscarEndereco do controlador
+            controllerEndereco.buscarEndereco(cep); // Chame o método buscarEndereco do controlador
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -329,6 +376,35 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private void BotaoApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoApagarCamposActionPerformed
+
+    private void ComboBoxEstadoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ComboBoxEstadoAncestorAdded
+        try {
+            controllerEndereco.estados();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ComboBoxEstadoAncestorAdded
+
+    private void ComboBoxEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ComboBoxEstadoFocusLost
+         
+    }//GEN-LAST:event_ComboBoxEstadoFocusLost
+
+    private void ComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEstadoActionPerformed
+        //Se tiver algo selecionado no combo box e ele for diferente do que ja tinha sido selecionado
+        if(ComboBoxEstado.getSelectedIndex()>=0 && selecionado != ComboBoxEstado.getSelectedIndex() && ComboBoxEstado.getItemCount()>=26){
+            selecionado = ComboBoxEstado.getSelectedIndex(); //Selecionado passar a ser este index
+            controllerEndereco.pesquisaEstado();
+        }
+       
+    }//GEN-LAST:event_ComboBoxEstadoActionPerformed
+
+    private void ComboBoxUFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxUFActionPerformed
+        //Se tiver algo selecionado no combo box e ele for diferente do que ja tinha sido selecionado
+        if(ComboBoxUF.getSelectedIndex()>=0 && selecionado != ComboBoxUF.getSelectedIndex() && ComboBoxUF.getItemCount()>=26){
+            selecionado = ComboBoxUF.getSelectedIndex(); //Selecionado passar a ser este index
+            controllerEndereco.pesquisaEstado();
+        }
+    }//GEN-LAST:event_ComboBoxUFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,13 +442,38 @@ public class CadastroClienteView extends javax.swing.JFrame {
         });
     }
 
-    public CadastroClienteView(JTextField CampoBairro, JTextField CampoCidade, JTextField CampoEstado, JTextField CampoLogradouro, JTextField CampoNumero) {
+    public CadastroClienteView(JTextField CampoBairro, JTextField CampoCidade, JTextField CampoLogradouro, JTextField CampoNumero, JComboBox ComboBoxUF) {
         this.CampoBairro = CampoBairro;
         this.CampoCidade = CampoCidade;
-        this.CampoEstado = CampoEstado;
         this.CampoLogradouro = CampoLogradouro;
         this.CampoNumero = CampoNumero;
+        this.ComboBoxUF = ComboBoxUF;
     }
+
+    public JComboBox getComboBoxEstado() {
+        return ComboBoxEstado;
+    }
+
+    public void setComboBoxEstado(JComboBox ComboBoxEstado) {
+        this.ComboBoxEstado = ComboBoxEstado;
+    }
+
+    public JComboBox getComboBoxUF() {
+        return ComboBoxUF;
+    }
+
+    public void setComboBoxUF(JComboBox ComboBoxUF) {
+        this.ComboBoxUF = ComboBoxUF;
+    }
+
+    public int getSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(int selecionado) {
+        this.selecionado = selecionado;
+    }
+
 
     public JTextField getCampoBairro() {
         return CampoBairro;
@@ -390,13 +491,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         this.CampoCidade = CampoCidade;
     }
 
-    public JTextField getCampoEstado() {
-        return CampoEstado;
-    }
 
-    public void setCampoEstado(JTextField CampoEstado) {
-        this.CampoEstado = CampoEstado;
-    }
 
     public JTextField getCampoLogradouro() {
         return CampoLogradouro;
@@ -424,9 +519,10 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private javax.swing.JTextField CampoBairro;
     private javax.swing.JTextField CampoCep;
     private javax.swing.JTextField CampoCidade;
-    private javax.swing.JTextField CampoEstado;
     private javax.swing.JTextField CampoLogradouro;
     private javax.swing.JTextField CampoNumero;
+    private javax.swing.JComboBox ComboBoxEstado;
+    private javax.swing.JComboBox ComboBoxUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -434,6 +530,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
