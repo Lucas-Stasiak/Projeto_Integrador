@@ -1,6 +1,8 @@
 
 package model;
 
+import java.text.DecimalFormat;
+
 public class Produto {
     private String nome;
     private String descricao;
@@ -37,6 +39,8 @@ public class Produto {
     }
 
     public void setPreco(float preco) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        df.format(preco);
         this.preco = preco;
     }
 
