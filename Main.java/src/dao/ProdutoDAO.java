@@ -41,4 +41,31 @@ public class ProdutoDAO {
 
         return produtos;
     }
+
+    public String getCategoriaDoProduto(String nome) {
+        String categoria = null;
+
+        try {
+            // Consulta SQL para pegar a categoria(chave estrangeira) do produto com base no nome
+            String sql = "select nomecategoria from produto where nome = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nome);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Verificar resultados
+            if (resultSet.next()) {
+                categoria = resultSet.getString("nomecategoria");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoria;
+    }
+
+
 }

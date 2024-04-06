@@ -291,7 +291,7 @@
                           <Component id="CampoProduto" max="32767" attributes="0"/>
                           <Component id="CampoQuantidade" max="32767" attributes="0"/>
                           <Component id="CampoValorUnitario" max="32767" attributes="0"/>
-                          <Component id="BotaoFinalizarCompra" alignment="0" max="32767" attributes="0"/>
+                          <Component id="BotaoAddCarrinho" alignment="0" max="32767" attributes="0"/>
                           <Component id="CampoValorTotal" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -300,7 +300,11 @@
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="BotaoRemoverItem" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CampoValorTotalCarrinho" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BotaoConcluirVenda" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -349,9 +353,11 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="BotaoFinalizarCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BotaoAddCarrinho" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BotaoRemoverItem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BotaoConcluirVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CampoValorTotalCarrinho" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -408,18 +414,27 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="CampoProduto">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CampoProdutoKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="CampoQuantidade">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="1"/>
+      </Properties>
       <Events>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CampoQuantidadeKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="CampoValorUnitario">
     </Component>
-    <Component class="javax.swing.JButton" name="BotaoFinalizarCompra">
+    <Component class="javax.swing.JButton" name="BotaoAddCarrinho">
       <Properties>
         <Property name="text" type="java.lang.String" value="Adicionar ao Carrinho"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAddCarrinhoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelTituloProdutos">
       <Properties>
@@ -445,6 +460,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Remover Item"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoRemoverItemActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BotaoConcluirVenda">
       <Properties>
@@ -464,18 +482,55 @@
         <Component class="javax.swing.JTable" name="TabelaCarrinho">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+              <Table columnCount="4" rowCount="0">
+                <Column editable="true" title="Nome" type="java.lang.String"/>
+                <Column editable="false" title="Categoria" type="java.lang.String"/>
+                <Column editable="true" title="Quantidade" type="java.lang.Integer"/>
+                <Column editable="true" title="Pre&#xe7;o" type="java.lang.Float"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="CampoValorTotal">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Valor Total:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="CampoValorTotalCarrinho">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CampoValorTotalCarrinhoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

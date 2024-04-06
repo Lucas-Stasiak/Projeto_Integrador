@@ -17,7 +17,7 @@ public class Produto {
         this.unidade = unidade;
         this.quantidade = quantidade;
     }
-
+    
     public String getNome() {
         return nome;
     }
