@@ -136,4 +136,18 @@ public class ProdutoController {
         }
     }
 
+    public void buscarProduto(String nomeProduto) throws SQLException {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        view.getListaProdutos().setModel(modelo); // Define o modelo na lista
+
+        // Limpa a lista antes de adicionar novos produtos
+        modelo.clear();
+
+        // Chama o método buscarProduto em ProdutoDAO
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        for (Produto produto : produtoDAO.buscarProduto(nomeProduto)) {
+            modelo.addElement(produto.getNome());
+        }
+    }
+
 }
