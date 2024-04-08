@@ -322,6 +322,8 @@ public class VendaPane extends javax.swing.JPanel {
 
         LabelValorTotal.setText("Valor total");
 
+        CampoProduto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        CampoProduto.setEnabled(false);
         CampoProduto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 CampoProdutoKeyPressed(evt);
@@ -339,6 +341,9 @@ public class VendaPane extends javax.swing.JPanel {
                 CampoQuantidadeKeyReleased(evt);
             }
         });
+
+        CampoValorUnitario.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        CampoValorUnitario.setEnabled(false);
 
         BotaoAddCarrinho.setText("Adicionar ao Carrinho");
         BotaoAddCarrinho.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +381,7 @@ public class VendaPane extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nome", "Categoria", "Quantidade", "Preço"
+                "Nome", "Categoria", "Quantidade", "Preço            R$"
             }
         ) {
             Class[] types = new Class [] {
@@ -396,8 +401,18 @@ public class VendaPane extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(TabelaCarrinho);
 
+        CampoValorTotal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        CampoValorTotal.setEnabled(false);
+        CampoValorTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoValorTotalActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Valor Total:");
 
+        CampoValorTotalCarrinho.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        CampoValorTotalCarrinho.setEnabled(false);
         CampoValorTotalCarrinho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoValorTotalCarrinhoActionPerformed(evt);
@@ -579,7 +594,11 @@ public class VendaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_BotaoAddCarrinhoActionPerformed
 
     private void BotaoRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverItemActionPerformed
-        controller.removerProdutoCarrinho();
+        try {
+            controller.removerProdutoCarrinho();
+        } catch (SQLException ex) {
+            Logger.getLogger(VendaPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BotaoRemoverItemActionPerformed
 
     private void CampoValorTotalCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoValorTotalCarrinhoActionPerformed
@@ -607,6 +626,10 @@ public class VendaPane extends javax.swing.JPanel {
     private void CampoQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoQuantidadeActionPerformed
+
+    private void CampoValorTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoValorTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoValorTotalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

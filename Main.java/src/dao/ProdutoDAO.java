@@ -70,10 +70,10 @@ public class ProdutoDAO {
     }
 
     public ArrayList<Produto> buscarProduto(String nomeProduto) throws SQLException {
-        String sql = "SELECT * FROM produto WHERE LOWER(nome) LIKE ?";
-        
+        String sql = "select * from produto where lower(nome) like ?";
+
         PreparedStatement statement = connection.prepareStatement(sql);
-        
+
         statement.setString(1, "%" + nomeProduto.toLowerCase() + "%");
         ResultSet resultSet = statement.executeQuery();
         // Cria uma lisa com varios produtos
@@ -86,7 +86,7 @@ public class ProdutoDAO {
             float preco = resultSet.getFloat("preco");
             String unidade = resultSet.getString("unidade");
             int quantidade = resultSet.getInt("quantidade");
-            
+
             // Cria o produto com base nas váriaveis 
             Produto produto = new Produto(nome, descricao, preco, unidade, quantidade);
             // Adiciona o produto criado na lista produto
@@ -98,6 +98,30 @@ public class ProdutoDAO {
         statement.close();
 
         return produtos;
+    }
+
+    public void aumentarQuantidade(int quantidade, String nome) throws SQLException {
+        String sql = "update produto set quantidade = quantidade + ? where nome = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, quantidade);
+        statement.setString(2, nome);
+
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    public void diminuirQuantidade(int quantidade, String nome) throws SQLException {
+        String sql = "update produto set quantidade = quantidade - ? where nome = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, quantidade);
+        statement.setString(2, nome);
+
+        statement.executeUpdate();
+        statement.close();
     }
 
 }
