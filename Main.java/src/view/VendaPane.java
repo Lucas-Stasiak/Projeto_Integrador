@@ -385,14 +385,14 @@ public class VendaPane extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nome", "Categoria", "Quantidade", "Preço            R$"
+                "Nome", "Categoria", "Quantidade", "Preço          R$"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true
+                false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -404,6 +404,14 @@ public class VendaPane extends javax.swing.JPanel {
             }
         });
         jScrollPane4.setViewportView(TabelaCarrinho);
+        if (TabelaCarrinho.getColumnModel().getColumnCount() > 0) {
+            TabelaCarrinho.getColumnModel().getColumn(0).setResizable(false);
+            TabelaCarrinho.getColumnModel().getColumn(1).setResizable(false);
+            TabelaCarrinho.getColumnModel().getColumn(2).setResizable(false);
+            TabelaCarrinho.getColumnModel().getColumn(2).setPreferredWidth(35);
+            TabelaCarrinho.getColumnModel().getColumn(3).setResizable(false);
+            TabelaCarrinho.getColumnModel().getColumn(3).setPreferredWidth(50);
+        }
 
         CampoValorTotal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         CampoValorTotal.setEnabled(false);
