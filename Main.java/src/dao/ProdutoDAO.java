@@ -36,6 +36,7 @@ public class ProdutoDAO {
 
             Produto produtoComDadosDoBanco = new Produto(nome, descricao, preco, unidade, quantidade);
 
+            // verifica se a quantidade do produto no estoque é maior que 0 para mostrar na listaprodutos  
             produtos.add(produtoComDadosDoBanco);//adiciona o produto dentro do array
         }
 
@@ -64,7 +65,6 @@ public class ProdutoDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return categoria;
     }

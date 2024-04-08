@@ -8,8 +8,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import model.Produto;
 
 public class VendaPane extends javax.swing.JPanel {
 
@@ -131,6 +129,7 @@ public class VendaPane extends javax.swing.JPanel {
         CampoValorTotalCarrinho = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         CampoBuscarProdutos = new javax.swing.JTextField();
+        BotaoCancelarCompra = new javax.swing.JButton();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jFrame1.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -324,6 +323,11 @@ public class VendaPane extends javax.swing.JPanel {
 
         CampoProduto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         CampoProduto.setEnabled(false);
+        CampoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoProdutoActionPerformed(evt);
+            }
+        });
         CampoProduto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 CampoProdutoKeyPressed(evt);
@@ -432,6 +436,13 @@ public class VendaPane extends javax.swing.JPanel {
             }
         });
 
+        BotaoCancelarCompra.setText("Cancelar compra");
+        BotaoCancelarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoCancelarCompraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -468,8 +479,11 @@ public class VendaPane extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(CampoValorTotalCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(BotaoConcluirVenda)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(BotaoCancelarCompra)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotaoConcluirVenda))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LabelTituloCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -517,7 +531,8 @@ public class VendaPane extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoAddCarrinho)
-                    .addComponent(BotaoConcluirVenda))
+                    .addComponent(BotaoConcluirVenda)
+                    .addComponent(BotaoCancelarCompra))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -610,7 +625,7 @@ public class VendaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_CampoProdutoKeyPressed
 
     private void CampoBuscarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoBuscarProdutosActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_CampoBuscarProdutosActionPerformed
 
     private void CampoBuscarProdutosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoBuscarProdutosKeyReleased
@@ -631,9 +646,22 @@ public class VendaPane extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoValorTotalActionPerformed
 
+    private void CampoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoProdutoActionPerformed
+
+    private void BotaoCancelarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarCompraActionPerformed
+        try {
+            controller.cancelarCompra();
+        } catch (SQLException ex) {
+            Logger.getLogger(VendaPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BotaoCancelarCompraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoAddCarrinho;
+    private javax.swing.JButton BotaoCancelarCompra;
     private javax.swing.JButton BotaoConcluirVenda;
     private javax.swing.JButton BotaoRemoverItem;
     private javax.swing.JTextField CampoBuscarProdutos;
