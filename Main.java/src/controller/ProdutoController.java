@@ -33,7 +33,7 @@ public class ProdutoController {
     }
 
     public Produto readProdutosSelecionados(String nomeProduto) throws SQLException {
-        String nome, descricao, unidade;
+        String nome, descricao, categoria, unidade;
         float preco;
         int quantidade;
 
@@ -47,9 +47,10 @@ public class ProdutoController {
                 preco = produto.getPreco();
                 unidade = produto.getUnidade();
                 quantidade = produto.getQuantidade();
+                categoria = produto.getCategoria();
 
                 // salva as informações em um modelo do produto
-                Produto pr = new Produto(nome, descricao, preco, unidade, quantidade);
+                Produto pr = new Produto(nome, descricao, preco, unidade, quantidade, categoria);
 
                 return pr;
             }
@@ -58,13 +59,6 @@ public class ProdutoController {
         // Se o produto não for encontrado
         return null;
 
-    }
-
-    public String getCategoriaDoProduto(String nome) throws SQLException {
-        String categoria = null;
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        categoria = produtoDAO.getCategoriaDoProduto(nome);
-        return categoria;
     }
 
     public String calcularValorTotalCarrinho() {
@@ -134,7 +128,7 @@ public class ProdutoController {
             if (quantidade <= produtoSelecionado.getQuantidade()) {
 
                 // Pega a categoria do produto
-                String categoria = getCategoriaDoProduto(produtoSelecionado.getNome());
+                String categoria = produtoSelecionado.getCategoria();
 
                 // Adiciona os dados do produto à tabela de carrinho
                 DefaultTableModel model = (DefaultTableModel) view.getTabelaCarrinho().getModel();

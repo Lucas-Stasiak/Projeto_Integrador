@@ -4,11 +4,13 @@ package model;
 import java.text.DecimalFormat;
 
 public class Produto {
+    private int id_produto;
     private String nome;
     private String descricao;
     private float preco;
     private String unidade;
     private int quantidade;
+    private String categoria;
 
     public Produto(String nome, String descricao, float preco, String unidade, int quantidade) {
         this.nome = nome;
@@ -16,6 +18,31 @@ public class Produto {
         this.preco = preco;
         this.unidade = unidade;
         this.quantidade = quantidade;
+    }
+
+    public Produto(String nome, String descricao, float preco, String unidade, int quantidade, String categoria) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.unidade = unidade;
+        this.quantidade = quantidade;
+        this.categoria = categoria;
+    }
+
+    public int getId_produto() {
+        return id_produto;
+    }
+
+    public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
     
     public String getNome() {
