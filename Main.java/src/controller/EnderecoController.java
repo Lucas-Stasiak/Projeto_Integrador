@@ -108,17 +108,17 @@ public class EnderecoController {
     private void preencherCamposEndereco(Endereco endereco) {
         if (endereco != null) {
             // Define os valores nos campos JTextField com os dados do endereço
-            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
-            view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
             view.getComboBoxUF().setSelectedItem(endereco.getSigla());
-            view.getCampoLogradouro().setText(endereco.getLogradouro());
+            view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
+            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
+            view.getComboBoxLogradouro().setSelectedItem(endereco.getLogradouro());
             view.getCampoNumero().setText(endereco.getNumero());
         } else {
             // Se o endereço não for encontrado, limpe os campos
             view.getComboBoxBairro().setSelectedIndex(-1);
             view.getComboBoxCidade().setSelectedIndex(-1);
             view.getComboBoxUF().setSelectedIndex(-1);
-            view.getCampoLogradouro().setText("");
+            view.getComboBoxLogradouro().setSelectedIndex(-1);
             view.getCampoNumero().setText("");
         }
     }
@@ -195,5 +195,22 @@ public class EnderecoController {
         }
         view.getComboBoxBairro().setSelectedIndex(-1);   
     }
-
+    
+    @SuppressWarnings("unchecked")
+    public void logradouro() throws SQLException{
+        
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        
+        String nome_bairro = (String) view.getComboBoxBairro().getSelectedItem();
+        int id_bairro = enderecoDao.pegarIdBairro(nome_bairro);
+        
+        view.getComboBoxLogradouro().removeAllItems();
+        for(Endereco logradouro : enderecoDao.readLogradouroPorBairro(id_bairro)){
+            view.getComboBoxLogradouro().addItem(logradouro.getLogradouro());
+        }
+        view.getComboBoxLogradouro().setSelectedIndex(-1);
+    }
+    
 }

@@ -4,6 +4,8 @@
  */
 package view;
 
+import controller.ClienteController;
+
 /**
  *
  * @author luizf
@@ -11,9 +13,11 @@ package view;
 public class ClientePane extends javax.swing.JPanel {
     
     CadastroClienteView viewCadastro = new CadastroClienteView();
+    ClienteController controller;
     
     public ClientePane() {
         initComponents();
+        controller = new ClienteController(viewCadastro, this);
     }
 
     /**
@@ -162,6 +166,7 @@ public class ClientePane extends javax.swing.JPanel {
 
     private void BotaoCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarClienteActionPerformed
         viewCadastro.setLocationRelativeTo(null);
+        viewCadastro.setController(this.controller);
         viewCadastro.setVisible(true);
     }//GEN-LAST:event_BotaoCadastrarClienteActionPerformed
 

@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.ClienteController;
 import controller.EnderecoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -18,8 +19,10 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class CadastroClienteView extends javax.swing.JFrame {
     
     private EnderecoController controllerEndereco;
+    private ClienteController controller;
     private int estadoSelecionado = -1;
     private int cidadeSelecionada = -1;
+    private int bairroSelecionado = -1;
     
     
     /**
@@ -31,6 +34,8 @@ public class CadastroClienteView extends javax.swing.JFrame {
         this.controllerEndereco = new EnderecoController(this);
         AutoCompleteDecorator.decorate(ComboBoxEstado);
         AutoCompleteDecorator.decorate(ComboBoxCidade);
+        AutoCompleteDecorator.decorate(ComboBoxBairro);
+        AutoCompleteDecorator.decorate(ComboBoxLogradouro);
     }
 
     /**
@@ -55,7 +60,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         CampoCep = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        CampoLogradouro = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         CampoNumero = new javax.swing.JTextField();
@@ -76,6 +80,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         ComboBoxCidade = new javax.swing.JComboBox();
         ComboBoxBairro = new javax.swing.JComboBox();
+        ComboBoxLogradouro = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,12 +117,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
         });
 
         jLabel6.setText("CEP:");
-
-        CampoLogradouro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoLogradouroActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Logradouro:");
 
@@ -235,6 +234,24 @@ public class CadastroClienteView extends javax.swing.JFrame {
         });
 
         ComboBoxBairro.setEditable(true);
+        ComboBoxBairro.setMaximumRowCount(100);
+        ComboBoxBairro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboBoxBairroMouseClicked(evt);
+            }
+        });
+        ComboBoxBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxBairroActionPerformed(evt);
+            }
+        });
+
+        ComboBoxLogradouro.setEditable(true);
+        ComboBoxLogradouro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxLogradouroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -245,16 +262,8 @@ public class CadastroClienteView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField9)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -265,12 +274,23 @@ public class CadastroClienteView extends javax.swing.JFrame {
                                         .addGap(72, 72, 72)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(CampoLogradouro)))
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel15)
-                            .addComponent(jScrollPane1))
+                                    .addComponent(ComboBoxLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2)))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel15))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -338,9 +358,9 @@ public class CadastroClienteView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CampoCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -384,10 +404,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
     
     }//GEN-LAST:event_CampoCepActionPerformed
 
-    private void CampoLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoLogradouroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CampoLogradouroActionPerformed
-
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
@@ -412,7 +428,8 @@ public class CadastroClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_CampoCepFocusLost
 
     private void BotaoApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposActionPerformed
-        // TODO add your handling code here:
+        controller.apagarCamposCadastro();
+        
     }//GEN-LAST:event_BotaoApagarCamposActionPerformed
 
     private void ComboBoxEstadoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ComboBoxEstadoAncestorAdded
@@ -430,8 +447,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private void ComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEstadoActionPerformed
         
         if(getComboBoxEstado().getSelectedIndex()>=0 && this.estadoSelecionado != getComboBoxEstado().getSelectedIndex() && getComboBoxEstado().getItemCount()>=26){
-            this.estadoSelecionado = getComboBoxEstado().getSelectedIndex();
-            
+            this.estadoSelecionado = getComboBoxEstado().getSelectedIndex();    
             controllerEndereco.atualizaComboBoxEstado();
         }
     }//GEN-LAST:event_ComboBoxEstadoActionPerformed
@@ -446,6 +462,14 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     private void ComboBoxCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCidadeActionPerformed
 
+        if(this.cidadeSelecionada != getComboBoxCidade().getSelectedIndex() && getComboBoxCidade().getSelectedIndex()>=0){
+            this.cidadeSelecionada = getComboBoxCidade().getSelectedIndex();
+            try {
+                controllerEndereco.bairros();
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_ComboBoxCidadeActionPerformed
 
     private void ComboBoxCidadeAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ComboBoxCidadeAncestorAdded
@@ -470,15 +494,26 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     private void ComboBoxCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboBoxCidadeItemStateChanged
 
-        if(this.cidadeSelecionada!= getComboBoxCidade().getSelectedIndex() && getComboBoxCidade().getSelectedIndex()>=0){
-        try {
-            this.cidadeSelecionada = getComboBoxCidade().getSelectedIndex();
-            controllerEndereco.bairros();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
     }//GEN-LAST:event_ComboBoxCidadeItemStateChanged
+
+    private void ComboBoxBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxBairroActionPerformed
+        if(this.bairroSelecionado != getComboBoxBairro().getSelectedIndex() && getComboBoxBairro().getSelectedIndex()>=0){
+            this.bairroSelecionado = getComboBoxBairro().getSelectedIndex();
+            try {
+                controllerEndereco.logradouro();
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ComboBoxBairroActionPerformed
+
+    private void ComboBoxBairroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboBoxBairroMouseClicked
+
+    }//GEN-LAST:event_ComboBoxBairroMouseClicked
+
+    private void ComboBoxLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxLogradouroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxLogradouroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -516,10 +551,10 @@ public class CadastroClienteView extends javax.swing.JFrame {
         });
     }
 
-    public CadastroClienteView(JComboBox ComboBoxBairro, JComboBox ComboBoxCidade, JTextField CampoLogradouro, JTextField CampoNumero, JComboBox ComboBoxUF) {
+    public CadastroClienteView(JComboBox ComboBoxBairro, JComboBox ComboBoxCidade, JComboBox ComboBoxLogradouro, JTextField CampoNumero, JComboBox ComboBoxUF) {
         this.ComboBoxBairro = ComboBoxBairro;
         this.ComboBoxCidade = ComboBoxCidade;
-        this.CampoLogradouro = CampoLogradouro;
+        this.ComboBoxLogradouro = ComboBoxLogradouro;
         this.CampoNumero = CampoNumero;
         this.ComboBoxUF = ComboBoxUF;
     }
@@ -534,6 +569,14 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     public int getEstadoSelecionado() {
         return estadoSelecionado;
+    }
+
+    public ClienteController getController() {
+        return controller;
+    }
+
+    public void setController(ClienteController controller) {
+        this.controller = controller;
     }
 
     public void setEstadoSelecionado(int estadoSelecionado) {
@@ -564,12 +607,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
         this.ComboBoxCidade = ComboBoxCidade;
     }
 
-    public JTextField getCampoLogradouro() {
-        return CampoLogradouro;
+    public JComboBox getComboBoxLogradouro() {
+        return ComboBoxLogradouro;
     }
 
-    public void setCampoLogradouro(JTextField CampoLogradouro) {
-        this.CampoLogradouro = CampoLogradouro;
+    public void setComboBoxLogradouro(JComboBox ComboBoxLogradouro) {
+        this.ComboBoxLogradouro = ComboBoxLogradouro;
     }
 
     public JTextField getCampoNumero() {
@@ -588,11 +631,11 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoCadastro;
     private javax.swing.JButton BotaoCancelarCadastro;
     private javax.swing.JTextField CampoCep;
-    private javax.swing.JTextField CampoLogradouro;
     private javax.swing.JTextField CampoNumero;
     private javax.swing.JComboBox ComboBoxBairro;
     private javax.swing.JComboBox ComboBoxCidade;
     private javax.swing.JComboBox ComboBoxEstado;
+    private javax.swing.JComboBox ComboBoxLogradouro;
     private javax.swing.JComboBox ComboBoxUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

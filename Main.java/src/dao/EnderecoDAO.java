@@ -102,7 +102,7 @@ public class EnderecoDAO {
         return cidades;
     }
     
-    //Pega o id da cidade
+    //Pegar o id da cidade pela sigla do estado e seu nome
     public int pegarIdCidade(String sigla, String nome_cidade) throws SQLException{
         String sql = "SELECT * FROM cidades WHERE fk_sigla = ? AND nome = ?";
         int id_cidade = 0;
@@ -120,6 +120,50 @@ public class EnderecoDAO {
        return id_cidade;
     }
     
+    
+    //Pegar id do bairro pelo seu nome
+    public int pegarIdBairro(String nome) throws SQLException{
+        String sql = "SELECT * FROM bairros WHERE nome = ?";
+        int id_bairro = 0;
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, nome);
+        statement.execute();
+        
+        ResultSet resultSet = statement.executeQuery();
+        
+        
+        while(resultSet.next()){
+            id_bairro = resultSet.getInt("id_bairro");
+        }
+        
+        return id_bairro; 
+    }
+    
+    
+    //Ler logradouro pelo id do bairro
+    public ArrayList<Endereco> readLogradouroPorBairro(int id_bairro) throws SQLException{
+        String sql = "SELECT * FROM logradouros WHERE id_bairro = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id_bairro);
+        
+        ResultSet resultSet = statement.executeQuery();
+        
+        ArrayList<Endereco> logradouros = new ArrayList<>();
+        
+        while(resultSet.next()){
+            String logradouro = resultSet.getString("nome");
+            Endereco logradouroEndereco = new Endereco();
+            logradouroEndereco.setLogradouro(logradouro);
+            
+            logradouros.add(logradouroEndereco);
+        }
+        return logradouros;
+        
+    }
+    
+    
     //Leitura dos bairros por cidade
     public ArrayList<Endereco> readBairroPorCidade(int id_cidade) throws SQLException{
         String sql = "SELECT * FROM bairros WHERE id_cidade = ?";
@@ -133,7 +177,6 @@ public class EnderecoDAO {
         
         while(resultSet.next()){
             String bairro = resultSet.getString("nome");
-            
             Endereco bairroEndereco = new Endereco();
             bairroEndereco.setBairro(bairro);
             
@@ -141,5 +184,5 @@ public class EnderecoDAO {
         }
         
         return bairros;
-    }
+    }  
 }
