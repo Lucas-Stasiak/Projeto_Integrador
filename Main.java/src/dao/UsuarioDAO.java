@@ -24,7 +24,7 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-      /* String sql = "insert into usuario(nome_usuario, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
+       String sql = "insert into usuario(nome, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
        
        PreparedStatement statement = connection.prepareStatement(sql);
        statement.setString(1, usuario.getNome());
@@ -33,7 +33,7 @@ public class UsuarioDAO {
        statement.setString(4, usuario.getTelefone());
        statement.setBoolean(5, usuario.isAdmin());
        statement.execute();
-         */
+         
     }
 
     public void delete(Usuario usuario) throws SQLException {
@@ -46,7 +46,7 @@ public class UsuarioDAO {
     }
 
     public void update(Usuario usuario) throws SQLException {
-        String sql = "update usuario set nome_usuario = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
+        String sql = "update usuario set nome = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         
@@ -117,7 +117,7 @@ public class UsuarioDAO {
         while (resultSet.next()) {
 
             id = resultSet.getInt("id_usuario");
-            nome = resultSet.getString("nome_usuario");
+            nome = resultSet.getString("nome");
             cpf = resultSet.getString("cpf");
             telefone = resultSet.getString("telefone");
             admin = resultSet.getBoolean("admin");
@@ -134,7 +134,7 @@ public class UsuarioDAO {
 
 
     public ArrayList<Usuario> buscarUsuarioNOMEeCPF(Usuario usuario) throws SQLException {
-        String sql = "SELECT * FROM usuario WHERE nome_usuario LIKE ? and cpf LIKE ?";
+        String sql = "SELECT * FROM usuario WHERE nome LIKE ? and cpf LIKE ?";
 
         // Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -151,7 +151,7 @@ public class UsuarioDAO {
         // Iterando sobre os resultados
         while (resultSet.next()) {
             int idUsuario = resultSet.getInt("id_usuario");
-            String nomeUsuario = resultSet.getString("nome_usuario");
+            String nomeUsuario = resultSet.getString("nome");
             String cpfUsuario = resultSet.getString("cpf");
             String telefoneUsuario = resultSet.getString("telefone");
             boolean adminUsuario = resultSet.getBoolean("admin");
@@ -181,7 +181,7 @@ public class UsuarioDAO {
         // Iterando sobre os resultados
         while (resultSet.next()) {
             int idUsuario = resultSet.getInt("id_usuario");
-            String nomeUsuario = resultSet.getString("nome_usuario");
+            String nomeUsuario = resultSet.getString("nome");
             String cpfUsuario = resultSet.getString("cpf");
             String telefoneUsuario = resultSet.getString("telefone");
             boolean adminUsuario = resultSet.getBoolean("admin");

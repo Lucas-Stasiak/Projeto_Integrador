@@ -12,6 +12,8 @@ import model.Endereco;
 import view.CadastroClienteView;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JTextField;
 
@@ -106,25 +108,24 @@ public class EnderecoController {
     private void preencherCamposEndereco(Endereco endereco) {
         if (endereco != null) {
             // Define os valores nos campos JTextField com os dados do endereço
-            view.getCampoBairro().setText(endereco.getBairro());
-            view.getCampoCidade().setText(endereco.getCidade());
+            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
+            view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
             view.getComboBoxUF().setSelectedItem(endereco.getSigla());
             view.getCampoLogradouro().setText(endereco.getLogradouro());
             view.getCampoNumero().setText(endereco.getNumero());
         } else {
             // Se o endereço não for encontrado, limpe os campos
-            view.getCampoBairro().setText("");
-            view.getCampoCidade().setText("");
+            view.getComboBoxBairro().setSelectedIndex(-1);
+            view.getComboBoxCidade().setSelectedIndex(-1);
             view.getComboBoxUF().setSelectedIndex(-1);
             view.getCampoLogradouro().setText("");
             view.getCampoNumero().setText("");
         }
     }
     
+    //função para leitura dos estados
+    @SuppressWarnings("unchecked")
     public void estados() throws SQLException{
-        
-        ArrayList<Endereco> listaEstado = new ArrayList<>();//Novo array para listar todos os estados do banco de dados
-        
         
         //Realiza a conexao e a envia para 
         Connection conexao = new Conexao().getConnection();
@@ -132,27 +133,67 @@ public class EnderecoController {
        
   
        //Repete até que todos os estados são obtidos
-        for(Endereco estado : enderecoDao.readEstado()){
-            
-            view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
+        for(Endereco estado : enderecoDao.readEstado()){   
             view.getComboBoxEstado().addItem(estado.getEstado());  // Adiciona o nome do estado no combo box estado
-            
-            view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
             view.getComboBoxUF().addItem(estado.getSigla()); // Adiciona a sigla do estado no combo box uf
-        }      
+        } 
+        
+        view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
+        view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
     }
     
-    public void pesquisaEstado(){
-        if(view.getSelecionado()>0){
-            if(view.getComboBoxEstado().getSelectedIndex() != view.getSelecionado()){
-                view.getComboBoxEstado().setSelectedIndex(view.getSelecionado());
-            }
-            
-            if(view.getComboBoxUF().getSelectedIndex() != view.getSelecionado()){
-                view.getComboBoxUF().setSelectedIndex(view.getSelecionado());
-            }
-            
-        }
+    public void atualizaComboBoxEstado(){
         
+        //Seleciona o combo box de estado e uf respectivamente ao seu estado ou uf selecionado
+        view.getComboBoxEstado().setSelectedIndex(view.getEstadoSelecionado());
+        view.getComboBoxUF().setSelectedIndex(view.getEstadoSelecionado());
+        
+        try {
+            cidades();//chama função para leitura das cidades
+        } catch (SQLException ex) {
+            Logger.getLogger(EnderecoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+      
+    @SuppressWarnings("unchecked")
+    public void cidades() throws SQLException{  
+        
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        
+
+        view.getComboBoxCidade().removeAllItems();//remove todos os itens do Combo Box
+        String sigla = (String) view.getComboBoxUF().getSelectedItem();
+        
+        //Le todas as cidades com o id do estado selecionado
+        for(Endereco cidade : enderecoDao.readCidadePorEstado(sigla)){
+            view.getComboBoxCidade().addItem(cidade.getCidade());     
+        }
+        view.getComboBoxCidade().setSelectedIndex(-1);
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    public void bairros() throws SQLException{
+        
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        
+ 
+        String nome_cidade = (String) view.getComboBoxCidade().getSelectedItem(); //Pega o nome da cidade selecionada
+        String sigla = (String) view.getComboBoxUF().getSelectedItem();
+        
+        int id_cidade = enderecoDao.pegarIdCidade(sigla, nome_cidade); //Pega o id da cidade selecionada
+     
+        view.getComboBoxBairro().removeAllItems();//Remove todos os itens do Combo Box
+      
+        //Le todos os bairros pelo id da cidadade selecionada
+        for(Endereco bairro : enderecoDao.readBairroPorCidade(id_cidade)){
+           view.getComboBoxBairro().addItem(bairro.getBairro());
+        }
+        view.getComboBoxBairro().setSelectedIndex(-1);   
+    }
+
 }
