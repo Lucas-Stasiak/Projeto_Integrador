@@ -379,12 +379,24 @@ public class VendaPane extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         TabelaProduto.getTableHeader().setReorderingAllowed(false);
+        TabelaProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaProdutoMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(TabelaProduto);
         if (TabelaProduto.getColumnModel().getColumnCount() > 0) {
             TabelaProduto.getColumnModel().getColumn(0).setResizable(false);
@@ -441,7 +453,7 @@ public class VendaPane extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nome", "Categoria", "Descrição", "Quantidade", "Unidade", "Preço          R$"
+                "Nome", "Categoria", "Descrição", "Quantidade", "Unidade", "Preço"
             }
         ) {
             Class[] types = new Class [] {
@@ -682,6 +694,14 @@ public class VendaPane extends javax.swing.JPanel {
     private void CampoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoProdutoActionPerformed
+
+    private void TabelaProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaProdutoMouseClicked
+        try {
+            controller.pegaValoresProdutoSelecionado();
+        } catch (SQLException ex) {
+            Logger.getLogger(VendaPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_TabelaProdutoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

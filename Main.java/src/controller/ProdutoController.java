@@ -4,6 +4,7 @@ import dao.ProdutoDAO;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Produto;
 import view.VendaPane;
 
@@ -16,26 +17,22 @@ public class ProdutoController {
     }
 
     public void readTabelaProduto() throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
-        view.getTabelaProduto().setModel(modelo); // Define o modelo na lista
-
-        // Limpa o modelo atual antes de adicionar novos dados
-        modelo.setRowCount(0);
+        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
+        modelo.setNumRows(0);
+        view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
 
         // Adiciona os produtos à lista
         for (Produto produto : new ProdutoDAO().readProduto()) {
             // Verifica se a quantidade do produto é maior que 0
             if (produto.getQuantidade() > 0) {
-                Object[] data = {
+                modelo.addRow(new Object[]{
                     produto.getNome(),
                     produto.getCategoria(),
                     produto.getDescricao(),
                     produto.getQuantidade(),
                     produto.getUnidade(),
                     produto.getPreco()
-                };
-                modelo.addRow(data);
-                System.out.println("Nome: " + produto.getNome() + ", Categoria: " + produto.getCategoria() + ", Descrição: " + produto.getDescricao() + ", Quantidade: " + produto.getQuantidade() + ", Unidade: " + produto.getUnidade() + ", Preço: " + produto.getPreco());
+                });
             }
         }
     }
@@ -94,12 +91,11 @@ public class ProdutoController {
         // Verifica se a String esta vazia ou é null ou se um produto esta selecionado
         if (view.getCampoQuantidade() != null && !view.getCampoQuantidade().getText().isEmpty() && view.getTabelaProduto().getSelectedRow() != -1) {
 
-            DefaultTableModel modelo = new DefaultTableModel();
-            view.getTabelaProduto().setModel(modelo);
+            DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
 
             Produto produtoSelecionado;
             // aqui pega o valor da tabela na linha selecionada na coluna 1 que e o nome
-            produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
+            produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
 
             // Pega a quantidade
             int quantidade = Integer.parseInt(view.getCampoQuantidade().getText().replace(',', '.'));
@@ -120,41 +116,43 @@ public class ProdutoController {
     }
 
     public void pegaValoresProdutoSelecionado() throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
-        view.getTabelaProduto().setModel(modelo);
+        int linhaSelecionada = view.getTabelaProduto().getSelectedRow();
+
+        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
 
         // recebe o objeto com os valores do produto selecionado
-        Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
-        view.getCampoProduto().setText(produtoSelecionado.getNome());
-        view.getCampoQuantidade().setText("1");
-        view.getCampoValorUnitario().setText(String.format("%.2f", produtoSelecionado.getPreco()));
+        Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
+        if (linhaSelecionada != -1 && produtoSelecionado != null) {
+            view.getCampoProduto().setText(produtoSelecionado.getNome());
+            view.getCampoQuantidade().setText("1");
+            view.getCampoValorUnitario().setText(String.format("%.2f", produtoSelecionado.getPreco()));
 
-        // calcula o valor unitario do produto * a quantidade
-        float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * produtoSelecionado.getPreco();
-        view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
+            // calcula o valor unitario do produto * a quantidade
+            float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * produtoSelecionado.getPreco();
+            view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
+        }
     }
 
     public void adicionaProdutoCarrinho() throws SQLException {
         int quantidade = Integer.parseInt(view.getCampoQuantidade().getText());
         if (quantidade >= 1) {
-            DefaultTableModel modelo = new DefaultTableModel();
-            view.getTabelaProduto().setModel(modelo);
 
-            Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
+            DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
+            Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
 
             if (quantidade <= produtoSelecionado.getQuantidade()) {
 
-                // Pega a categoria do produto
-                String nome = produtoSelecionado.getNome();
-                String categoria = produtoSelecionado.getCategoria();
-                String descricao = produtoSelecionado.getDescricao();
-                String quantidadeEscolhida = view.getCampoQuantidade().getText().replace(',', '.');
-                String unidade = produtoSelecionado.getUnidade();
-                float preco = produtoSelecionado.getPreco();
-
                 // Adiciona os dados do produto à tabela de carrinho
-                DefaultTableModel model = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-                model.addRow(new Object[]{nome, categoria, descricao, Integer.parseInt(quantidadeEscolhida), unidade, preco});
+                DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+                view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
+                modeloCarrinho.addRow(new Object[]{
+                    produtoSelecionado.getNome(),
+                    produtoSelecionado.getCategoria(),
+                    produtoSelecionado.getDescricao(),
+                    quantidade,
+                    produtoSelecionado.getUnidade(),
+                    produtoSelecionado.getPreco()
+                });
 
                 //isso serve para atualizar o valor total dos itens do carrinho
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
@@ -211,8 +209,9 @@ public class ProdutoController {
     }
 
     public void buscarProduto(String nomeProduto) throws SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
-        view.getTabelaProduto().setModel(modelo);
+        DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
+        modelo.setNumRows(0);
+        view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
 
         // Chama o método buscarProduto em ProdutoDAO
         ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -232,14 +231,15 @@ public class ProdutoController {
     }
 
     public void cancelarCompra() throws SQLException {
-        DefaultTableModel modeloTabela = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-        if (modeloTabela.getRowCount() > 0) {
+        DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+        
+        if (modeloCarrinho.getRowCount() > 0) {
 
             // Itera sobre todas as linhas da tabela
-            for (int i = modeloTabela.getRowCount() - 1; i >= 0; i--) {
+            for (int i = modeloCarrinho.getRowCount() - 1; i >= 0; i--) {
 
-                Object nomeProduto = modeloTabela.getValueAt(i, 0);
-                Object quantidadeProduto = modeloTabela.getValueAt(i, 3);
+                Object nomeProduto = modeloCarrinho.getValueAt(i, 0);
+                Object quantidadeProduto = modeloCarrinho.getValueAt(i, 3);
 
                 int quantidade = Integer.parseInt(quantidadeProduto.toString());
                 String nome = nomeProduto.toString();
@@ -249,10 +249,12 @@ public class ProdutoController {
                 produtoDAO.aumentarQuantidade(quantidade, nome);
 
                 // Remove a linha da tabela
-                modeloTabela.removeRow(i);
+                modeloCarrinho.removeRow(i);
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
                 readTabelaProduto();
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
         }
     }
 

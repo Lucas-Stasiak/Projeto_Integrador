@@ -36,7 +36,6 @@ public class ProdutoDAO {
             float preco = resultSet.getFloat("preco");
 
             Produto produtoComDadosDoBanco = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
-            System.out.println(produtoComDadosDoBanco);
 
             produtos.add(produtoComDadosDoBanco);//adiciona o produto dentro do array
         }
