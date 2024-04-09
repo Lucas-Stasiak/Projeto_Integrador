@@ -68,10 +68,10 @@ public class ProdutoController {
         for (int i = 0; i < view.getTabelaCarrinho().getRowCount(); i++) {
 
             // Pega o valor na coluna de preço
-            double preco = Double.parseDouble(view.getTabelaCarrinho().getValueAt(i, 3).toString().replace(',', '.'));
+            double preco = Double.parseDouble(view.getTabelaCarrinho().getValueAt(i, 5).toString().replace(',', '.'));
 
             // Pega a quantidade na coluna de quantidade
-            int quantidade = Integer.parseInt(view.getTabelaCarrinho().getValueAt(i, 2).toString().replace(',', '.'));
+            int quantidade = Integer.parseInt(view.getTabelaCarrinho().getValueAt(i, 3).toString().replace(',', '.'));
             double subtotal = preco * quantidade;
 
             total += subtotal;
@@ -128,11 +128,16 @@ public class ProdutoController {
             if (quantidade <= produtoSelecionado.getQuantidade()) {
 
                 // Pega a categoria do produto
+                String nome = produtoSelecionado.getNome();
                 String categoria = produtoSelecionado.getCategoria();
+                String descricao = produtoSelecionado.getDescricao();
+                String quantidadeEscolhida = view.getCampoQuantidade().getText().replace(',', '.');
+                String unidade = produtoSelecionado.getUnidade();
+                float preco = produtoSelecionado.getPreco();
 
                 // Adiciona os dados do produto à tabela de carrinho
                 DefaultTableModel model = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-                model.addRow(new Object[]{produtoSelecionado.getNome(), categoria, view.getCampoQuantidade().getText(), produtoSelecionado.getPreco()});
+                model.addRow(new Object[]{nome, categoria, descricao, Integer.parseInt(quantidadeEscolhida), unidade, preco});
 
                 //isso serve para atualizar o valor total dos itens do carrinho
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
@@ -145,7 +150,7 @@ public class ProdutoController {
             } else {
                 JOptionPane.showMessageDialog(null, "Quantidade máxima de '" + produtoSelecionado.getNome() + "' disponível: " + produtoSelecionado.getQuantidade());
                 view.getCampoQuantidade().setText(String.valueOf(produtoSelecionado.getQuantidade()));
-                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText().replace(',', '.')) * Float.parseFloat(view.getCampoValorUnitario().getText().replace(',', '.'));
+                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * Float.parseFloat(view.getCampoValorUnitario().getText().replace(',', '.'));
                 view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
             }
         } else {
@@ -164,13 +169,13 @@ public class ProdutoController {
 
             // Retorna a quantidade removida para o carrinho
             // pega o valor da coluna quantidade da tabela na linha selecionada
-            Object quantidadeProduto = view.getTabelaCarrinho().getValueAt(linhaSelecionada, 2);
+            Object quantidadeProduto = view.getTabelaCarrinho().getValueAt(linhaSelecionada, 3);
 
             // transforma a quantidade que retorna como objeto em String
-            int quantidade = Integer.parseInt((String) quantidadeProduto);
+            int quantidade = (Integer) quantidadeProduto;
 
             Object nomeProduto = view.getTabelaCarrinho().getValueAt(linhaSelecionada, 0);
-            String nome = nomeProduto.toString();
+            String nome = (String) nomeProduto;
             produtoDAO.aumentarQuantidade(quantidade, nome);
 
             // Remove a linha selecionada da tabela de carrinho
@@ -212,7 +217,7 @@ public class ProdutoController {
             for (int i = modeloTabela.getRowCount() - 1; i >= 0; i--) {
 
                 Object nomeProduto = modeloTabela.getValueAt(i, 0);
-                Object quantidadeProduto = modeloTabela.getValueAt(i, 2);
+                Object quantidadeProduto = modeloTabela.getValueAt(i, 3);
 
                 int quantidade = Integer.parseInt(quantidadeProduto.toString());
                 String nome = nomeProduto.toString();
