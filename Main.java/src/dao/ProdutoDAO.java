@@ -29,15 +29,14 @@ public class ProdutoDAO {
         while (resultSet.next()) {
 
             String nome = resultSet.getString("nome");
-            String descricao = resultSet.getString("descricao");
-            float preco = resultSet.getFloat("preco");
-            String unidade = resultSet.getString("unidade");
-            int quantidade = resultSet.getInt("quantidade");
             String categoria = resultSet.getString("fk_nome_categoria");
+            String descricao = resultSet.getString("descricao");
+            int quantidade = resultSet.getInt("quantidade");
+            String unidade = resultSet.getString("unidade");
+            float preco = resultSet.getFloat("preco");
 
-            Produto produtoComDadosDoBanco = new Produto(nome, descricao, preco, unidade, quantidade, categoria);
+            Produto produtoComDadosDoBanco = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
 
-            // verifica se a quantidade do produto no estoque é maior que 0 para mostrar na listaprodutos  
             produtos.add(produtoComDadosDoBanco);//adiciona o produto dentro do array
         }
 
@@ -66,7 +65,7 @@ public class ProdutoDAO {
             String categoria = resultSet.getString("fk_nome_categoria");
 
             // Cria o produto com base nas váriaveis 
-            Produto produto = new Produto(nome, descricao, preco, unidade, quantidade, categoria);
+            Produto produto = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
             // Adiciona o produto criado na lista produto
             produtos.add(produto);
         }

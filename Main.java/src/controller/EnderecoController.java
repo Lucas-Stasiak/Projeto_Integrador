@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EnderecoController {
@@ -111,6 +112,7 @@ public class EnderecoController {
         if (endereco != null) {
             // Define os valores nos campos JTextField com os dados do endere�o
             view.getComboBoxUF().setSelectedItem(endereco.getSigla());
+            view.getComboBoxEstado().setSelectedIndex(view.getComboBoxUF().getSelectedIndex());
             view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
             view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
             view.getComboBoxLogradouro().setSelectedItem(endereco.getLogradouro());
@@ -120,6 +122,7 @@ public class EnderecoController {
             view.getComboBoxBairro().setSelectedIndex(-1);
             view.getComboBoxCidade().setSelectedIndex(-1);
             view.getComboBoxUF().setSelectedIndex(-1);
+            view.getComboBoxEstado().setSelectedIndex(-1);
             view.getComboBoxLogradouro().setSelectedIndex(-1);
             view.getCampoNumero().setText("");
         }
@@ -272,7 +275,11 @@ public class EnderecoController {
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
         
         String nome_bairro = (String) view.getComboBoxBairro().getSelectedItem();
-        int id_bairro = enderecoDao.pegarIdBairro(nome_bairro);
+        String sigla = (String) view.getComboBoxUF().getSelectedItem();
+        String cidade = (String) view.getComboBoxCidade().getSelectedItem();
+        
+        int id_cidade = enderecoDao.pegarIdCidade(sigla, cidade);
+        int id_bairro = enderecoDao.pegarIdBairro(nome_bairro,id_cidade);
         
         view.getComboBoxLogradouro().removeAllItems();
         for(Endereco logradouro : enderecoDao.readLogradouroPorBairro(id_bairro)){
@@ -283,46 +290,61 @@ public class EnderecoController {
     
     public void cadastroEndereco() throws SQLException{
         
-        //Realiza a conexao
-        Connection conexao = new Conexao().getConnection();
-        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        if(campoNuloEndereco()){
+            JOptionPane.showMessageDialog(null, "Campo(s) de endereço vazio(s)", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            //Realiza a conexao
+            Connection conexao = new Conexao().getConnection();
+            EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        
+            Endereco endereco = new Endereco();
+            endereco = enderecoDosCamposPreenchidos();
+
+            //Caso o cep não existe no banco de dados realizará a verificação e inserção no banco de dados
+            if(!enderecoDao.existeCEP(endereco.getCep())){
+                int id_cidade = enderecoDao.pegarIdCidade(endereco.getSigla(), endereco.getCidade());
+            
+                //Verifica se o bairro do endereço existe -- Se não existe ele entra
+                if(!enderecoDao.existeBairro(endereco.getBairro(), id_cidade)){
+                     enderecoDao.novoBairro(endereco.getBairro(),id_cidade);
+                }
+                int id_bairro = enderecoDao.pegarIdBairro(endereco.getBairro(),id_cidade);
+                enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
+            }
+            //Insere o endereço no banco de dados de endereços cliente e usuario
+            //enderecoDao.insertEndereco(){
+            view.dispose();
+        }
+    }
+     
+    
+    //Pega o que está escrito nos campos
+    public Endereco enderecoDosCamposPreenchidos(){
         
         String cep = view.getCampoCep().getText();//Pega o que esta escrito no campo cep
         String logradouro = (String) view.getComboBoxLogradouro().getSelectedItem();
         String cidade = (String) view.getComboBoxCidade().getSelectedItem();
         String uf = (String) view.getComboBoxUF().getSelectedItem();
         String bairro = (String) view.getComboBoxBairro().getSelectedItem();
-        
-        Endereco endereco = new Endereco(logradouro, bairro, cidade, uf, cep);
+        String numero = view.getCampoNumero().getText();
+        String complemento = view.getCampoComplemento().getText();
 
-        //Caso o cep não existe no banco de dados realizará a verificação e inserção no banco de dados
-        if(!enderecoDao.existeCEP(cep)){
-            int id_cidade = enderecoDao.pegarIdCidade(uf, cidade);
-
-            //Verifica se o bairro do endereço existe -- Se não existe ele entra
-            if(!enderecoDao.existeBairro(bairro, id_cidade)){
-                 enderecoDao.novoBairro(bairro,id_cidade);
-            }
-            int id_bairro = enderecoDao.pegarIdBairro(bairro,id_cidade);
-            enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
-        }
-        //Insere o endereço no banco de dados de endereços cliente e usuario
-        //enderecoDao.insertEndereco(){
+        Endereco endereco = new Endereco(logradouro, bairro, cidade, cep, numero, uf, complemento);
         
-    }
-       
-    public Endereco textosDosCamposPreenchidos(){
-        Endereco endereco = new Endereco();
-    //Pegar textos de todos os campos preenchidos
         return endereco;
     }
 
-    public void campoNulo(){
-        //Verifica se existe campos nulos
-    }
-    
-    
-    
-    
+    public boolean campoNuloEndereco(){
+        String cep = view.getCampoCep().getText();
+        String numero = view.getCampoNumero().getText();
+        String estado = (String) view.getComboBoxEstado().getSelectedItem();
+        String bairro = (String) view.getComboBoxBairro().getSelectedItem();
+        String logradouro = (String) view.getComboBoxLogradouro().getSelectedItem();
+        String complemento = view.getCampoComplemento().getText();
+        
+        return (cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty() || complemento.isEmpty());
+        
+    }   
     
 }

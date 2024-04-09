@@ -16,6 +16,7 @@ public class Endereco {
     private String cep;
     private String numero;
     private String uf;
+    private String complemento;
 
     public Endereco(String logradouro, String bairro, String cidade, String uf, String cep, String numero) {
         this.logradouro = logradouro;
@@ -25,6 +26,17 @@ public class Endereco {
         this.cep = cep;
         this.numero = numero;
     }
+
+    public Endereco(String logradouro, String bairro, String cidade, String cep, String numero, String uf, String complemento) {
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.numero = numero;
+        this.uf = uf;
+        this.complemento = complemento;
+    }
+    
 
     public Endereco(String logradouro, String bairro, String cidade, String uf, String cep) {
         this.logradouro = logradouro;
@@ -100,7 +112,12 @@ public class Endereco {
         this.numero = numero;
     }
 
-    
-    
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }   
     
 }

@@ -123,12 +123,13 @@ public class EnderecoDAO {
     
     
     //Pegar id do bairro pelo seu nome
-    public int pegarIdBairro(String nome) throws SQLException{
-        String sql = "SELECT * FROM bairros WHERE nome = ?";
+    public int pegarIdBairro(String nome, int id_cidade) throws SQLException{
+        String sql = "SELECT * FROM bairros WHERE nome = ? AND id_cidade = ? ";
         int id_bairro = 0;
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, nome);
+        statement.setInt(2, id_cidade);
         statement.execute();
         
         ResultSet resultSet = statement.executeQuery();
@@ -236,25 +237,4 @@ public class EnderecoDAO {
         statement.execute();
         
     }
-    
-    public int pegarIdBairro(String bairro,int id_cidade) throws SQLException{
-        int id_bairro = 0;
-        String sql = "SELECT * FROM bairros WHERE id_cidade = ? AND nome = ?";
-        
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id_cidade);
-        statement.setString(2, bairro);
-        
-        ResultSet resultSet = statement.executeQuery();
-
-        while(resultSet.next()){
-            id_bairro = resultSet.getInt("id_bairro");
-        }
-        
-        return id_bairro;
-        
-    }
-    
-    
-    
 }
