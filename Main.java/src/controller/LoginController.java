@@ -48,7 +48,7 @@ public class LoginController {
                 
                 //Aparece a tela com base no true or false da váriavel admin
                 JFrame telaMenu = admin ? new AdmView() : new FuncionarioView();
-                telaMenu.setVisible(true);//torna a tela do menuvisivel
+                telaMenu.setVisible(true);//torna a tela do menu visivel
                 view.dispose();//fecha tela login
             }
             
