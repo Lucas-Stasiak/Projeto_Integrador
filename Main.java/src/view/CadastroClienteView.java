@@ -124,6 +124,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
         jLabel9.setText("Bairro:");
 
+        CampoNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoNumeroActionPerformed(evt);
+            }
+        });
+
         jLabel10.setText("Numero:");
 
         jLabel11.setText("Complemento:");
@@ -423,6 +429,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField9ActionPerformed
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
+        try {
+            // controller.cadastroCliente();
+            controllerEndereco.cadastroEndereco();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_BotaoCadastroActionPerformed
 
@@ -546,6 +558,10 @@ public class CadastroClienteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotaoAtualizarCEPActionPerformed
 
+    private void CampoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoNumeroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -652,6 +668,14 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     public void setCampoNumero(JTextField CampoNumero) {
         this.CampoNumero = CampoNumero;
+    }
+
+    public JTextField getCampoCep() {
+        return CampoCep;
+    }
+
+    public void setCampoCep(JTextField CampoCep) {
+        this.CampoCep = CampoCep;
     }
     
     

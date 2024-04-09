@@ -186,5 +186,75 @@ public class EnderecoDAO {
         }
         
         return bairros;
-    }  
+    }
+    
+    public boolean existeCEP(String cep) throws SQLException{
+        String sql = "SELECT * FROM logradouros WHERE cep = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, cep);
+        statement.execute();
+        
+        ResultSet resultSet = statement.getResultSet();
+        
+        return resultSet.next();
+    }
+    
+    public void novoLogradouro(Endereco endereco, int id_cidade, int id_bairro) throws SQLException{
+        String sql = "INSERT INTO logradouros(cep, nome, uf, id_cidade, id_bairro) VALUES(?,?,?,?,?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, endereco.getCep());
+        statement.setString(2, endereco.getLogradouro());
+        statement.setString(3, endereco.getSigla());
+        statement.setInt(4, id_cidade);
+        statement.setInt(5, id_bairro);
+        statement.execute();
+        
+        
+    }
+    
+    public boolean existeBairro(String bairro, int id_cidade) throws SQLException{
+        String sql = "SELECT * FROM bairros WHERE id_cidade = ? AND nome = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id_cidade);
+        statement.setString(2, bairro);
+        statement.execute();
+        
+        ResultSet resultSet = statement.getResultSet();
+        
+        return resultSet.next();
+    }
+    
+    public void novoBairro(String bairro, int id_cidade) throws SQLException{
+        String sql = "INSERT INTO bairros(nome,id_cidade) VALUES(?,?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, bairro);
+        statement.setInt(2, id_cidade);
+        statement.execute();
+        
+    }
+    
+    public int pegarIdBairro(String bairro,int id_cidade) throws SQLException{
+        int id_bairro = 0;
+        String sql = "SELECT * FROM bairros WHERE id_cidade = ? AND nome = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id_cidade);
+        statement.setString(2, bairro);
+        
+        ResultSet resultSet = statement.executeQuery();
+
+        while(resultSet.next()){
+            id_bairro = resultSet.getInt("id_bairro");
+        }
+        
+        return id_bairro;
+        
+    }
+    
+    
+    
 }

@@ -7,10 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import model.Endereco;
 import view.CadastroClienteView;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,10 +36,10 @@ public class EnderecoController {
     }
 
     public void buscarEndereco(String cep) throws SQLException {
-        // Verifica se o CEP tem mais de 8 dígitos
+        // Verifica se o CEP tem mais de 8 digitos
         if (cep.length() > 8) {
             try {
-                // Faz a conexão com ViaCEP
+                // Faz a conex�o com ViaCEP
                 String url = "https://viacep.com.br/ws/" + cep + "/json/";
                 @SuppressWarnings("deprecation")
                 HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -58,7 +60,7 @@ public class EnderecoController {
                     Endereco endereco = parseJsonToAddress(response.toString());
                     preencherCamposEndereco(endereco);
                 } else {
-                    System.out.println("Erro na requisição: " + responseCode);
+                    System.out.println("Erro na requisicao: " + responseCode);
                 }
             } catch (IOException e) {
             }
@@ -90,7 +92,7 @@ public class EnderecoController {
                     cep = line.split(":")[1].replaceAll("\"", "").trim();
                 } else if (line.contains("\"complemento\"")) {
                     String complemento = line.split(":")[1].replaceAll("\"", "").trim();
-                    // Verifica se o complemento é composto apenas por dígitos
+                    // Verifica se o complemento � composto apenas por d�gitos
                     if (complemento.matches("\\d+")) {
                         numero = complemento;
                     }
@@ -99,32 +101,22 @@ public class EnderecoController {
 
             endereco = new Endereco(logradouro, bairro, cidade, uf, cep, numero);
         } catch (NumberFormatException e) {
-            // Trate a exceção adequadamente
+            // Trate a exce��o adequadamente
 
         }
         return endereco;
     }
-    
-    public void buscarCEP(Endereco endereco){
-        
-        // Faz a conexão com ViaCEP
-        String url = "https://viacep.com.br/ws/" + endereco.getSigla() +"/" + endereco.getCidade()+ "/" + endereco.getLogradouro() +"/json/";
-        
-        //Implementação para pegar o CEP
-        
-    }
-    
 
     private void preencherCamposEndereco(Endereco endereco) {
         if (endereco != null) {
-            // Define os valores nos campos JTextField com os dados do endereço
+            // Define os valores nos campos JTextField com os dados do endere�o
             view.getComboBoxUF().setSelectedItem(endereco.getSigla());
             view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
             view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
             view.getComboBoxLogradouro().setSelectedItem(endereco.getLogradouro());
             view.getCampoNumero().setText(endereco.getNumero());
         } else {
-            // Se o endereço não for encontrado, limpe os campos
+            // Se o endere�o n�o for encontrado, limpe os campos
             view.getComboBoxBairro().setSelectedIndex(-1);
             view.getComboBoxCidade().setSelectedIndex(-1);
             view.getComboBoxUF().setSelectedIndex(-1);
@@ -132,6 +124,72 @@ public class EnderecoController {
             view.getCampoNumero().setText("");
         }
     }
+    
+    //Realiza o tratamento da string
+    public String tratamentoString(String url){
+        url = tratamentoCaracteresEspeciais(url);
+        url = tratamentoEspacos(url);
+        
+        return url;
+    }
+    
+    //Verifica se é um caracter especial se for ele modifica
+    public String tratamentoCaracteresEspeciais(String url){
+        
+        
+        //Inicia um Normalizer com a string, pega todos os caracteres separadamente
+        return Normalizer.normalize(url, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", ""); // Todos os caracteres que não são ASCII são substuidos pelo vazio: ""
+    }
+    
+    //Tratamento de espaços para envio da url
+    public String tratamentoEspacos(String url){
+        return url.replace(" ", "%20"); //Caso tiver um espaço, ele retornara %20 no lugar dos espaços;
+    }
+
+
+    //Parecida com a BuscarEndereco -- Estudar mais ela para poder comentar
+    public void buscarCEP(Endereco endereco) {
+        
+        try{
+        // Constr�i a URL com os par�metros do endere�o
+        String url = "https://viacep.com.br/ws/" + endereco.getSigla() + "/" + endereco.getCidade() + "/" + endereco.getLogradouro() + "/json/";
+        url = tratamentoString(url);
+            
+        @SuppressWarnings("deprecation")
+        // Cria um objeto URL com a URL construida
+        URL apiUrl;
+        apiUrl = new URL(url);
+            
+        // Abre uma conexão HTTP com a URL
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+
+        // Configura o método de requisição
+        connection.setRequestMethod("GET");
+
+        // Obtém o código de resposta da requisição
+        int responseCode = connection.getResponseCode();
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            // Se a conexão foi bem-sucedida, lê os dados da resposta
+            StringBuilder response = new StringBuilder();
+             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+            endereco = parseJsonToAddress(response.toString());
+            view.getCampoCep().setText(endereco.getCep());
+            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
+        } else {
+            // Se a conexão não foi bem-sucedida, mostra o c�digo de erro
+            System.out.println("Erro na requisi��o: " + responseCode);
+        }
+        }catch (IOException e) {
+            System.out.println("Erro!");
+        }
+}
     
     //função para leitura dos estados
     @SuppressWarnings("unchecked")
@@ -142,14 +200,14 @@ public class EnderecoController {
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
        
   
-       //Repete até que todos os estados são obtidos
+       //Repete at� que todos os estados s�o obtidos
         for(Endereco estado : enderecoDao.readEstado()){   
             view.getComboBoxEstado().addItem(estado.getEstado());  // Adiciona o nome do estado no combo box estado
             view.getComboBoxUF().addItem(estado.getSigla()); // Adiciona a sigla do estado no combo box uf
         } 
         
-        view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
-        view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box já ter algum estado selecionado
+        view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box j� ter algum estado selecionado
+        view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box j� ter algum estado selecionado
     }
     
     public void atualizaComboBoxEstado(){
@@ -159,7 +217,7 @@ public class EnderecoController {
         view.getComboBoxUF().setSelectedIndex(view.getEstadoSelecionado());
         
         try {
-            cidades();//chama função para leitura das cidades
+            cidades();//chama fun��o para leitura das cidades
         } catch (SQLException ex) {
             Logger.getLogger(EnderecoController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,5 +280,49 @@ public class EnderecoController {
         }
         view.getComboBoxLogradouro().setSelectedIndex(-1);
     }
+    
+    public void cadastroEndereco() throws SQLException{
+        
+        //Realiza a conexao
+        Connection conexao = new Conexao().getConnection();
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        
+        String cep = view.getCampoCep().getText();//Pega o que esta escrito no campo cep
+        String logradouro = (String) view.getComboBoxLogradouro().getSelectedItem();
+        String cidade = (String) view.getComboBoxCidade().getSelectedItem();
+        String uf = (String) view.getComboBoxUF().getSelectedItem();
+        String bairro = (String) view.getComboBoxBairro().getSelectedItem();
+        
+        Endereco endereco = new Endereco(logradouro, bairro, cidade, uf, cep);
+
+        //Caso o cep não existe no banco de dados realizará a verificação e inserção no banco de dados
+        if(!enderecoDao.existeCEP(cep)){
+            int id_cidade = enderecoDao.pegarIdCidade(uf, cidade);
+
+            //Verifica se o bairro do endereço existe -- Se não existe ele entra
+            if(!enderecoDao.existeBairro(bairro, id_cidade)){
+                 enderecoDao.novoBairro(bairro,id_cidade);
+            }
+            int id_bairro = enderecoDao.pegarIdBairro(bairro,id_cidade);
+            enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
+        }
+        //Insere o endereço no banco de dados de endereços cliente e usuario
+        //enderecoDao.insertEndereco(){
+        
+    }
+       
+    public Endereco textosDosCamposPreenchidos(){
+        Endereco endereco = new Endereco();
+    //Pegar textos de todos os campos preenchidos
+        return endereco;
+    }
+
+    public void campoNulo(){
+        //Verifica se existe campos nulos
+    }
+    
+    
+    
+    
     
 }
