@@ -117,6 +117,7 @@ public class EnderecoDAO {
         while(resultSet.next()){
             id_cidade = resultSet.getInt("id_cidades");
         }
+        
        return id_cidade;
     }
     
@@ -159,6 +160,7 @@ public class EnderecoDAO {
             
             logradouros.add(logradouroEndereco);
         }
+        
         return logradouros;
         
     }

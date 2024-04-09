@@ -26,6 +26,12 @@ public class Endereco {
         this.numero = numero;
     }
 
+    public Endereco(String logradouro, String cidade, String sigla) {
+        this.logradouro = logradouro;
+        this.cidade = cidade;
+        this.uf = sigla;
+    }
+
     public String getSigla() {
         return uf;
     }

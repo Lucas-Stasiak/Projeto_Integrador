@@ -104,6 +104,16 @@ public class EnderecoController {
         }
         return endereco;
     }
+    
+    public void buscarCEP(Endereco endereco){
+        
+        // Faz a conexão com ViaCEP
+        String url = "https://viacep.com.br/ws/" + endereco.getSigla() +"/" + endereco.getCidade()+ "/" + endereco.getLogradouro() +"/json/";
+        
+        //Implementação para pegar o CEP
+        
+    }
+    
 
     private void preencherCamposEndereco(Endereco endereco) {
         if (endereco != null) {
