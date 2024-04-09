@@ -20,13 +20,13 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Produto(String nome, String descricao, float preco, String unidade, int quantidade, String categoria) {
+    public Produto(String nome, String categoria, String descricao, int quantidade, String unidade, float preco) {
         this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.unidade = unidade;
-        this.quantidade = quantidade;
         this.categoria = categoria;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.unidade = unidade;
+        this.preco = preco;
     }
 
     public int getId_produto() {

@@ -2,7 +2,6 @@ package controller;
 
 import dao.ProdutoDAO;
 import java.sql.SQLException;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
@@ -16,18 +15,27 @@ public class ProdutoController {
         this.view = view;
     }
 
-    public void readListaProduto() throws SQLException {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        view.getListaProdutos().setModel(modelo); // Define o modelo na lista
+    public void readTabelaProduto() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        view.getTabelaProduto().setModel(modelo); // Define o modelo na lista
 
-        // Limpa a lista antes de adicionar novos produtos
-        modelo.clear();
+        // Limpa o modelo atual antes de adicionar novos dados
+        modelo.setRowCount(0);
 
         // Adiciona os produtos à lista
         for (Produto produto : new ProdutoDAO().readProduto()) {
             // Verifica se a quantidade do produto é maior que 0
             if (produto.getQuantidade() > 0) {
-                modelo.addElement(produto.getNome());
+                Object[] data = {
+                    produto.getNome(),
+                    produto.getCategoria(),
+                    produto.getDescricao(),
+                    produto.getQuantidade(),
+                    produto.getUnidade(),
+                    produto.getPreco()
+                };
+                modelo.addRow(data);
+                System.out.println("Nome: " + produto.getNome() + ", Categoria: " + produto.getCategoria() + ", Descrição: " + produto.getDescricao() + ", Quantidade: " + produto.getQuantidade() + ", Unidade: " + produto.getUnidade() + ", Preço: " + produto.getPreco());
             }
         }
     }
@@ -50,7 +58,7 @@ public class ProdutoController {
                 categoria = produto.getCategoria();
 
                 // salva as informações em um modelo do produto
-                Produto pr = new Produto(nome, descricao, preco, unidade, quantidade, categoria);
+                Produto pr = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
 
                 return pr;
             }
@@ -84,10 +92,14 @@ public class ProdutoController {
     // Atualiza o valor total com base na quantidade do produto inserida
     public void alteraQuantidadeProduto() throws SQLException {
         // Verifica se a String esta vazia ou é null ou se um produto esta selecionado
-        if (view.getCampoQuantidade() != null && !view.getCampoQuantidade().getText().isEmpty() && view.getListaProdutos().getSelectedValue() != null) {
+        if (view.getCampoQuantidade() != null && !view.getCampoQuantidade().getText().isEmpty() && view.getTabelaProduto().getSelectedRow() != -1) {
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            view.getTabelaProduto().setModel(modelo);
 
             Produto produtoSelecionado;
-            produtoSelecionado = readProdutosSelecionados(view.getListaProdutos().getSelectedValue());
+            // aqui pega o valor da tabela na linha selecionada na coluna 1 que e o nome
+            produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
 
             // Pega a quantidade
             int quantidade = Integer.parseInt(view.getCampoQuantidade().getText().replace(',', '.'));
@@ -108,9 +120,11 @@ public class ProdutoController {
     }
 
     public void pegaValoresProdutoSelecionado() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        view.getTabelaProduto().setModel(modelo);
 
         // recebe o objeto com os valores do produto selecionado
-        Produto produtoSelecionado = readProdutosSelecionados(view.getListaProdutos().getSelectedValue());
+        Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
         view.getCampoProduto().setText(produtoSelecionado.getNome());
         view.getCampoQuantidade().setText("1");
         view.getCampoValorUnitario().setText(String.format("%.2f", produtoSelecionado.getPreco()));
@@ -123,7 +137,10 @@ public class ProdutoController {
     public void adicionaProdutoCarrinho() throws SQLException {
         int quantidade = Integer.parseInt(view.getCampoQuantidade().getText());
         if (quantidade >= 1) {
-            Produto produtoSelecionado = readProdutosSelecionados(view.getListaProdutos().getSelectedValue());
+            DefaultTableModel modelo = new DefaultTableModel();
+            view.getTabelaProduto().setModel(modelo);
+
+            Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 1).toString());
 
             if (quantidade <= produtoSelecionado.getQuantidade()) {
 
@@ -146,7 +163,7 @@ public class ProdutoController {
                 // Diminui a quantidade adicionada ao carrinho do estoque
                 produtoDAO.diminuirQuantidade(Integer.parseInt(view.getCampoQuantidade().getText()), produtoSelecionado.getNome());
                 // Para atualizar a lista de produtos
-                readListaProduto();
+                readTabelaProduto();
             } else {
                 JOptionPane.showMessageDialog(null, "Quantidade máxima de '" + produtoSelecionado.getNome() + "' disponível: " + produtoSelecionado.getQuantidade());
                 view.getCampoQuantidade().setText(String.valueOf(produtoSelecionado.getQuantidade()));
@@ -186,7 +203,7 @@ public class ProdutoController {
             view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
 
             // Para atualizar a lista de produtos
-            readListaProduto();
+            readTabelaProduto();
         } else {
             // Se nenhuma linha estiver selecionada, exiba uma mensagem de alerta
             JOptionPane.showMessageDialog(null, "Selecione um item para remover.");
@@ -194,17 +211,22 @@ public class ProdutoController {
     }
 
     public void buscarProduto(String nomeProduto) throws SQLException {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        view.getListaProdutos().setModel(modelo); // Define o modelo na lista
-
-        // Limpa a lista antes de adicionar novos produtos
-        modelo.clear();
+        DefaultTableModel modelo = new DefaultTableModel();
+        view.getTabelaProduto().setModel(modelo);
 
         // Chama o método buscarProduto em ProdutoDAO
         ProdutoDAO produtoDAO = new ProdutoDAO();
         for (Produto produto : produtoDAO.buscarProduto(nomeProduto)) {
             if (produto.getQuantidade() > 0) {
-                modelo.addElement(produto.getNome());
+                Object[] data = {
+                    produto.getNome(),
+                    produto.getCategoria(),
+                    produto.getDescricao(),
+                    produto.getQuantidade(),
+                    produto.getUnidade(),
+                    produto.getPreco()
+                };
+                modelo.addRow(data);
             }
         }
     }
@@ -229,7 +251,7 @@ public class ProdutoController {
                 // Remove a linha da tabela
                 modeloTabela.removeRow(i);
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
-                readListaProduto();
+                readTabelaProduto();
             }
         }
     }
