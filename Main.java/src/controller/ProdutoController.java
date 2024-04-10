@@ -1,5 +1,7 @@
 package controller;
 
+import dao.CompraDAO;
+import dao.HistoricoDAO;
 import dao.ProdutoDAO;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -257,9 +259,22 @@ public class ProdutoController {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
         }
     }
-    
-    public void concluirVenda(){
-        
+
+    public void concluirVenda() throws SQLException {
+        DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+        if (modeloCarrinho.getRowCount() > 0) {
+            
+            for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
+                
+                Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
+                HistoricoDAO historicoDAO = new HistoricoDAO();
+                historicoDAO.adicionarCarrinhoHistorico();
+                CompraDAO compraDAO = new CompraDAO();
+                compraDAO.adicionarCarrinhoCompra();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
+        }
     }
 
 }
