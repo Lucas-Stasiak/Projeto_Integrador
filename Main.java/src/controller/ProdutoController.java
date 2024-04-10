@@ -106,10 +106,10 @@ public class ProdutoController {
                 // Avisa caso a quantidade e maior que a disponivel no estoque
                 JOptionPane.showMessageDialog(null, "Quantidade de '" + produtoSelecionado.getNome() + "' disponível no estoque: " + produtoSelecionado.getQuantidade());
                 view.getCampoQuantidade().setText(String.valueOf(produtoSelecionado.getQuantidade()));
-                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText().replace(',', '.')) * Float.parseFloat(view.getCampoValorUnitario().getText().replace(',', '.'));
+                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText().replace(',', '.')) * produtoSelecionado.getPreco();
                 view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
             } else {
-                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText().replace(',', '.')) * Float.parseFloat(view.getCampoValorUnitario().getText().replace(',', '.'));
+                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText().replace(',', '.')) * produtoSelecionado.getPreco();
                 view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
             }
         }
@@ -123,9 +123,7 @@ public class ProdutoController {
         // recebe o objeto com os valores do produto selecionado
         Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
         if (linhaSelecionada != -1 && produtoSelecionado != null) {
-            view.getCampoProduto().setText(produtoSelecionado.getNome());
             view.getCampoQuantidade().setText("1");
-            view.getCampoValorUnitario().setText(String.format("%.2f", produtoSelecionado.getPreco()));
 
             // calcula o valor unitario do produto * a quantidade
             float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * produtoSelecionado.getPreco();
@@ -167,7 +165,7 @@ public class ProdutoController {
             } else {
                 JOptionPane.showMessageDialog(null, "Quantidade máxima de '" + produtoSelecionado.getNome() + "' disponível: " + produtoSelecionado.getQuantidade());
                 view.getCampoQuantidade().setText(String.valueOf(produtoSelecionado.getQuantidade()));
-                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * Float.parseFloat(view.getCampoValorUnitario().getText().replace(',', '.'));
+                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * produtoSelecionado.getPreco();
                 view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
             }
         } else {
@@ -258,6 +256,10 @@ public class ProdutoController {
         } else {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
         }
+    }
+    
+    public void concluirVenda(){
+        
     }
 
 }
