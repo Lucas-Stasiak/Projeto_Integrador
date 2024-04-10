@@ -68,6 +68,14 @@ public class Endereco {
         return logradouro;
     }
 
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }

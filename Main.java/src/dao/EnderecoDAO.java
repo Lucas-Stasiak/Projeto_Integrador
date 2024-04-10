@@ -22,6 +22,28 @@ public class EnderecoDAO {
         this.connection = connection;
     }
     
+    
+    /*//Inserir novo endereco na tabela Endereco
+    public int insertEndereco(Endereco endereco) throws SQLException{
+        String sql = "INSERT INTO endereco(rua, bairro, numero, complemento, cep, fk_id_cidades) VALUES(?,?,?,?,?,?)";
+        int numero = Integer.parseInt(endereco.getNumero());
+        int id_cidade = pegarIdCidade(endereco.getSigla(), endereco.getCidade());
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, endereco.getLogradouro());
+        statement.setString(2, endereco.getBairro());
+        statement.setInt(3, numero);
+        statement.setString(4, endereco.getComplemento());
+        statement.setString(5, endereco.getCep());
+        statement.setInt(6, id_cidade);
+        statement.execute();
+
+        //Precisa retornar o id do endereco criado
+        //return pegarIdEndereco(endereco, id_cidade, numero);
+    }*/
+    
+    
+    
     //Le a tabela de estados no BD
     public ArrayList<Endereco> readEstado() throws SQLException{
         String sql = "SELECT * FROM estados";

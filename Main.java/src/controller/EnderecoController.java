@@ -22,21 +22,10 @@ import javax.swing.JTextField;
 
 public class EnderecoController {
 
-    private CadastroClienteView view;
 
-    public EnderecoController(CadastroClienteView view) {
-        this.view = view;
-    }
-
-    public CadastroClienteView getView() {
-        return view;
-    }
-
-    public void setView(CadastroClienteView view) {
-        this.view = view;
-    }
-
-    public void buscarEndereco(String cep) throws SQLException {
+    
+    public Endereco buscarEndereco(String cep) throws SQLException {
+        Endereco endereco = new Endereco();
         // Verifica se o CEP tem mais de 8 digitos
         if (cep.length() > 8) {
             try {
@@ -58,16 +47,16 @@ public class EnderecoController {
                     }
 
                     // Processar a resposta JSON manualmente
-                    Endereco endereco = parseJsonToAddress(response.toString());
-                    preencherCamposEndereco(endereco);
+                    endereco = parseJsonToAddress(response.toString());  
                 } else {
                     System.out.println("Erro na requisicao: " + responseCode);
                 }
             } catch (IOException e) {
             }
         }
+        return endereco;
     }
-
+    
     private Endereco parseJsonToAddress(String json) {
         Endereco endereco = null;
         try {
@@ -107,26 +96,9 @@ public class EnderecoController {
         }
         return endereco;
     }
+    
+    
 
-    private void preencherCamposEndereco(Endereco endereco) {
-        if (endereco != null) {
-            // Define os valores nos campos JTextField com os dados do endere�o
-            view.getComboBoxUF().setSelectedItem(endereco.getSigla());
-            view.getComboBoxEstado().setSelectedIndex(view.getComboBoxUF().getSelectedIndex());
-            view.getComboBoxCidade().setSelectedItem(endereco.getCidade());
-            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
-            view.getComboBoxLogradouro().setSelectedItem(endereco.getLogradouro());
-            view.getCampoNumero().setText(endereco.getNumero());
-        } else {
-            // Se o endere�o n�o for encontrado, limpe os campos
-            view.getComboBoxBairro().setSelectedIndex(-1);
-            view.getComboBoxCidade().setSelectedIndex(-1);
-            view.getComboBoxUF().setSelectedIndex(-1);
-            view.getComboBoxEstado().setSelectedIndex(-1);
-            view.getComboBoxLogradouro().setSelectedIndex(-1);
-            view.getCampoNumero().setText("");
-        }
-    }
     
     //Realiza o tratamento da string
     public String tratamentoString(String url){
@@ -150,9 +122,9 @@ public class EnderecoController {
         return url.replace(" ", "%20"); //Caso tiver um espaço, ele retornara %20 no lugar dos espaços;
     }
 
-
+    
     //Parecida com a BuscarEndereco -- Estudar mais ela para poder comentar
-    public void buscarCEP(Endereco endereco) {
+    public Endereco buscarCEP(Endereco endereco) {
         
         try{
         // Constr�i a URL com os par�metros do endere�o
@@ -183,8 +155,6 @@ public class EnderecoController {
                 }
             }
             endereco = parseJsonToAddress(response.toString());
-            view.getCampoCep().setText(endereco.getCep());
-            view.getComboBoxBairro().setSelectedItem(endereco.getBairro());
         } else {
             // Se a conexão não foi bem-sucedida, mostra o c�digo de erro
             System.out.println("Erro na requisi��o: " + responseCode);
@@ -192,114 +162,92 @@ public class EnderecoController {
         }catch (IOException e) {
             System.out.println("Erro!");
         }
+        return endereco;
 }
     
     //função para leitura dos estados
     @SuppressWarnings("unchecked")
-    public void estados() throws SQLException{
+    public ArrayList<Endereco> estados() throws SQLException{
         
         //Realiza a conexao e a envia para 
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
        
-  
+        ArrayList<Endereco> estados = new ArrayList<>();
+        
        //Repete at� que todos os estados s�o obtidos
         for(Endereco estado : enderecoDao.readEstado()){   
-            view.getComboBoxEstado().addItem(estado.getEstado());  // Adiciona o nome do estado no combo box estado
-            view.getComboBoxUF().addItem(estado.getSigla()); // Adiciona a sigla do estado no combo box uf
+            estados.add(estado);
         } 
-        
-        view.getComboBoxEstado().setSelectedIndex(-1); // Evita o Combo Box j� ter algum estado selecionado
-        view.getComboBoxUF().setSelectedIndex(-1); // Evita o Combo Box j� ter algum estado selecionado
+        return estados;
+       
     }
     
-    public void atualizaComboBoxEstado(){
-        
-        //Seleciona o combo box de estado e uf respectivamente ao seu estado ou uf selecionado
-        view.getComboBoxEstado().setSelectedIndex(view.getEstadoSelecionado());
-        view.getComboBoxUF().setSelectedIndex(view.getEstadoSelecionado());
-        
-        try {
-            cidades();//chama fun��o para leitura das cidades
-        } catch (SQLException ex) {
-            Logger.getLogger(EnderecoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-      
     @SuppressWarnings("unchecked")
-    public void cidades() throws SQLException{  
+    public ArrayList<String> cidades(String sigla) throws SQLException{  
         
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
         
-
-        view.getComboBoxCidade().removeAllItems();//remove todos os itens do Combo Box
-        String sigla = (String) view.getComboBoxUF().getSelectedItem();
+        ArrayList<String> cidades = new ArrayList<>();
         
         //Le todas as cidades com o id do estado selecionado
         for(Endereco cidade : enderecoDao.readCidadePorEstado(sigla)){
-            view.getComboBoxCidade().addItem(cidade.getCidade());     
+            cidades.add(cidade.getCidade());
         }
-        view.getComboBoxCidade().setSelectedIndex(-1);
+        return cidades;
     }
     
-    
+   
     @SuppressWarnings("unchecked")
-    public void bairros() throws SQLException{
+    public ArrayList<String> bairros(String nome_cidade, String uf) throws SQLException{
         
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
-        EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
+        EnderecoDAO enderecoDao = new EnderecoDAO(conexao); 
         
- 
-        String nome_cidade = (String) view.getComboBoxCidade().getSelectedItem(); //Pega o nome da cidade selecionada
-        String sigla = (String) view.getComboBoxUF().getSelectedItem();
-        
-        int id_cidade = enderecoDao.pegarIdCidade(sigla, nome_cidade); //Pega o id da cidade selecionada
+        int id_cidade = enderecoDao.pegarIdCidade(uf, nome_cidade); //Pega o id da cidade selecionada
      
-        view.getComboBoxBairro().removeAllItems();//Remove todos os itens do Combo Box
-      
+        ArrayList<String> bairros = new ArrayList<>();
+       
         //Le todos os bairros pelo id da cidadade selecionada
         for(Endereco bairro : enderecoDao.readBairroPorCidade(id_cidade)){
-           view.getComboBoxBairro().addItem(bairro.getBairro());
+           bairros.add(bairro.getBairro());
         }
-        view.getComboBoxBairro().setSelectedIndex(-1);   
+        return bairros;
     }
     
     @SuppressWarnings("unchecked")
-    public void logradouro() throws SQLException{
+    public ArrayList<String> logradouro(String bairro, String uf, String cidade) throws SQLException{
         
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
         
-        String nome_bairro = (String) view.getComboBoxBairro().getSelectedItem();
-        String sigla = (String) view.getComboBoxUF().getSelectedItem();
-        String cidade = (String) view.getComboBoxCidade().getSelectedItem();
+        int id_cidade = enderecoDao.pegarIdCidade(uf, cidade);
+        int id_bairro = enderecoDao.pegarIdBairro(bairro,id_cidade);
         
-        int id_cidade = enderecoDao.pegarIdCidade(sigla, cidade);
-        int id_bairro = enderecoDao.pegarIdBairro(nome_bairro,id_cidade);
+        ArrayList<String> logradouros = new ArrayList<>();
         
-        view.getComboBoxLogradouro().removeAllItems();
+        
         for(Endereco logradouro : enderecoDao.readLogradouroPorBairro(id_bairro)){
-            view.getComboBoxLogradouro().addItem(logradouro.getLogradouro());
+            logradouros.add(logradouro.getLogradouro());
         }
-        view.getComboBoxLogradouro().setSelectedIndex(-1);
+        return logradouros;
     }
     
-    public void cadastroEndereco() throws SQLException{
+    
+    public void cadastroEndereco(Endereco endereco, boolean temCampoNulo) throws SQLException{
+        int id_endereco = -1;
         
-        if(campoNuloEndereco()){
+        if(temCampoNulo){
             JOptionPane.showMessageDialog(null, "Campo(s) de endereço vazio(s)", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         else{
             //Realiza a conexao
             Connection conexao = new Conexao().getConnection();
-            EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
-        
-            Endereco endereco = new Endereco();
-            endereco = enderecoDosCamposPreenchidos();
+            EnderecoDAO enderecoDao = new EnderecoDAO(conexao);      
 
             //Caso o cep não existe no banco de dados realizará a verificação e inserção no banco de dados
             if(!enderecoDao.existeCEP(endereco.getCep())){
@@ -313,38 +261,8 @@ public class EnderecoController {
                 enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
             }
             //Insere o endereço no banco de dados de endereços cliente e usuario
-            //enderecoDao.insertEndereco(){
-            view.dispose();
+            //id_endereco = enderecoDao.insertEndereco(endereco);
+            //System.out.println(id_endereco);
         }
-    }
-     
-    
-    //Pega o que está escrito nos campos
-    public Endereco enderecoDosCamposPreenchidos(){
-        
-        String cep = view.getCampoCep().getText();//Pega o que esta escrito no campo cep
-        String logradouro = (String) view.getComboBoxLogradouro().getSelectedItem();
-        String cidade = (String) view.getComboBoxCidade().getSelectedItem();
-        String uf = (String) view.getComboBoxUF().getSelectedItem();
-        String bairro = (String) view.getComboBoxBairro().getSelectedItem();
-        String numero = view.getCampoNumero().getText();
-        String complemento = view.getCampoComplemento().getText();
-
-        Endereco endereco = new Endereco(logradouro, bairro, cidade, cep, numero, uf, complemento);
-        
-        return endereco;
-    }
-
-    public boolean campoNuloEndereco(){
-        String cep = view.getCampoCep().getText();
-        String numero = view.getCampoNumero().getText();
-        String estado = (String) view.getComboBoxEstado().getSelectedItem();
-        String bairro = (String) view.getComboBoxBairro().getSelectedItem();
-        String logradouro = (String) view.getComboBoxLogradouro().getSelectedItem();
-        String complemento = view.getCampoComplemento().getText();
-        
-        return (cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty() || complemento.isEmpty());
-        
     }   
-    
 }

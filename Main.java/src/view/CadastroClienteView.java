@@ -35,7 +35,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
     public CadastroClienteView() {
         initComponents();
         this.setLocationRelativeTo(null); //Centraliza o frame na tela
-        this.controllerEndereco = new EnderecoController(this);
+        //this.controllerEndereco = new EnderecoController(this);
         AutoCompleteDecorator.decorate(ComboBoxEstado);
         AutoCompleteDecorator.decorate(ComboBoxCidade);
         AutoCompleteDecorator.decorate(ComboBoxBairro);
@@ -466,14 +466,15 @@ public class CadastroClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_CampoComplementoActionPerformed
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
-        try {
             if(BotaoRadioEndereco.isSelected()){
-                controllerEndereco.cadastroEndereco();
+                try {
+                    controller.realizarCadastroEndereco();
+                    //controller.realizarCadastroCliente();
+                    this.dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            //Cadastrar usuario
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_BotaoCadastroActionPerformed
 
     private void BotaoCancelarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarCadastroActionPerformed
@@ -491,7 +492,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     private void ComboBoxEstadoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ComboBoxEstadoAncestorAdded
         try {
-            controllerEndereco.estados();
+            controller.comboBoxEstadados();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -505,7 +506,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         
         if(getComboBoxEstado().getSelectedIndex()>=0 && this.estadoSelecionado != getComboBoxEstado().getSelectedIndex() && getComboBoxEstado().getItemCount()>=26){
             this.estadoSelecionado = getComboBoxEstado().getSelectedIndex();    
-            controllerEndereco.atualizaComboBoxEstado();
+            controller.atualizaComboBoxEstado();
             ComboBoxLogradouro.removeAllItems();
             this.cidadeSelecionada = -1;
             this.bairroSelecionado = -1;
@@ -517,7 +518,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         //Se tiver algo selecionado no combo box e ele for diferente do que ja tinha sido selecionado
         if(getComboBoxUF().getSelectedIndex()>=0 && this.estadoSelecionado != getComboBoxUF().getSelectedIndex() && getComboBoxUF().getItemCount()>=26){
             this.estadoSelecionado = getComboBoxUF().getSelectedIndex();
-            controllerEndereco.atualizaComboBoxEstado();
+            controller.atualizaComboBoxEstado();
         }
     }//GEN-LAST:event_ComboBoxUFActionPerformed
 
@@ -526,7 +527,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         if(this.cidadeSelecionada != getComboBoxCidade().getSelectedIndex() && getComboBoxCidade().getSelectedIndex()>=0){
             this.cidadeSelecionada = getComboBoxCidade().getSelectedIndex();
             try {
-                controllerEndereco.bairros();
+                controller.comboBoxBairros();
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -561,7 +562,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
         if(this.bairroSelecionado != getComboBoxBairro().getSelectedIndex() && getComboBoxBairro().getSelectedIndex()>=0){
             this.bairroSelecionado = getComboBoxBairro().getSelectedIndex();
             try {
-                controllerEndereco.logradouro();
+                controller.comboBoxLogradouros();
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -585,15 +586,19 @@ public class CadastroClienteView extends javax.swing.JFrame {
         
         if (!cep.isEmpty()){
             try {
-                controllerEndereco.buscarEndereco(cep); // Chame o método buscarEndereco do controlador
+                controller.preencherCamposEndereco(cep);
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
-            if(!logradouro.isEmpty() && !cidade.isEmpty() && !uf.isEmpty()){
-                controllerEndereco.buscarCEP(endereco);
-            }
+           if(!logradouro.isEmpty() && !cidade.isEmpty() && !uf.isEmpty()){
+               try {
+                   controller.preencherCEP();
+               } catch (SQLException ex) {
+                   Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
             else{
                //erro "CEP NÃO ENCONTRADO"
             }
