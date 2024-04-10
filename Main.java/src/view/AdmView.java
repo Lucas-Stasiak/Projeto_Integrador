@@ -5,12 +5,16 @@
 package view;
 
 import controller.MenuAdmController;
+import java.awt.Toolkit;
+import model.Utilitarios;
 
 /**
  *
  * @author Th3Br
  */
 public class AdmView extends javax.swing.JFrame {
+    
+    
 
     private final MenuAdmController controller;
     UsuarioPanel usuarioPane = new UsuarioPanel();
@@ -34,6 +38,8 @@ public class AdmView extends javax.swing.JFrame {
         
         controller = new MenuAdmController(this);
         controller.menuPrincipal();    
+        Utilitarios u = new Utilitarios();
+        u.InserirIcone(this);
     }
     
     /**
@@ -258,4 +264,5 @@ public class AdmView extends javax.swing.JFrame {
     private javax.swing.JLayeredPane MainPane;
     // End of variables declaration//GEN-END:variables
 
+   
 }
