@@ -137,14 +137,10 @@ public class ProdutoController {
         int quantidade = Integer.parseInt(view.getCampoQuantidade().getText());
         if (quantidade >= 1) {
 
-            DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
-            Produto produtoSelecionado = readProdutosSelecionados(modelo.getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
-
+            Produto produtoSelecionado = readProdutosSelecionados(view.getTabelaProduto().getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
             if (quantidade <= produtoSelecionado.getQuantidade()) {
-
                 // Adiciona os dados do produto à tabela de carrinho
                 DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-                view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
                 modeloCarrinho.addRow(new Object[]{
                     produtoSelecionado.getNome(),
                     produtoSelecionado.getCategoria(),
@@ -153,6 +149,12 @@ public class ProdutoController {
                     produtoSelecionado.getUnidade(),
                     produtoSelecionado.getPreco()
                 });
+                System.out.println("Nome: " + produtoSelecionado.getNome());
+                System.out.println("Categoria: " + produtoSelecionado.getCategoria());
+                System.out.println("Descrição: " + produtoSelecionado.getDescricao());
+                System.out.println("Quantidade: " + quantidade);
+                System.out.println("Unidade: " + produtoSelecionado.getUnidade());
+                System.out.println("Preço: " + produtoSelecionado.getPreco());
 
                 //isso serve para atualizar o valor total dos itens do carrinho
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
@@ -232,7 +234,7 @@ public class ProdutoController {
 
     public void cancelarCompra() throws SQLException {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-        
+
         if (modeloCarrinho.getRowCount() > 0) {
 
             // Itera sobre todas as linhas da tabela
