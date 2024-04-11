@@ -46,13 +46,14 @@ public class ProdutoController {
     public Produto readProdutosSelecionados(String nomeProduto) throws SQLException {
         String nome, descricao, categoria, unidade;
         float preco;
-        int quantidade;
+        int quantidade, id_produto;
 
         for (Produto produto : new ProdutoDAO().readProduto()) {
 
             if (produto.getNome().equals(nomeProduto)) {
 
                 // Se o produto for encontrado, retorna os outros valores
+                id_produto = produto.getId_produto();
                 nome = produto.getNome();
                 descricao = produto.getDescricao();
                 preco = produto.getPreco();
@@ -61,7 +62,7 @@ public class ProdutoController {
                 categoria = produto.getCategoria();
 
                 // salva as informações em um modelo do produto
-                Produto pr = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
+                Produto pr = new Produto(id_produto, nome, categoria, descricao, quantidade, unidade, preco);
 
                 return pr;
             }
@@ -267,30 +268,34 @@ public class ProdutoController {
     public void concluirVenda() throws SQLException {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
         if (modeloCarrinho.getRowCount() > 0) {
-            if (!view.getCampoCpfCliente().getText().isEmpty() && view.getCampoCpfCliente().getText().length() == 14) {
+            
+            Connection conexao = new Conexao().getConnection();
+            ClienteDAO clienteDAO = new ClienteDAO(conexao);
+            
+            int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
+
+            if (id_cliente != -1) {
+
+                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                LoginController login = new LoginController("1");
+                String usuarioLogado = login.getCpfUsuarioLogado();
+                int id_usuario = usuarioDAO.buscarIdUsuarioCPF(usuarioLogado);
+
+                float valorTotal = Float.parseFloat(view.getCampoValorTotalCarrinho().getText().replace(',', '.'));
+
+                HistoricoDAO historicoDAO = new HistoricoDAO(conexao);
+                int id_historico = historicoDAO.adicionarCarrinhoHistorico(valorTotal, id_usuario, id_cliente);
 
                 for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
-                    float valorTotal = Float.parseFloat(view.getCampoValorTotalCarrinho().getText().replace(',', '.'));
-                    
-                    Connection conexao = new Conexao().getConnection();
-                    UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
-                    
-                    LoginController login = new LoginController("1");
-                    String usuarioLogado = login.getCpfUsuarioLogado();
-                    int id_usuario = usuarioDAO.buscarIdUsuarioCPF(usuarioLogado);
-                    ClienteDAO clienteDAO = new ClienteDAO(conexao);
-                    int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
 
                     Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
-                    
-                    HistoricoDAO historicoDAO = new HistoricoDAO(conexao);
-                    historicoDAO.adicionarCarrinhoHistorico(valorTotal, id_usuario, id_cliente);
-                    
+
                     CompraDAO compraDAO = new CompraDAO();
-                    compraDAO.adicionarCarrinhoCompra();
+                    compraDAO.adicionarCarrinhoCompra(produtoSelecionado.getPreco(), produtoSelecionado.getUnidade(), id_historico, produtoSelecionado.getId_produto());
                 }
+
             } else {
-                JOptionPane.showMessageDialog(null, "Cpf Cliente não informado e/ou errado.");
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");

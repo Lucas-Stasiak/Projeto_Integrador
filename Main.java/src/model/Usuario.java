@@ -46,6 +46,10 @@ public class Usuario {
         this.telefone = telefone;
         this.admin = admin;
     }
+    
+    public Usuario(String cpf) {
+        this.cpf = cpf;
+    }
 
     public Usuario() {
     }

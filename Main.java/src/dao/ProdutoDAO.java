@@ -28,6 +28,7 @@ public class ProdutoDAO {
         //busca todos os produtos
         while (resultSet.next()) {
 
+            int id_produto = resultSet.getInt("id_produto");
             String nome = resultSet.getString("nome");
             String categoria = resultSet.getString("fk_nome_categoria");
             String descricao = resultSet.getString("descricao");
@@ -35,7 +36,7 @@ public class ProdutoDAO {
             String unidade = resultSet.getString("unidade");
             float preco = resultSet.getFloat("preco");
 
-            Produto produtoComDadosDoBanco = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
+            Produto produtoComDadosDoBanco = new Produto(id_produto, nome, categoria, descricao, quantidade, unidade, preco);
 
             produtos.add(produtoComDadosDoBanco);//adiciona o produto dentro do array
         }
