@@ -466,15 +466,11 @@ public class CadastroClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_CampoComplementoActionPerformed
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
-            if(BotaoRadioEndereco.isSelected()){
-                try {
-                    controller.realizarCadastroEndereco();
-                    //controller.realizarCadastroCliente();
-                    this.dispose();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        try {
+            controller.realizarCadastro(BotaoRadioEndereco.isSelected());
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }//GEN-LAST:event_BotaoCadastroActionPerformed
 
     private void BotaoCancelarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarCadastroActionPerformed

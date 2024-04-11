@@ -556,7 +556,11 @@ public class VendaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_jFrame1formWindowActivated
 
     private void BotaoConcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoConcluirVendaActionPerformed
-        controller.concluirVenda();
+        try {
+            controller.concluirVenda();
+        } catch (SQLException ex) {
+            Logger.getLogger(VendaPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BotaoConcluirVendaActionPerformed
 
     private void CampoQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoQuantidadeKeyReleased

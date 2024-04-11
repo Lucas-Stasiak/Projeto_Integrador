@@ -238,9 +238,11 @@ public class EnderecoController {
     }
     
     
-    public void cadastroEndereco(Endereco endereco, boolean temCampoNulo) throws SQLException{
-        int id_endereco = -1;
+    //Realiza o cadastro do endereço
+    public int cadastroEndereco(Endereco endereco, boolean temCampoNulo) throws SQLException{
+        int id_endereco = -1; //Define o id do endereço como -1
         
+        //Se tem campo nulo ele mostra na tela
         if(temCampoNulo){
             JOptionPane.showMessageDialog(null, "Campo(s) de endereço vazio(s)", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -261,8 +263,11 @@ public class EnderecoController {
                 enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
             }
             //Insere o endereço no banco de dados de endereços cliente e usuario
-            //id_endereco = enderecoDao.insertEndereco(endereco);
-            //System.out.println(id_endereco);
+            int numero = Integer.parseInt(endereco.getNumero());
+            int id_logradouro = enderecoDao.pegerIdLogradouro(endereco.getCep()); 
+            
+            id_endereco = enderecoDao.insertEndereco(endereco.getComplemento(), numero, id_logradouro);
         }
+        return id_endereco;
     }   
 }

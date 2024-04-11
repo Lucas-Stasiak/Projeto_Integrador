@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Usuario;
-import org.postgresql.jdbc.EscapedFunctions;
 import view.AtualizarUsuarioView;
 import view.CadastroUsuarioView;
 import view.UsuarioPanel;

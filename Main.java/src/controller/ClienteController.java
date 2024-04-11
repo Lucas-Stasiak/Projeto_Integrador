@@ -1,11 +1,14 @@
 
 package controller;
 
-import java.awt.Color;
+import dao.ClienteDAO;
+import dao.Conexao;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Cliente;
 import model.Endereco;
 import view.CadastroClienteView;
 import view.ClientePane;
@@ -186,9 +189,63 @@ public class ClienteController extends EnderecoController{
         
     }
     
-    public void realizarCadastroEndereco() throws SQLException{
+    public void realizarCadastro(boolean ativado) throws SQLException{
+        int id_endereco = -1;
+        if(ativado){
+            id_endereco = realizarCadastroEndereco();
+            if(id_endereco>=0){
+                realizarCadastroClienteComEndereco(id_endereco);
+            }
+        }
+        else{
+            realizarCadastroClienteSemEndereco();
+        }
+    }
+    
+    public void realizarCadastroClienteComEndereco(int id_endereco) throws SQLException {
+        Cliente clienteParaCadastro = informacaoDosCamposPessoais();
+        
+        
+        //Realiza a conexão
+        Connection conexao = new Conexao().getConnection();
+        ClienteDAO clienteDao = new ClienteDAO(conexao);
+        
+        clienteDao.insertComEndereco(clienteParaCadastro, id_endereco);
+        
+        
+        
+    }
+    
+    public void realizarCadastroClienteSemEndereco() throws SQLException{
+        Cliente clienteParaCadastro = informacaoDosCamposPessoais();
+        
+        //Realiza a conexão
+        Connection conexao = new Conexao().getConnection();
+        ClienteDAO clienteDao = new ClienteDAO(conexao);
+        
+        clienteDao.insert(clienteParaCadastro);
+    }
+    
+    public Cliente informacaoDosCamposPessoais(){
+        String nome, cpf, rg, telefone;
+        
+        nome = cadastroView.getCampoNomeCliente().getText();
+        cpf = cadastroView.getCampoCpfCliente().getText();
+        rg = cadastroView.getCampoRgCliente().getText();
+        telefone = cadastroView.getCampoTelefoneCliente().getText();
+        
+        Cliente clienteComDados = new Cliente(nome, cpf, rg, telefone);
+        
+        return clienteComDados;  
+    }
+    
+    
+    public int realizarCadastroEndereco() throws SQLException{
+        int id_endereco;
         Endereco endereco = enderecoDosCamposPreenchidos();
-        cadastroEndereco(enderecoDosCamposPreenchidos(), campoNuloEndereco());
+        id_endereco = cadastroEndereco(endereco, campoNuloEndereco());
+        
+        return id_endereco;
     }
     
     public void preencherCEP() throws SQLException{
