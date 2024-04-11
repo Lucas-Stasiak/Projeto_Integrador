@@ -10,7 +10,7 @@ public class HistoricoDAO {
         this.connection = connection;
     }
     
-    public void adicionarCarrinhoHistorico(float precoTotal, String usuario, String cpfCliente){
+    public void adicionarCarrinhoHistorico(float precoTotal, int id_usuario, int cpfCliente){
         
         
     }

@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ClienteDAO;
 import dao.CompraDAO;
 import dao.Conexao;
 import dao.HistoricoDAO;
@@ -276,13 +277,14 @@ public class ProdutoController {
                     
                     LoginController login = new LoginController("1");
                     String usuarioLogado = login.getCpfUsuarioLogado();
-                    String nome = usuarioDAO.buscarUsuarioCPF(usuarioLogado);
-                    nome = "teste";
+                    int id_usuario = usuarioDAO.buscarIdUsuarioCPF(usuarioLogado);
+                    ClienteDAO clienteDAO = new ClienteDAO(conexao);
+                    int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
 
                     Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
                     
                     HistoricoDAO historicoDAO = new HistoricoDAO(conexao);
-                    historicoDAO.adicionarCarrinhoHistorico(valorTotal, nome, view.getCampoCpfCliente().getText());
+                    historicoDAO.adicionarCarrinhoHistorico(valorTotal, id_usuario, id_cliente);
                     
                     CompraDAO compraDAO = new CompraDAO();
                     compraDAO.adicionarCarrinhoCompra();

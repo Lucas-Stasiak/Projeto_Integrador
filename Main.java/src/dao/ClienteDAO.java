@@ -3,6 +3,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Cliente;
 
@@ -43,5 +44,19 @@ public class ClienteDAO {
        statement.execute();
        
    }
+   
+   public int buscarIdClienteCPF(String cpf) throws SQLException {
+        String sql = "SELECT * FROM cliente WHERE cpf LIKE ?";
+
+        // Conexao com o bd
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, cpf);
+        statement.execute();
+
+        // Executando a consulta
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.getInt("id_cliente");
+}
     
 }

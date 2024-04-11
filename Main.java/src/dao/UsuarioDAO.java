@@ -192,6 +192,20 @@ public class UsuarioDAO {
         
     }
     
+    public int buscarIdUsuarioCPF(String cpf) throws SQLException {
+        String sql = "SELECT * FROM usuario WHERE cpf LIKE ?";
+
+        // Conexao com o bd
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, cpf);
+        statement.execute();
+
+        // Executando a consulta
+        ResultSet resultSet = statement.executeQuery();
+
+        return resultSet.getInt("id_usuario");
+    }
+    
 
 
 }
