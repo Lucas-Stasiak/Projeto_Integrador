@@ -16,9 +16,14 @@ import view.AdmView;
 
 public class LoginController {
     private LoginView view;
+    private String cpfUsuarioLogado;
 
     public LoginController(LoginView view) {
             this.view = view;
+    }
+
+    public LoginController(String cpfUsuarioLogado) {
+        this.cpfUsuarioLogado = getCpfUsuarioLogado();
     }
     
     public void autenticarUsuario() throws SQLException {
@@ -43,6 +48,8 @@ public class LoginController {
             
             //Se existe um usuario havera outra verificação;
             if(existe){
+                cpfUsuarioLogado = usuarioAutenticar.getCpf();
+                
                 //Verifica se usuario é admin
                 admin = UsuarioDao.verificaAdmin (usuarioAutenticar);
                 
@@ -57,4 +64,9 @@ public class LoginController {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro de login", JOptionPane.ERROR_MESSAGE);
             }
     }
+
+    public String getCpfUsuarioLogado() {
+        return cpfUsuarioLogado;
+    }
+    
 }

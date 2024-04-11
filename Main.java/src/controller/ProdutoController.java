@@ -1,8 +1,11 @@
 package controller;
 
 import dao.CompraDAO;
+import dao.Conexao;
 import dao.HistoricoDAO;
 import dao.ProdutoDAO;
+import dao.UsuarioDAO;
+import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -263,14 +266,29 @@ public class ProdutoController {
     public void concluirVenda() throws SQLException {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
         if (modeloCarrinho.getRowCount() > 0) {
-            
-            for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
-                
-                Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
-                HistoricoDAO historicoDAO = new HistoricoDAO();
-                historicoDAO.adicionarCarrinhoHistorico();
-                CompraDAO compraDAO = new CompraDAO();
-                compraDAO.adicionarCarrinhoCompra();
+            if (!view.getCampoCpfCliente().getText().isEmpty() && view.getCampoCpfCliente().getText().length() == 14) {
+
+                for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
+                    float valorTotal = Float.parseFloat(view.getCampoValorTotalCarrinho().getText().replace(',', '.'));
+                    
+                    Connection conexao = new Conexao().getConnection();
+                    UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                    
+                    LoginController login = new LoginController("1");
+                    String usuarioLogado = login.getCpfUsuarioLogado();
+                    String nome = usuarioDAO.buscarUsuarioCPF(usuarioLogado);
+                    nome = "teste";
+
+                    Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
+                    
+                    HistoricoDAO historicoDAO = new HistoricoDAO(conexao);
+                    historicoDAO.adicionarCarrinhoHistorico(valorTotal, nome, view.getCampoCpfCliente().getText());
+                    
+                    CompraDAO compraDAO = new CompraDAO();
+                    compraDAO.adicionarCarrinhoCompra();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cpf Cliente não informado e/ou errado.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");

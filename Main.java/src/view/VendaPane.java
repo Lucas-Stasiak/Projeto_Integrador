@@ -1,6 +1,7 @@
 package view;
 
 import controller.ProdutoController;
+import controller.TextoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 public class VendaPane extends javax.swing.JPanel {
 
     private final ProdutoController controller;
+    TextoController textoController = new TextoController();
 
     public VendaPane() {
         initComponents();
@@ -66,6 +68,16 @@ public class VendaPane extends javax.swing.JPanel {
         this.CampoValorTotal = CampoValorTotal;
     }
 
+    public JTextField getCampoCpfCliente() {
+        return CampoCpfCliente;
+    }
+
+    public void setCampoCpfCliente(JTextField CampoCpfCliente) {
+        this.CampoCpfCliente = CampoCpfCliente;
+    }
+    
+    
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -105,6 +117,8 @@ public class VendaPane extends javax.swing.JPanel {
         BotaoCancelarCompra = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaCarrinho = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        CampoCpfCliente = new javax.swing.JTextField();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jFrame1.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -440,6 +454,14 @@ public class VendaPane extends javax.swing.JPanel {
             TabelaCarrinho.getColumnModel().getColumn(5).setPreferredWidth(35);
         }
 
+        jLabel6.setText("CPF Cliente");
+
+        CampoCpfCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoCpfClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -462,28 +484,35 @@ public class VendaPane extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CampoValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(LabelTituloProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(LabelTituloCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(BotaoCancelarCompra)
-                                .addGap(369, 369, 369)
-                                .addComponent(BotaoConcluirVenda))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BotaoRemoverItem)
-                                .addGap(308, 308, 308)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(CampoValorTotalCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(LabelTituloCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BotaoRemoverItem)
+                                    .addComponent(BotaoCancelarCompra))
+                                .addGap(125, 125, 125)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CampoCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(BotaoConcluirVenda))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(jLabel6)
+                                        .addGap(114, 114, 114)
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(CampoValorTotalCarrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addContainerGap())
                     .addComponent(jScrollPane1)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelTituloProdutos)
                     .addComponent(LabelTituloCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -508,13 +537,15 @@ public class VendaPane extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(BotaoRemoverItem)
                         .addComponent(LabelValorTotal)
-                        .addComponent(CampoValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(CampoValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BotaoConcluirVenda)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(BotaoCancelarCompra)
-                        .addComponent(BotaoAddCarrinho)))
+                        .addComponent(BotaoAddCarrinho))
+                    .addComponent(CampoCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -634,6 +665,10 @@ public class VendaPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TabelaProdutoMouseClicked
 
+    private void CampoCpfClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoCpfClienteActionPerformed
+
+    }//GEN-LAST:event_CampoCpfClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoAddCarrinho;
@@ -641,6 +676,7 @@ public class VendaPane extends javax.swing.JPanel {
     private javax.swing.JButton BotaoConcluirVenda;
     private javax.swing.JButton BotaoRemoverItem;
     private javax.swing.JTextField CampoBuscarProdutos;
+    private javax.swing.JTextField CampoCpfCliente;
     private javax.swing.JTextField CampoQuantidade;
     private javax.swing.JTextField CampoValorTotal;
     private javax.swing.JTextField CampoValorTotalCarrinho;
@@ -660,6 +696,7 @@ public class VendaPane extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
