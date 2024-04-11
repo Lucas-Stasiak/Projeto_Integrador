@@ -26,28 +26,28 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="BotaoAbrirPaneUsuario" max="32767" attributes="0"/>
                   <Component id="CampoAbrirPaneProduto" max="32767" attributes="0"/>
                   <Component id="BotaoAbrirPaneClientes" max="32767" attributes="0"/>
-                  <Component id="BotaoAbrirPaneHistorico" pref="150" max="32767" attributes="0"/>
+                  <Component id="BotaoAbrirPaneHistorico" max="32767" attributes="0"/>
                   <Component id="BotaoAbrirPaneVenda" max="32767" attributes="0"/>
-                  <Component id="BotaoAbrirPaneHome" alignment="0" max="32767" attributes="0"/>
+                  <Component id="BotaoAbrirPaneHome" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
               <Component id="MainPane" pref="490" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="BotaoAbrirPaneHome" min="-2" pref="37" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="BotaoAbrirPaneVenda" min="-2" pref="37" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
                   </Group>
                   <Component id="MainPane" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
