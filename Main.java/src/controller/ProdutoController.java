@@ -290,7 +290,7 @@ public class ProdutoController {
 
                     Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
 
-                    int quantidade = (int) modeloCarrinho.getValueAt(i, 0);
+                    int quantidade = (int) modeloCarrinho.getValueAt(i, 3);
                     
                     CompraDAO compraDAO = new CompraDAO();
                     compraDAO.adicionarCarrinhoCompra(produtoSelecionado.getPreco(), produtoSelecionado.getUnidade(), quantidade, id_historico, produtoSelecionado.getId_produto());
