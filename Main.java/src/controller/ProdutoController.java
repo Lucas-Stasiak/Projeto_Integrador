@@ -1,8 +1,12 @@
 package controller;
 
+import dao.ClienteDAO;
 import dao.CompraDAO;
+import dao.Conexao;
 import dao.HistoricoDAO;
 import dao.ProdutoDAO;
+import dao.UsuarioDAO;
+import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -42,13 +46,14 @@ public class ProdutoController {
     public Produto readProdutosSelecionados(String nomeProduto) throws SQLException {
         String nome, descricao, categoria, unidade;
         float preco;
-        int quantidade;
+        int quantidade, id_produto;
 
         for (Produto produto : new ProdutoDAO().readProduto()) {
 
             if (produto.getNome().equals(nomeProduto)) {
 
                 // Se o produto for encontrado, retorna os outros valores
+                id_produto = produto.getId_produto();
                 nome = produto.getNome();
                 descricao = produto.getDescricao();
                 preco = produto.getPreco();
@@ -57,7 +62,7 @@ public class ProdutoController {
                 categoria = produto.getCategoria();
 
                 // salva as informações em um modelo do produto
-                Produto pr = new Produto(nome, categoria, descricao, quantidade, unidade, preco);
+                Produto pr = new Produto(id_produto, nome, categoria, descricao, quantidade, unidade, preco);
 
                 return pr;
             }
@@ -264,13 +269,33 @@ public class ProdutoController {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
         if (modeloCarrinho.getRowCount() > 0) {
             
-            for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
-                
-                Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
-                HistoricoDAO historicoDAO = new HistoricoDAO();
-                historicoDAO.adicionarCarrinhoHistorico();
-                CompraDAO compraDAO = new CompraDAO();
-                compraDAO.adicionarCarrinhoCompra();
+            Connection conexao = new Conexao().getConnection();
+            ClienteDAO clienteDAO = new ClienteDAO(conexao);
+            
+            int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
+
+            if (id_cliente != -1) {
+
+                UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+                LoginController login = new LoginController("1");
+                String usuarioLogado = login.getCpfUsuarioLogado();
+                int id_usuario = usuarioDAO.buscarIdUsuarioCPF(usuarioLogado);
+
+                float valorTotal = Float.parseFloat(view.getCampoValorTotalCarrinho().getText().replace(',', '.'));
+
+                HistoricoDAO historicoDAO = new HistoricoDAO(conexao);
+                int id_historico = historicoDAO.adicionarCarrinhoHistorico(valorTotal, id_usuario, id_cliente);
+
+                for (int i = 0; i < modeloCarrinho.getRowCount(); i++) {
+
+                    Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
+
+                    CompraDAO compraDAO = new CompraDAO();
+                    compraDAO.adicionarCarrinhoCompra(produtoSelecionado.getPreco(), produtoSelecionado.getUnidade(), id_historico, produtoSelecionado.getId_produto());
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");

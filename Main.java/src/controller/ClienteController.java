@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Endereco;
 import view.CadastroClienteView;
@@ -24,6 +25,11 @@ public class ClienteController extends EnderecoController{
         this.view = view;
     }
 
+    public void apagarTodosCampos(){
+        apagarCamposCadastroEndereco();
+        apagarCamposInformacaoCliente();
+    }
+    
     //Apagar campos de informacoes do endereço
     public void apagarCamposCadastroEndereco(){
        cadastroView.getComboBoxBairro().setSelectedIndex(-1);
@@ -124,6 +130,7 @@ public class ClienteController extends EnderecoController{
     }
     
     //Preenche o Combo Box de bairro
+    @SuppressWarnings("unchecked")
     public void comboBoxBairros() throws SQLException{
         
         String nome_cidade = (String) cadastroView.getComboBoxCidade().getSelectedItem(); //Pega o nome da cidade selecionada
@@ -140,6 +147,7 @@ public class ClienteController extends EnderecoController{
     }
     
     //Preenche o Combo Box de logradouro
+    @SuppressWarnings("unchecked")
     public void comboBoxLogradouros() throws SQLException{
         String bairro = (String) cadastroView.getComboBoxBairro().getSelectedItem();
         String sigla = (String) cadastroView.getComboBoxUF().getSelectedItem();
@@ -205,11 +213,15 @@ public class ClienteController extends EnderecoController{
             //Caso o id do endereço for maior do que 0 significa que o cadastro pode continuar
             if(id_endereco>=0){
                 realizarCadastroClienteComEndereco(id_endereco);//Função para o cadastro do cliente com endereço, é necessário enviar o id_endereco
+                JOptionPane.showMessageDialog(null, "Cliente foi cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                cadastroView.dispose();//Fecha a tela de cadastro
             }
         }
         //Caso o Radio Button esteja desativo o cadastro será realizado sem endereço
         else{
             realizarCadastroClienteSemEndereco();//Função para cadastro sem endereço
+            JOptionPane.showMessageDialog(null, "Cliente foi cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            cadastroView.dispose();//Fecha a tela de cadastro
         }
     }
     
@@ -237,14 +249,16 @@ public class ClienteController extends EnderecoController{
     
     //Função para pegar as informações dos campos pessoais
     public Cliente informacaoDosCamposPessoais(){
-        String nome, cpf, rg, telefone;
+        String nome, cpf, rg, telefone, observacao;
         
         nome = cadastroView.getCampoNomeCliente().getText();
         cpf = cadastroView.getCampoCpfCliente().getText();
         rg = cadastroView.getCampoRgCliente().getText();
         telefone = cadastroView.getCampoTelefoneCliente().getText();
+        observacao = cadastroView.getCampoObservacaoCliente().getText();
+       
         
-        Cliente clienteComDados = new Cliente(nome, cpf, rg, telefone);
+        Cliente clienteComDados = new Cliente(nome, cpf, rg, telefone, observacao);
         
         return clienteComDados;  
     }

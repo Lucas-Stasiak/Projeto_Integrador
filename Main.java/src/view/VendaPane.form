@@ -281,23 +281,33 @@
                   </Group>
                   <Component id="LabelTituloProdutos" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="44" max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="BotaoCancelarCompra" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="369" max="-2" attributes="0"/>
-                              <Component id="BotaoConcluirVenda" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="BotaoRemoverItem" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="308" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="CampoValorTotalCarrinho" min="-2" pref="111" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="LabelTituloCarrinho" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="BotaoRemoverItem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="BotaoCancelarCompra" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="CampoCpfCliente" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="BotaoConcluirVenda" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="CampoValorTotalCarrinho" min="-2" pref="111" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -309,7 +319,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelTituloProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LabelTituloCarrinho" alignment="3" max="32767" attributes="0"/>
@@ -342,6 +352,7 @@
                       <Component id="LabelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="CampoValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -350,6 +361,7 @@
                       <Component id="BotaoCancelarCompra" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="BotaoAddCarrinho" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="CampoCpfCliente" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
@@ -589,5 +601,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CPF Cliente"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="CampoCpfCliente">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CampoCpfClienteActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

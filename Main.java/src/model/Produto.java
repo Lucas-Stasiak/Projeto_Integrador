@@ -28,6 +28,16 @@ public class Produto {
         this.unidade = unidade;
         this.preco = preco;
     }
+    
+    public Produto(int id_produto, String nome, String categoria, String descricao, int quantidade, String unidade, float preco) {
+        this.id_produto = id_produto;
+        this.nome = nome;
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.unidade = unidade;
+        this.preco = preco;
+    }
 
     public int getId_produto() {
         return id_produto;

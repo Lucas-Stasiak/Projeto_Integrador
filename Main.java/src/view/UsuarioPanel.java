@@ -263,7 +263,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
     private void BotaoCadastrarUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarUsuario1ActionPerformed
         //seta o controller do view cadastro e torna ele visivel
         viewCadastrarUsuario.setController(controller);
-        controller.apagarCamposCadastro(); // Antes de ser visivel ele apaga os campos do cadastro
+        controller.apagarCamposCadastro();// Antes de ser visivel ele apaga os campos do cadastro
         viewCadastrarUsuario.setLocationRelativeTo(null);
         viewCadastrarUsuario.setVisible(true); 
     }//GEN-LAST:event_BotaoCadastrarUsuario1ActionPerformed

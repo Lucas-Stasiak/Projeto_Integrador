@@ -167,6 +167,7 @@ public class ClientePane extends javax.swing.JPanel {
     private void BotaoCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarClienteActionPerformed
         viewCadastro.setLocationRelativeTo(null);
         viewCadastro.setController(this.controller);
+        controller.apagarTodosCampos();
         viewCadastro.setVisible(true);
     }//GEN-LAST:event_BotaoCadastrarClienteActionPerformed
 

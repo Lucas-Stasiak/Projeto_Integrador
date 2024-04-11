@@ -12,7 +12,7 @@ import view.AtualizarUsuarioView;
 import view.CadastroUsuarioView;
 import view.UsuarioPanel;
 
-public class UsuarioController {
+public class UsuarioController extends EnderecoController{
 
     private UsuarioPanel view;
     private CadastroUsuarioView viewCadastro;
@@ -46,7 +46,55 @@ public class UsuarioController {
             JOptionPane.showMessageDialog(null, "Usuario foi removido com sucesso!", "sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
+    //Função para habilitar e desabilitar os campos de endereco
+     public void enderecoHabilitado(){
+        if (viewCadastro.getBotaoRadioEndereco().isSelected()){
+            habilitarEndereco();
+            apagarCamposCadastroEndereco();
+        }
+        else{
+            desabilitarEndereco();
+        }
+    }
+     
+    public void habilitarEndereco(){
+        viewCadastro.getCampoCadastroCEP().setEnabled(true);
+        viewCadastro.getCampoCadastroNumero().setEnabled(true);
+        viewCadastro.getCampoCadastroComplemento().setEnabled(true);
+        viewCadastro.getBotaoAtualizarCEP().setEnabled(true);
+        viewCadastro.getComboBoxEstado().setEnabled(true);
+        viewCadastro.getComboBoxUF().setEnabled(true);
+        viewCadastro.getComboBoxCidade().setEnabled(true);
+        viewCadastro.getComboBoxBairro().setEnabled(true);
+        viewCadastro.getComboBoxLogradouro().setEnabled(true);
+        viewCadastro.getBotaoApagarCamposCadastroEndereco().setEnabled(true);
+    }
+    
+    public void desabilitarEndereco(){
+        viewCadastro.getCampoCadastroCEP().setEnabled(false);
+        viewCadastro.getCampoCadastroNumero().setEnabled(false);
+        viewCadastro.getCampoCadastroComplemento().setEnabled(false);
+        viewCadastro.getBotaoAtualizarCEP().setEnabled(false);
+        viewCadastro.getComboBoxEstado().setEnabled(false);
+        viewCadastro.getComboBoxUF().setEnabled(false);
+        viewCadastro.getComboBoxCidade().setEnabled(false);
+        viewCadastro.getComboBoxBairro().setEnabled(false);
+        viewCadastro.getComboBoxLogradouro().setEnabled(false);
+        viewCadastro.getBotaoApagarCamposCadastroEndereco().setEnabled(false);
+    }
+            //Apagar campos de informacoes do endereço
+    public void apagarCamposCadastroEndereco(){
+       viewCadastro.getComboBoxBairro().setSelectedIndex(-1);
+       viewCadastro.getComboBoxCidade().setSelectedIndex(-1);
+       viewCadastro.getComboBoxEstado().setSelectedIndex(-1);
+       viewCadastro.getComboBoxUF().setSelectedIndex(-1);
+       viewCadastro.getComboBoxLogradouro().setSelectedIndex(-1); 
+       viewCadastro.getCampoCadastroCEP().setText("");
+       viewCadastro.getCampoCadastroComplemento().setText("");
+       viewCadastro.getCampoCadastroNumero().setText("");
+    }
+     
     //Apaga os campos de pesquisa
     public void apagarCampos() {
         
@@ -54,6 +102,11 @@ public class UsuarioController {
         view.getCampoPesquisaNome().setText("");
         view.getCampoPesquisaCPF().setText("");
         view.getComboBoxPesquisa().setSelectedIndex(0);
+    }
+    
+    public void apagarCamposCadastro(){
+        apagarCamposCadastroDadosIdentificacao();
+        apagarCamposCadastroEndereco();
     }
     
     //Preenche o comboBox com base no tipo de usuario selecionado
@@ -67,17 +120,19 @@ public class UsuarioController {
     }
     
     //Apaga os campos do cadastro
-    public void apagarCamposCadastro(){
+    public void apagarCamposCadastroDadosIdentificacao(){
         
         viewCadastro.getCampoTextoNome().setText("");
         viewCadastro.getCampoTextoCpf().setText("");
         viewCadastro.getCampoTextoTelefone().setText("");
         viewCadastro.getCampoTextoSenhaUsuario().setText("");
         viewCadastro.getCampoTextoConfirmaSenhaUsuario().setText("");
+        viewCadastro.getCampoCadastroObservacaoUsuario().setText("");
         viewCadastro.getCheckAdmin().setSelected(false);
     }
     
     //Leitura da tabela
+    @SuppressWarnings("unchecked")
     public void readTabelaUsuario() throws SQLException {
 
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
@@ -114,6 +169,7 @@ public class UsuarioController {
     }
 
     //Função para busca de usuário
+    @SuppressWarnings("unchecked")
     public void buscarUsuario() throws SQLException {
         
         
@@ -226,31 +282,12 @@ public class UsuarioController {
 
     //Comparar strings e ver se são iguais
     public boolean comparacaoStrings(String string, String string2) {
-        if (string.intern() == string2.intern()) {
-            return true;
-        } else {
-            return false;
-        }
+        return string.intern().equals(string2.intern());//Se são iguais retorna true
     }
     
     // verifica se a algum campo em branco antes de cadastrar o usuario
     public boolean verificaCampoPreenchido(String nome, String cpf, String senha, String senhaConfirma, String telefone) {
-        if (nome.isEmpty()) {
-            return true;
-        }
-        if (cpf.isEmpty()) {
-            return true;
-        }
-        if (senha.isEmpty()) {
-            return true;
-        }
-        if (senhaConfirma.isEmpty()) {
-            return true;
-        }
-        if (telefone.isEmpty()) {
-            return true;
-        }
-        return false;
+        return nome.isEmpty() || cpf.isEmpty() || senha.isEmpty() || senhaConfirma.isEmpty() || telefone.isEmpty(); //Se algum desses campos for vazio será retornado true
     }
     
 }

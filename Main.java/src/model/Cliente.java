@@ -8,22 +8,16 @@ public class Cliente {
     private String cpf;
     private String rg;
     private String telefone;
+    private String observacao;
 
-    public Cliente(int id, String nome, String cpf, String rg, String telefone) {
-        this.id = id;
+    public Cliente(String nome, String cpf, String rg, String telefone, String observacao) {
         this.nome = nome;
         this.cpf = cpf;
         this.rg = rg;
         this.telefone = telefone;
+        this.observacao = observacao;
     }
-
-    public Cliente(String nome, String cpf, String rg, String telefone) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.telefone = telefone;
-    }
-
+    
     public int getId() {
         return id;
     }
@@ -63,4 +57,14 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     } 
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+    
+    
 }
