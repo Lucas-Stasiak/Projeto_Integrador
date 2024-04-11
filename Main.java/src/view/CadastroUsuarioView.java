@@ -9,8 +9,12 @@ import controller.UsuarioController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -51,9 +55,33 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         CampoTextoSenhaUsuario = new javax.swing.JPasswordField();
         CampoTextoConfirmaSenhaUsuario = new javax.swing.JPasswordField();
         CheckAdmin = new javax.swing.JCheckBox();
-        BotaoApagarCamposCadastro = new javax.swing.JButton();
+        BotaoApagarCamposCadastroIdentificacao = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        BotaoRadioEndereco = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
+        BotaoApagarCamposCadastroEndereco = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        CampoCadastroCEP = new javax.swing.JTextField();
+        BotaoAtualizarCEP = new javax.swing.JButton();
+        ComboBoxEstado = new javax.swing.JComboBox();
+        jLabel10 = new javax.swing.JLabel();
+        ComboBoxUF = new javax.swing.JComboBox();
+        jLabel11 = new javax.swing.JLabel();
+        ComboBoxCidade = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        ComboBoxBairro = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        ComboBoxLogradouro = new javax.swing.JComboBox();
+        CampoCadastroNumero = new javax.swing.JTextField();
+        CampoCadastroComplemento = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        BotaoCancelarCadastro = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        CampoCadastroObservacaoUsuario = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,7 +109,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Nome Completo:");
 
         jLabel2.setText("CPF");
 
@@ -108,10 +136,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         });
 
-        BotaoApagarCamposCadastro.setText("Apagar Campos");
-        BotaoApagarCamposCadastro.addActionListener(new java.awt.event.ActionListener() {
+        BotaoApagarCamposCadastroIdentificacao.setText("Apagar Campos");
+        BotaoApagarCamposCadastroIdentificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoApagarCamposCadastroActionPerformed(evt);
+                BotaoApagarCamposCadastroIdentificacaoActionPerformed(evt);
             }
         });
 
@@ -120,43 +148,155 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel6.setText("Cadastro de Usuário");
 
+        jLabel7.setText("Observação(ões):");
+
+        BotaoRadioEndereco.setSelected(true);
+        BotaoRadioEndereco.setText("Endereço:");
+        BotaoRadioEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoRadioEnderecoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Dados de identificação do usuário:");
+
+        BotaoApagarCamposCadastroEndereco.setText("Apagar Campos");
+        BotaoApagarCamposCadastroEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoApagarCamposCadastroEnderecoActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("CEP:");
+
+        BotaoAtualizarCEP.setText("jButton1");
+
+        ComboBoxEstado.setEditable(true);
+
+        jLabel10.setText("Estado:");
+
+        ComboBoxUF.setEditable(true);
+
+        jLabel11.setText("UF:");
+
+        ComboBoxCidade.setEditable(true);
+
+        jLabel12.setText("Cidade:");
+
+        ComboBoxBairro.setEditable(true);
+
+        jLabel13.setText("Bairro:");
+
+        jLabel14.setText("Logradouro:");
+
+        ComboBoxLogradouro.setEditable(true);
+
+        jLabel15.setText("Número:");
+
+        jLabel16.setText("Complemento:");
+
+        BotaoCancelarCadastro.setText("Cancelar");
+
+        CampoCadastroObservacaoUsuario.setColumns(20);
+        CampoCadastroObservacaoUsuario.setRows(5);
+        jScrollPane2.setViewportView(CampoCadastroObservacaoUsuario);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(129, Short.MAX_VALUE)
+                .addGap(90, 90, 90)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(31, 31, 31))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(CampoTextoNome))
+                                        .addGap(18, 18, 18)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel2)
+                                        .addComponent(CampoTextoCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                        .addComponent(CampoTextoSenhaUsuario))
+                                    .addComponent(jLabel4)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CampoCadastroCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(BotaoAtualizarCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(BotaoRadioEndereco))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ComboBoxUF, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboBoxLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(288, 288, 288)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(CampoCadastroNumero))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(CampoTextoSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                            .addComponent(jLabel4)
-                            .addComponent(CampoTextoNome))
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(CheckAdmin)
+                                .addGap(92, 92, 92))
+                            .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CampoCadastroComplemento)
+                            .addComponent(jLabel16)
+                            .addComponent(BotaoApagarCamposCadastroEndereco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(BotaoCancelarCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BotaoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2)
-                                    .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                    .addComponent(CampoTextoCpf)
-                                    .addComponent(BotaoApagarCamposCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(61, 61, 61)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CheckAdmin)
-                                    .addComponent(jLabel3)
-                                    .addComponent(CampoTextoTelefone)
-                                    .addComponent(BotaoCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))
-                            .addComponent(jLabel5))))
-                .addContainerGap(130, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(ComboBoxCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BotaoApagarCamposCadastroIdentificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13)
+                                        .addComponent(ComboBoxBairro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                .addGap(105, 105, 105))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -165,24 +305,54 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CampoTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoTextoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(CampoTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CheckAdmin))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(2, 2, 2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CampoTextoSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CheckAdmin)
-                    .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
+                    .addComponent(CampoTextoConfirmaSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoApagarCamposCadastroIdentificacao, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(65, 65, 65)
+                .addComponent(BotaoRadioEndereco)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotaoApagarCamposCadastro)
-                    .addComponent(BotaoCadastro))
-                .addContainerGap(51, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CampoCadastroCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoAtualizarCEP)
+                    .addComponent(ComboBoxCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(jLabel16)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboBoxLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CampoCadastroNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CampoCadastroComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(BotaoApagarCamposCadastroEndereco)
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotaoCadastro)
+                    .addComponent(BotaoCancelarCadastro))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,6 +394,14 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         return CampoTextoCpf;
     }
 
+    public JRadioButton getBotaoRadioEndereco() {
+        return BotaoRadioEndereco;
+    }
+
+    public void setBotaoRadioEndereco(JRadioButton BotaoRadioEndereco) {
+        this.BotaoRadioEndereco = BotaoRadioEndereco;
+    }
+
     public void setCampoTextoCpf(JTextField CampoTextoCpf) {
         this.CampoTextoCpf = CampoTextoCpf;
     }
@@ -243,6 +421,120 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     public void setCampoTextoTelefone(JTextField CampoTextoTelefone) {
         this.CampoTextoTelefone = CampoTextoTelefone;
     }
+
+    public JButton getBotaoApagarCamposCadastroEndereco() {
+        return BotaoApagarCamposCadastroEndereco;
+    }
+
+    public void setBotaoApagarCamposCadastroEndereco(JButton BotaoApagarCamposCadastroEndereco) {
+        this.BotaoApagarCamposCadastroEndereco = BotaoApagarCamposCadastroEndereco;
+    }
+
+    public JButton getBotaoApagarCamposCadastroIdentificacao() {
+        return BotaoApagarCamposCadastroIdentificacao;
+    }
+
+    public void setBotaoApagarCamposCadastroIdentificacao(JButton BotaoApagarCamposCadastroIdentificacao) {
+        this.BotaoApagarCamposCadastroIdentificacao = BotaoApagarCamposCadastroIdentificacao;
+    }
+
+    public JButton getBotaoAtualizarCEP() {
+        return BotaoAtualizarCEP;
+    }
+
+    public void setBotaoAtualizarCEP(JButton BotaoAtualizarCEP) {
+        this.BotaoAtualizarCEP = BotaoAtualizarCEP;
+    }
+
+    public JButton getBotaoCadastro() {
+        return BotaoCadastro;
+    }
+
+    public void setBotaoCadastro(JButton BotaoCadastro) {
+        this.BotaoCadastro = BotaoCadastro;
+    }
+
+    public JButton getBotaoCancelarCadastro() {
+        return BotaoCancelarCadastro;
+    }
+
+    public void setBotaoCancelarCadastro(JButton BotaoCancelarCadastro) {
+        this.BotaoCancelarCadastro = BotaoCancelarCadastro;
+    }
+
+    public JTextField getCampoCadastroCEP() {
+        return CampoCadastroCEP;
+    }
+
+    public void setCampoCadastroCEP(JTextField CampoCadastroCEP) {
+        this.CampoCadastroCEP = CampoCadastroCEP;
+    }
+
+    public JTextField getCampoCadastroComplemento() {
+        return CampoCadastroComplemento;
+    }
+
+    public void setCampoCadastroComplemento(JTextField CampoCadastroComplemento) {
+        this.CampoCadastroComplemento = CampoCadastroComplemento;
+    }
+
+    public JTextField getCampoCadastroNumero() {
+        return CampoCadastroNumero;
+    }
+
+    public void setCampoCadastroNumero(JTextField CampoCadastroNumero) {
+        this.CampoCadastroNumero = CampoCadastroNumero;
+    }
+
+
+    public JTextArea getCampoCadastroObservacaoUsuario() {
+        return CampoCadastroObservacaoUsuario;
+    }
+
+    public void setCampoCadastroObservacaoUsuario(JTextArea CampoCadastroObservacaoUsuario) {
+        this.CampoCadastroObservacaoUsuario = CampoCadastroObservacaoUsuario;
+    }
+
+    public JComboBox getComboBoxBairro() {
+        return ComboBoxBairro;
+    }
+
+    public void setComboBoxBairro(JComboBox ComboBoxBairro) {
+        this.ComboBoxBairro = ComboBoxBairro;
+    }
+
+    public JComboBox getComboBoxCidade() {
+        return ComboBoxCidade;
+    }
+
+    public void setComboBoxCidade(JComboBox ComboBoxCidade) {
+        this.ComboBoxCidade = ComboBoxCidade;
+    }
+
+    public JComboBox getComboBoxEstado() {
+        return ComboBoxEstado;
+    }
+
+    public void setComboBoxEstado(JComboBox ComboBoxEstado) {
+        this.ComboBoxEstado = ComboBoxEstado;
+    }
+
+    public JComboBox getComboBoxLogradouro() {
+        return ComboBoxLogradouro;
+    }
+
+    public void setComboBoxLogradouro(JComboBox ComboBoxLogradouro) {
+        this.ComboBoxLogradouro = ComboBoxLogradouro;
+    }
+
+    public JComboBox getComboBoxUF() {
+        return ComboBoxUF;
+    }
+
+    public void setComboBoxUF(JComboBox ComboBoxUF) {
+        this.ComboBoxUF = ComboBoxUF;
+    }
+    
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
         try {
@@ -274,9 +566,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CheckAdminActionPerformed
 
-    private void BotaoApagarCamposCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroActionPerformed
-        controller.apagarCamposCadastro();
-    }//GEN-LAST:event_BotaoApagarCamposCadastroActionPerformed
+    private void BotaoApagarCamposCadastroIdentificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroIdentificacaoActionPerformed
+        controller.apagarCamposCadastroDadosIdentificacao();
+    }//GEN-LAST:event_BotaoApagarCamposCadastroIdentificacaoActionPerformed
 
     private void CampoTextoCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoTextoCpfKeyTyped
         //Verifica validação da escrita no campo do cpf
@@ -287,6 +579,14 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             evt.consume();//Consome a letra e evita ela aparecer no campo do texto.
         }
     }//GEN-LAST:event_CampoTextoCpfKeyTyped
+
+    private void BotaoRadioEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRadioEnderecoActionPerformed
+        controller.enderecoHabilitado();
+    }//GEN-LAST:event_BotaoRadioEnderecoActionPerformed
+
+    private void BotaoApagarCamposCadastroEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroEnderecoActionPerformed
+        controller.apagarCamposCadastroEndereco();
+    }//GEN-LAST:event_BotaoApagarCamposCadastroEnderecoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,20 +624,44 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoApagarCamposCadastro;
+    private javax.swing.JButton BotaoApagarCamposCadastroEndereco;
+    private javax.swing.JButton BotaoApagarCamposCadastroIdentificacao;
+    private javax.swing.JButton BotaoAtualizarCEP;
     private javax.swing.JButton BotaoCadastro;
+    private javax.swing.JButton BotaoCancelarCadastro;
+    private javax.swing.JRadioButton BotaoRadioEndereco;
+    private javax.swing.JTextField CampoCadastroCEP;
+    private javax.swing.JTextField CampoCadastroComplemento;
+    private javax.swing.JTextField CampoCadastroNumero;
+    private javax.swing.JTextArea CampoCadastroObservacaoUsuario;
     private javax.swing.JPasswordField CampoTextoConfirmaSenhaUsuario;
     private javax.swing.JTextField CampoTextoCpf;
     private javax.swing.JTextField CampoTextoNome;
     private javax.swing.JPasswordField CampoTextoSenhaUsuario;
     private javax.swing.JTextField CampoTextoTelefone;
     private javax.swing.JCheckBox CheckAdmin;
+    private javax.swing.JComboBox ComboBoxBairro;
+    private javax.swing.JComboBox ComboBoxCidade;
+    private javax.swing.JComboBox ComboBoxEstado;
+    private javax.swing.JComboBox ComboBoxLogradouro;
+    private javax.swing.JComboBox ComboBoxUF;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
 }
