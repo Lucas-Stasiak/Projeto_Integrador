@@ -24,6 +24,7 @@ public class ClienteController extends EnderecoController{
         this.view = view;
     }
 
+    //Apagar campos de informacoes do endereço
     public void apagarCamposCadastroEndereco(){
        cadastroView.getComboBoxBairro().setSelectedIndex(-1);
        cadastroView.getComboBoxCidade().setSelectedIndex(-1);
@@ -36,6 +37,7 @@ public class ClienteController extends EnderecoController{
         
     }
     
+    //Apagar campos de informacoes do cliente
     public void apagarCamposInformacaoCliente(){
         cadastroView.getCampoNomeCliente().setText("");
         cadastroView.getCampoCpfCliente().setText("");
@@ -70,6 +72,7 @@ public class ClienteController extends EnderecoController{
         cadastroView.getBotaoApagarCamposEndereco().setEnabled(false);
     }
 
+    //Função para habilitar e desabilitar os campos de endereco
     public void enderecoHabilitado(){
         if (cadastroView.getBotaoRadioEndereco().isSelected()){
             habilitarEndereco();
@@ -120,6 +123,7 @@ public class ClienteController extends EnderecoController{
         cadastroView.getComboBoxCidade().setSelectedIndex(-1);
     }
     
+    //Preenche o Combo Box de bairro
     public void comboBoxBairros() throws SQLException{
         
         String nome_cidade = (String) cadastroView.getComboBoxCidade().getSelectedItem(); //Pega o nome da cidade selecionada
@@ -135,6 +139,7 @@ public class ClienteController extends EnderecoController{
         
     }
     
+    //Preenche o Combo Box de logradouro
     public void comboBoxLogradouros() throws SQLException{
         String bairro = (String) cadastroView.getComboBoxBairro().getSelectedItem();
         String sigla = (String) cadastroView.getComboBoxUF().getSelectedItem();
@@ -173,10 +178,10 @@ public class ClienteController extends EnderecoController{
         }
     }
     
-    //Pega o que está escrito nos campos
+    //Pega o que está escrito nos campos de endereco
     public Endereco enderecoDosCamposPreenchidos() throws SQLException{
         
-        String cep = cadastroView.getCampoCep().getText();//Pega o que esta escrito no campo cep
+        String cep = cadastroView.getCampoCep().getText();
         String logradouro = (String) cadastroView.getComboBoxLogradouro().getSelectedItem();
         String cidade = (String) cadastroView.getComboBoxCidade().getSelectedItem();
         String uf = (String) cadastroView.getComboBoxUF().getSelectedItem();
@@ -189,43 +194,48 @@ public class ClienteController extends EnderecoController{
         
     }
     
+    //Função para realização do cadastro do cliente, ela recebe um true or false do Radio Button para habilitar ou não o endereço
     public void realizarCadastro(boolean ativado) throws SQLException{
-        int id_endereco = -1;
+        int id_endereco = -1;//id do endereço é setado como -1
+        
+        //Se os campos de endereço estejam ativados ele entra
         if(ativado){
-            id_endereco = realizarCadastroEndereco();
+            id_endereco = realizarCadastroEndereco(); //Insere o endereço no banco de dados e pega o seu id
+            
+            //Caso o id do endereço for maior do que 0 significa que o cadastro pode continuar
             if(id_endereco>=0){
-                realizarCadastroClienteComEndereco(id_endereco);
+                realizarCadastroClienteComEndereco(id_endereco);//Função para o cadastro do cliente com endereço, é necessário enviar o id_endereco
             }
         }
+        //Caso o Radio Button esteja desativo o cadastro será realizado sem endereço
         else{
-            realizarCadastroClienteSemEndereco();
+            realizarCadastroClienteSemEndereco();//Função para cadastro sem endereço
         }
     }
     
+    //Função para cadastro do cliente com endereço
     public void realizarCadastroClienteComEndereco(int id_endereco) throws SQLException {
-        Cliente clienteParaCadastro = informacaoDosCamposPessoais();
-        
+        Cliente clienteParaCadastro = informacaoDosCamposPessoais(); //Pega os campos pessoais preenchidos
         
         //Realiza a conexão
         Connection conexao = new Conexao().getConnection();
         ClienteDAO clienteDao = new ClienteDAO(conexao);
         
-        clienteDao.insertComEndereco(clienteParaCadastro, id_endereco);
-        
-        
-        
+        clienteDao.insertComEndereco(clienteParaCadastro, id_endereco);//Função para inserir usuario com endereço
     }
     
+    //Função para cadastro do cliente sem endereço
     public void realizarCadastroClienteSemEndereco() throws SQLException{
-        Cliente clienteParaCadastro = informacaoDosCamposPessoais();
+        Cliente clienteParaCadastro = informacaoDosCamposPessoais();//Pega os campos pessoais preenchidos
         
         //Realiza a conexão
         Connection conexao = new Conexao().getConnection();
         ClienteDAO clienteDao = new ClienteDAO(conexao);
         
-        clienteDao.insert(clienteParaCadastro);
+        clienteDao.insert(clienteParaCadastro);//Função para inserir usuario sem endereço
     }
     
+    //Função para pegar as informações dos campos pessoais
     public Cliente informacaoDosCamposPessoais(){
         String nome, cpf, rg, telefone;
         
@@ -239,23 +249,25 @@ public class ClienteController extends EnderecoController{
         return clienteComDados;  
     }
     
-    
+    //Função para realizar o cadastro do endereço -- retorna o id_endereço
     public int realizarCadastroEndereco() throws SQLException{
         int id_endereco;
-        Endereco endereco = enderecoDosCamposPreenchidos();
-        id_endereco = cadastroEndereco(endereco, campoNuloEndereco());
+        Endereco endereco = enderecoDosCamposPreenchidos();//Pega as informações dos campos de endereçp
+        id_endereco = cadastroEndereco(endereco, campoNuloEndereco());//Chama a função para cadastrar o endereço e armazena o id retornado
         
         return id_endereco;
     }
     
+    //Função para preenchar o CEP com informações do endereçp
     public void preencherCEP() throws SQLException{
         
-        Endereco endereco = buscarCEP(enderecoDosCamposPreenchidos());
+        Endereco endereco = buscarCEP(enderecoDosCamposPreenchidos());//Chama a função para buscar o CEP pelas informções do endereço
         cadastroView.getCampoCep().setText(endereco.getCep());
         cadastroView.getComboBoxBairro().setSelectedItem(endereco.getBairro());
         cadastroView.getCampoNumero().setText(endereco.getNumero());
     }
     
+    //Verifica se tem campo nulo em endereço -- retorna true or false
     public boolean campoNuloEndereco(){
         String cep = cadastroView.getCampoCep().getText();
         String numero = cadastroView.getCampoNumero().getText();
@@ -267,8 +279,5 @@ public class ClienteController extends EnderecoController{
         return (cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty() || complemento.isEmpty());
         
     }   
-     
-    
-    
-    
+
 }

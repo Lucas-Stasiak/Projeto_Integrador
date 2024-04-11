@@ -97,9 +97,6 @@ public class EnderecoController {
         return endereco;
     }
     
-    
-
-    
     //Realiza o tratamento da string
     public String tratamentoString(String url){
         url = tratamentoCaracteresEspeciais(url);
@@ -110,8 +107,7 @@ public class EnderecoController {
     
     //Verifica se é um caracter especial se for ele modifica
     public String tratamentoCaracteresEspeciais(String url){
-        
-        
+
         //Inicia um Normalizer com a string, pega todos os caracteres separadamente
         return Normalizer.normalize(url, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", ""); // Todos os caracteres que não são ASCII são substuidos pelo vazio: ""
@@ -156,8 +152,8 @@ public class EnderecoController {
             }
             endereco = parseJsonToAddress(response.toString());
         } else {
-            // Se a conexão não foi bem-sucedida, mostra o c�digo de erro
-            System.out.println("Erro na requisi��o: " + responseCode);
+            // Se a conexão não foi bem-sucedida, mostra o código de erro
+            System.out.println("Erro na requisicao: " + responseCode);
         }
         }catch (IOException e) {
             System.out.println("Erro!");
@@ -165,17 +161,17 @@ public class EnderecoController {
         return endereco;
 }
     
-    //função para leitura dos estados
-    @SuppressWarnings("unchecked")
+    
+    @SuppressWarnings("unchecked")//Realiza a leitura de todos os estados do Brasil e retorna um array de Endereco
     public ArrayList<Endereco> estados() throws SQLException{
         
         //Realiza a conexao e a envia para 
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
        
-        ArrayList<Endereco> estados = new ArrayList<>();
+        ArrayList<Endereco> estados = new ArrayList<>();//Array para armazenar os nomes e a sigla dos estados
         
-       //Repete at� que todos os estados s�o obtidos
+       //Repete até que todos os estados são obtidos e armazenados no array estados
         for(Endereco estado : enderecoDao.readEstado()){   
             estados.add(estado);
         } 
@@ -183,16 +179,16 @@ public class EnderecoController {
        
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")//Realiza a leitura de todas as cidades com base na sigla do estado e retorna um array de string
     public ArrayList<String> cidades(String sigla) throws SQLException{  
         
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
         
-        ArrayList<String> cidades = new ArrayList<>();
+        ArrayList<String> cidades = new ArrayList<>();//Array com nomes das cidades
         
-        //Le todas as cidades com o id do estado selecionado
+        //Le todas as cidades com a sigla do estado selecionado
         for(Endereco cidade : enderecoDao.readCidadePorEstado(sigla)){
             cidades.add(cidade.getCidade());
         }
@@ -200,7 +196,7 @@ public class EnderecoController {
     }
     
    
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")//Realiza a leitura de todos os bairros com base na cidade e uf e retorna um array de string
     public ArrayList<String> bairros(String nome_cidade, String uf) throws SQLException{
         
         //Realiza a conexao
@@ -209,7 +205,7 @@ public class EnderecoController {
         
         int id_cidade = enderecoDao.pegarIdCidade(uf, nome_cidade); //Pega o id da cidade selecionada
      
-        ArrayList<String> bairros = new ArrayList<>();
+        ArrayList<String> bairros = new ArrayList<>();//Array com o nome dos bairros
        
         //Le todos os bairros pelo id da cidadade selecionada
         for(Endereco bairro : enderecoDao.readBairroPorCidade(id_cidade)){
@@ -218,19 +214,19 @@ public class EnderecoController {
         return bairros;
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")//Realiza a leitura de todos os logradouros do banco de dados com base no bairro, uf e cidade e retorna um array de string
     public ArrayList<String> logradouro(String bairro, String uf, String cidade) throws SQLException{
         
         //Realiza a conexao
         Connection conexao = new Conexao().getConnection();
         EnderecoDAO enderecoDao = new EnderecoDAO(conexao);
         
-        int id_cidade = enderecoDao.pegarIdCidade(uf, cidade);
-        int id_bairro = enderecoDao.pegarIdBairro(bairro,id_cidade);
+        int id_cidade = enderecoDao.pegarIdCidade(uf, cidade);//Pega o id da cidade
+        int id_bairro = enderecoDao.pegarIdBairro(bairro,id_cidade);//Pega o id do bairro
         
-        ArrayList<String> logradouros = new ArrayList<>();
+        ArrayList<String> logradouros = new ArrayList<>();//Array com o nome dos logradouros
         
-        
+        //Realiza a pesquisa no banco de dados e insere no array de logradouros
         for(Endereco logradouro : enderecoDao.readLogradouroPorBairro(id_bairro)){
             logradouros.add(logradouro.getLogradouro());
         }
@@ -238,7 +234,7 @@ public class EnderecoController {
     }
     
     
-    //Realiza o cadastro do endereço
+    //Realiza o cadastro do endereço e retorna seu id
     public int cadastroEndereco(Endereco endereco, boolean temCampoNulo) throws SQLException{
         int id_endereco = -1; //Define o id do endereço como -1
         
@@ -253,19 +249,21 @@ public class EnderecoController {
 
             //Caso o cep não existe no banco de dados realizará a verificação e inserção no banco de dados
             if(!enderecoDao.existeCEP(endereco.getCep())){
-                int id_cidade = enderecoDao.pegarIdCidade(endereco.getSigla(), endereco.getCidade());
+                int id_cidade = enderecoDao.pegarIdCidade(endereco.getSigla(), endereco.getCidade());//Pega o id da cidade
             
                 //Verifica se o bairro do endereço existe -- Se não existe ele entra
                 if(!enderecoDao.existeBairro(endereco.getBairro(), id_cidade)){
-                     enderecoDao.novoBairro(endereco.getBairro(),id_cidade);
+                     enderecoDao.novoBairro(endereco.getBairro(),id_cidade);//Insere o bairro no banco de dados
                 }
-                int id_bairro = enderecoDao.pegarIdBairro(endereco.getBairro(),id_cidade);
-                enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Inseri o endereco no banco de dados
+                
+                int id_bairro = enderecoDao.pegarIdBairro(endereco.getBairro(),id_cidade);//pega o id do bairro
+                enderecoDao.novoLogradouro(endereco, id_cidade, id_bairro); //Insere o logradouro no banco de dados
             }
-            //Insere o endereço no banco de dados de endereços cliente e usuario
+            //Define o numero como inteiro e pega o id do logradouro
             int numero = Integer.parseInt(endereco.getNumero());
             int id_logradouro = enderecoDao.pegerIdLogradouro(endereco.getCep()); 
             
+            //Insere no banco de dados o endereco do cliente e armazena o id do endereco criado
             id_endereco = enderecoDao.insertEndereco(endereco.getComplemento(), numero, id_logradouro);
         }
         return id_endereco;
