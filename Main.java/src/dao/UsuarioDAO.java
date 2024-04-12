@@ -1,4 +1,3 @@
-
 package dao;
 
 import java.sql.Connection;
@@ -24,16 +23,16 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-       String sql = "insert into usuario(nome, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
-       
-       PreparedStatement statement = connection.prepareStatement(sql);
-       statement.setString(1, usuario.getNome());
-       statement.setString(2, usuario.getCpf());
-       statement.setString(3, usuario.getSenha());
-       statement.setString(4, usuario.getTelefone());
-       statement.setBoolean(5, usuario.isAdmin());
-       statement.execute();
-         
+        String sql = "insert into usuario(nome, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getCpf());
+        statement.setString(3, usuario.getSenha());
+        statement.setString(4, usuario.getTelefone());
+        statement.setBoolean(5, usuario.isAdmin());
+        statement.execute();
+
     }
 
     public void delete(Usuario usuario) throws SQLException {
@@ -49,7 +48,7 @@ public class UsuarioDAO {
         String sql = "update usuario set nome = ?, cpf = ?, senha = ?, telefone = ?, admin = ? where cpf = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
-        
+
         //Evita SQL Injection 
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getCpf());
@@ -101,7 +100,7 @@ public class UsuarioDAO {
         }
         return admin;
     }
-    
+
     //Leitura de todos os usuarios
     public ArrayList<Usuario> readUsuario() throws SQLException {
 
@@ -131,7 +130,6 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-
     public ArrayList<Usuario> buscarUsuarioNOMEeCPF(Usuario usuario) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE nome LIKE ? and cpf LIKE ?";
 
@@ -144,9 +142,8 @@ public class UsuarioDAO {
         // Executando a consulta
         ResultSet resultSet = statement.executeQuery();
 
-    
         ArrayList<Usuario> usuarios = new ArrayList<>();
-    
+
         // Iterando sobre os resultados
         while (resultSet.next()) {
             int idUsuario = resultSet.getInt("id_usuario");
@@ -160,23 +157,22 @@ public class UsuarioDAO {
         }
 
         return usuarios;
-}
-    
-    
-    public ArrayList<Usuario> buscarUsuarioNOMEeCPFeADM(Usuario usuario) throws SQLException{
+    }
+
+    public ArrayList<Usuario> buscarUsuarioNOMEeCPFeADM(Usuario usuario) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE admin = ? and nome_usuario LIKE ? and cpf LIKE ?";
-        
+
         //Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setBoolean(1, usuario.isAdmin());
         statement.setString(2, "%" + usuario.getNome() + "%");
         statement.setString(3, "%" + usuario.getCpf() + "%");
         statement.execute();
-        
+
         ResultSet resultSet = statement.executeQuery();
-        
+
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        
+
         // Iterando sobre os resultados
         while (resultSet.next()) {
             int idUsuario = resultSet.getInt("id_usuario");
@@ -189,23 +185,24 @@ public class UsuarioDAO {
             usuarios.add(usuarioPesquisado);
         }
         return usuarios;
-        
+
     }
-    
+
     public int buscarIdUsuarioCPF(String cpf) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE cpf LIKE ?";
 
         // Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, cpf);
-        statement.execute();
 
         // Executando a consulta
         ResultSet resultSet = statement.executeQuery();
 
-        return resultSet.getInt("id_usuario");
+        if (resultSet.next()) {
+            return resultSet.getInt("id_usuario");
+        } else {
+            return -1;
+        }
     }
-    
-
 
 }

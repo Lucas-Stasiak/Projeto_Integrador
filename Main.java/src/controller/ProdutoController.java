@@ -8,6 +8,7 @@ import dao.ProdutoDAO;
 import dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -25,7 +26,8 @@ public class ProdutoController {
     public void readTabelaProduto() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
         modelo.setNumRows(0);
-        view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+        view.getTabelaProduto().setRowSorter(sorter);
 
         // Adiciona os produtos à lista
         for (Produto produto : new ProdutoDAO().readProduto()) {
@@ -154,16 +156,10 @@ public class ProdutoController {
                     produtoSelecionado.getUnidade(),
                     produtoSelecionado.getPreco()
                 });
-                System.out.println("Nome: " + produtoSelecionado.getNome());
-                System.out.println("Categoria: " + produtoSelecionado.getCategoria());
-                System.out.println("Descrição: " + produtoSelecionado.getDescricao());
-                System.out.println("Quantidade: " + quantidade);
-                System.out.println("Unidade: " + produtoSelecionado.getUnidade());
-                System.out.println("Preço: " + produtoSelecionado.getPreco());
 
                 //isso serve para atualizar o valor total dos itens do carrinho
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
-
+                
                 ProdutoDAO produtoDAO = new ProdutoDAO();
                 // Diminui a quantidade adicionada ao carrinho do estoque
                 produtoDAO.diminuirQuantidade(Integer.parseInt(view.getCampoQuantidade().getText()), produtoSelecionado.getNome());
@@ -218,7 +214,8 @@ public class ProdutoController {
     public void buscarProduto(String nomeProduto) throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaProduto().getModel();
         modelo.setNumRows(0);
-        view.getTabelaProduto().setRowSorter(new TableRowSorter(modelo));
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+        view.getTabelaProduto().setRowSorter(sorter);
 
         // Chama o método buscarProduto em ProdutoDAO
         ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -265,14 +262,18 @@ public class ProdutoController {
         }
     }
 
-    public void concluirVenda() throws SQLException {
+    public void concluirVenda() throws SQLException, ParseException {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
         if (modeloCarrinho.getRowCount() > 0) {
-            
+
             Connection conexao = new Conexao().getConnection();
             ClienteDAO clienteDAO = new ClienteDAO(conexao);
-            
             int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
+
+            // cliente padrão caso ele não seja informado
+            if (view.getCampoCpfCliente().getText().equals("")) {
+                id_cliente = 1;
+            }
 
             if (id_cliente != -1) {
 
@@ -291,17 +292,22 @@ public class ProdutoController {
                     Produto produtoSelecionado = readProdutosSelecionados(modeloCarrinho.getValueAt(i, 0).toString());
 
                     int quantidade = (int) modeloCarrinho.getValueAt(i, 3);
-                    
+
                     CompraDAO compraDAO = new CompraDAO();
                     compraDAO.adicionarCarrinhoCompra(produtoSelecionado.getPreco(), produtoSelecionado.getUnidade(), quantidade, id_historico, produtoSelecionado.getId_produto());
                 }
-
+                limparCarrinho();
             } else {
                 JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
         }
+    }
+    
+    public void limparCarrinho(){
+        DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+        modeloCarrinho.setRowCount(0);
     }
 
 }

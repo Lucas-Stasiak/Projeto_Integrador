@@ -12,7 +12,7 @@ public class Historico {
     private int fk_id_cliente;
     private int fk_id_usuario;
 
-    public Historico(float precoTotal, int fk_id_cliente, int fk_id_usuario) {
+    public Historico(float precoTotal, int fk_id_usuario, int fk_id_cliente) {
         this.data = new Date(); // Cria a data atual
         this.tempo = new Timestamp(System.currentTimeMillis()); // Cria o timestamp atual
         this.precoTotal = precoTotal;

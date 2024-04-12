@@ -12,7 +12,7 @@ public class CompraDAO {
         this.connection = new Conexao().getConnection();
     }
     
-    public void adicionarCarrinhoCompra(float preco, String unidade,int quantidade, int id_historico, int id_produto) throws SQLException{
+    public void adicionarCarrinhoCompra(float preco, String unidade, int quantidade, int id_historico, int id_produto) throws SQLException{
 
         String sql = "INSERT INTO compra (preco, unidade, quantidade, fk_id_historico, fk_id_produto) VALUES (?, ?, ?, ?, ?)";
 
