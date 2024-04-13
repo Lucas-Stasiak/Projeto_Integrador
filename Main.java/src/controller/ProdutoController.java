@@ -268,19 +268,17 @@ public class ProdutoController {
 
             Connection conexao = new Conexao().getConnection();
             ClienteDAO clienteDAO = new ClienteDAO(conexao);
-            int id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
+            Integer id_cliente = clienteDAO.buscarIdClienteCPF(view.getCampoCpfCliente().getText());
 
             // cliente padrão caso ele não seja informado
             if (view.getCampoCpfCliente().getText().equals("")) {
-                id_cliente = 1;
+                id_cliente = 0;
             }
 
             if (id_cliente != -1) {
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
-                LoginController login = new LoginController("1");
-                String usuarioLogado = login.getCpfUsuarioLogado();
-                int id_usuario = usuarioDAO.buscarIdUsuarioCPF(usuarioLogado);
+                int id_usuario = usuarioDAO.buscarIdUsuarioCPF(view.getCpf());
 
                 float valorTotal = Float.parseFloat(view.getCampoValorTotalCarrinho().getText().replace(',', '.'));
 

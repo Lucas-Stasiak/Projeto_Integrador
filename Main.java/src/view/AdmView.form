@@ -36,9 +36,9 @@
                   <Component id="BotaoAbrirPaneVenda" max="32767" attributes="0"/>
                   <Component id="BotaoAbrirPaneHome" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
-              <Component id="MainPane" pref="490" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+              <Component id="MainPane" pref="492" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

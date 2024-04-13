@@ -7,9 +7,8 @@ package view;
  */
 public class FuncionarioView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FuncionarioView
-     */
+    public String cpf;
+    
     public FuncionarioView() {
         
         initComponents();
@@ -98,6 +97,14 @@ public class FuncionarioView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
     private void BotaoAbrirPaneHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneHomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoAbrirPaneHomeActionPerformed

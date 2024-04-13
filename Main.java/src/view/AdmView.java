@@ -13,8 +13,6 @@ import model.Utilitarios;
  * @author Th3Br
  */
 public class AdmView extends javax.swing.JFrame {
-    
-    
 
     private final MenuAdmController controller;
     UsuarioPanel usuarioPane = new UsuarioPanel();
@@ -23,6 +21,7 @@ public class AdmView extends javax.swing.JFrame {
     ClientePane clientePane = new ClientePane();
     HistoricoPane historicoPane = new HistoricoPane();
     VendaPane vendaPane = new VendaPane();
+    private String cpf;
     
     public AdmView() {
       
@@ -119,9 +118,9 @@ public class AdmView extends javax.swing.JFrame {
                     .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(106, 106, 106)
-                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
-                .addGap(170, 170, 170))
+                .addGap(100, 100, 100)
+                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                .addGap(174, 174, 174))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,6 +146,14 @@ public class AdmView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
     public ClientePane getClientePane() {
         return clientePane;
     }
@@ -212,6 +219,7 @@ public class AdmView extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoAbrirPaneClientesActionPerformed
 
     private void BotaoAbrirPaneVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneVendaActionPerformed
+        vendaPane.setCpf(this.cpf);
         controller.vendaPane();
     }//GEN-LAST:event_BotaoAbrirPaneVendaActionPerformed
 

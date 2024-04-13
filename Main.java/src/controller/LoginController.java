@@ -16,14 +16,10 @@ import view.AdmView;
 
 public class LoginController {
     private LoginView view;
-    private String cpfUsuarioLogado;
+    public String cpfUsuarioLogado;
 
     public LoginController(LoginView view) {
             this.view = view;
-    }
-
-    public LoginController(String cpfUsuarioLogado) {
-        this.cpfUsuarioLogado = getCpfUsuarioLogado();
     }
     
     public void autenticarUsuario() throws SQLException {
@@ -54,8 +50,16 @@ public class LoginController {
                 admin = UsuarioDao.verificaAdmin (usuarioAutenticar);
                 
                 //Aparece a tela com base no true or false da váriavel admin
-                JFrame telaMenu = admin ? new AdmView() : new FuncionarioView();
-                telaMenu.setVisible(true);//torna a tela do menu visivel
+                if(admin){
+                    AdmView telaMenu = new AdmView();
+                    telaMenu.setCpf(cpfUsuarioLogado);
+                    telaMenu.setVisible(true);//torna a tela do menu visivel
+                }else{
+                    FuncionarioView telaMenu = new FuncionarioView();// : new FuncionarioView();
+                    telaMenu.setCpf(cpfUsuarioLogado);
+                    telaMenu.setVisible(true);//torna a tela do menu visivel
+                }
+                
                 view.dispose();//fecha tela login
             }
             
@@ -64,9 +68,4 @@ public class LoginController {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro de login", JOptionPane.ERROR_MESSAGE);
             }
     }
-
-    public String getCpfUsuarioLogado() {
-        return cpfUsuarioLogado;
-    }
-    
 }

@@ -272,7 +272,7 @@ public class ClienteController extends EnderecoController{
         return id_endereco;
     }
     
-    //Função para preenchar o CEP com informações do endereçp
+    //Função para preenchar o CEP com informações do endereço
     public void preencherCEP() throws SQLException{
         
         Endereco endereco = buscarCEP(enderecoDosCamposPreenchidos());//Chama a função para buscar o CEP pelas informções do endereço

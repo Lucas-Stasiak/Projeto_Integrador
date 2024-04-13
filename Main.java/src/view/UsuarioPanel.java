@@ -60,8 +60,6 @@ public class UsuarioPanel extends javax.swing.JPanel {
         TabelaUsuario = new javax.swing.JTable();
         BotaoAtualizarUsuario = new javax.swing.JButton();
         BotaoRemoverUsuario = new javax.swing.JButton();
-        BotaoBuscarUsuario = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         ComboBoxPesquisa = new javax.swing.JComboBox<>();
         BotaoApagarCampos = new javax.swing.JButton();
 
@@ -72,6 +70,17 @@ public class UsuarioPanel extends javax.swing.JPanel {
         BotaoCadastrarUsuario1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoCadastrarUsuario1ActionPerformed(evt);
+            }
+        });
+
+        CampoPesquisaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoPesquisaNomeActionPerformed(evt);
+            }
+        });
+        CampoPesquisaNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CampoPesquisaNomeKeyReleased(evt);
             }
         });
 
@@ -88,6 +97,9 @@ public class UsuarioPanel extends javax.swing.JPanel {
             }
         });
         CampoPesquisaCPF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CampoPesquisaCPFKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 CampoPesquisaCPFKeyTyped(evt);
             }
@@ -143,26 +155,12 @@ public class UsuarioPanel extends javax.swing.JPanel {
             }
         });
 
-        BotaoBuscarUsuario.setText("Buscar");
-        BotaoBuscarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BotaoBuscarUsuarioMouseClicked(evt);
-            }
-        });
-        BotaoBuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoBuscarUsuarioActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Apagar Pesquisa");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         ComboBoxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Usuário", "Admin" }));
+        ComboBoxPesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboBoxPesquisaMouseClicked(evt);
+            }
+        });
         ComboBoxPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxPesquisaActionPerformed(evt);
@@ -188,26 +186,22 @@ public class UsuarioPanel extends javax.swing.JPanel {
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(129, 129, 129))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(BotaoBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24)))
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                                        .addGap(129, 129, 129))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                                         .addGap(114, 114, 114))
                                     .addComponent(CampoPesquisaNome)
                                     .addComponent(BotaoApagarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(258, 258, 258)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                                         .addGap(172, 172, 172))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CampoPesquisaCPF)
@@ -215,14 +209,11 @@ public class UsuarioPanel extends javax.swing.JPanel {
                                 .addComponent(ComboBoxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(50, 50, 50))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BotaoCadastrarUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoRemoverUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BotaoAtualizarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -240,11 +231,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
                     .addComponent(CampoPesquisaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBoxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BotaoBuscarUsuario)
-                        .addComponent(BotaoApagarCampos)))
+                .addComponent(BotaoApagarCampos)
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,24 +333,12 @@ public class UsuarioPanel extends javax.swing.JPanel {
      
     }//GEN-LAST:event_BotaoRemoverUsuarioActionPerformed
 
-    private void BotaoBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoBuscarUsuarioActionPerformed
-
-    private void BotaoBuscarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoBuscarUsuarioMouseClicked
+    private void ComboBoxPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxPesquisaActionPerformed
         try {
             controller.buscarUsuario();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_BotaoBuscarUsuarioMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void ComboBoxPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxPesquisaActionPerformed
-
     }//GEN-LAST:event_ComboBoxPesquisaActionPerformed
 
     private void BotaoApagarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposActionPerformed
@@ -389,11 +364,34 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_CampoPesquisaCPFMouseClicked
 
+    private void CampoPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoPesquisaNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoPesquisaNomeActionPerformed
+
+    private void CampoPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoPesquisaNomeKeyReleased
+        try {
+            controller.buscarUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_CampoPesquisaNomeKeyReleased
+
+    private void CampoPesquisaCPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFKeyReleased
+        try {
+            controller.buscarUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_CampoPesquisaCPFKeyReleased
+
+    private void ComboBoxPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboBoxPesquisaMouseClicked
+
+    }//GEN-LAST:event_ComboBoxPesquisaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoApagarCampos;
     private javax.swing.JButton BotaoAtualizarUsuario;
-    private javax.swing.JButton BotaoBuscarUsuario;
     private javax.swing.JButton BotaoCadastrarUsuario1;
     private javax.swing.JButton BotaoRemoverUsuario;
     private javax.swing.JTextField CampoPesquisaCPF;
@@ -401,7 +399,6 @@ public class UsuarioPanel extends javax.swing.JPanel {
     private javax.swing.JTextField CampoPesquisaNome;
     private javax.swing.JComboBox<String> ComboBoxPesquisa;
     private javax.swing.JTable TabelaUsuario;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

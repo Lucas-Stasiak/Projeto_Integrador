@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 public class VendaPane extends javax.swing.JPanel {
 
     private final ProdutoController controller;
+    private String cpf;
     TextoController textoController = new TextoController();
 
     public VendaPane() {
@@ -28,6 +29,14 @@ public class VendaPane extends javax.swing.JPanel {
 
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+        System.out.println(getCpf());
+    }
 
     public JTable getTabelaProduto() {
         return TabelaProduto;

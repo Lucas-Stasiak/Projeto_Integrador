@@ -124,9 +124,8 @@ public class UsuarioDAO {
             Usuario usuarioComDadosDoBanco = new Usuario(id, nome, cpf, telefone, admin);//Pega os dados do Banco de dados e envia para um usuario
 
             usuarios.add(usuarioComDadosDoBanco);//adiciona o usuario dentro do array
-
         }
-
+        
         return usuarios;
     }
 
@@ -160,7 +159,7 @@ public class UsuarioDAO {
     }
 
     public ArrayList<Usuario> buscarUsuarioNOMEeCPFeADM(Usuario usuario) throws SQLException {
-        String sql = "SELECT * FROM usuario WHERE admin = ? and nome_usuario LIKE ? and cpf LIKE ?";
+        String sql = "SELECT * FROM usuario WHERE admin = ? and nome LIKE ? and cpf LIKE ?";
 
         //Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -189,7 +188,7 @@ public class UsuarioDAO {
     }
 
     public int buscarIdUsuarioCPF(String cpf) throws SQLException {
-        String sql = "SELECT * FROM usuario WHERE cpf LIKE ?";
+        String sql = "SELECT * FROM usuario WHERE cpf = ?";
 
         // Conexao com o bd
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -201,6 +200,7 @@ public class UsuarioDAO {
         if (resultSet.next()) {
             return resultSet.getInt("id_usuario");
         } else {
+            System.out.println("NAO ACHADO");
             return -1;
         }
     }

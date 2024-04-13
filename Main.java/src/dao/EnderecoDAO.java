@@ -167,7 +167,7 @@ public class EnderecoDAO {
     
     //Pegar id do bairro pelo seu nome
     public int pegarIdBairro(String nome, int id_cidade) throws SQLException{
-        String sql = "SELECT * FROM bairros WHERE nome = ? AND fk_id_cidade = ? ";
+        String sql = "SELECT * FROM bairros WHERE nome = ? AND fk_id_cidades = ? ";
         int id_bairro = 0;
         
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -212,7 +212,7 @@ public class EnderecoDAO {
     
     //Leitura dos bairros por cidade
     public ArrayList<Endereco> readBairroPorCidade(int id_cidade) throws SQLException{
-        String sql = "SELECT * FROM bairros WHERE fk_id_cidade = ?";
+        String sql = "SELECT * FROM bairros WHERE fk_id_cidades = ?";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, id_cidade);
@@ -245,7 +245,7 @@ public class EnderecoDAO {
     }
     
     public void novoLogradouro(Endereco endereco, int id_cidade, int id_bairro) throws SQLException{
-        String sql = "INSERT INTO logradouros(cep, nome, uf, fk_id_cidade, fk_id_bairro) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO logradouros(cep, nome, uf, fk_id_cidades, fk_id_bairro) VALUES(?,?,?,?,?)";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, endereco.getCep());
@@ -259,7 +259,7 @@ public class EnderecoDAO {
     }
     
     public boolean existeBairro(String bairro, int id_cidade) throws SQLException{
-        String sql = "SELECT * FROM bairros WHERE fk_id_cidade = ? AND nome = ?";
+        String sql = "SELECT * FROM bairros WHERE fk_id_cidades = ? AND nome = ?";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, id_cidade);
@@ -272,7 +272,7 @@ public class EnderecoDAO {
     }
     
     public void novoBairro(String bairro, int id_cidade) throws SQLException{
-        String sql = "INSERT INTO bairros(nome,fk_id_cidade) VALUES(?,?)";
+        String sql = "INSERT INTO bairros(nome,fk_id_cidades) VALUES(?,?)";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, bairro);

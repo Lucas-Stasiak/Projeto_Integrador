@@ -170,6 +170,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabel9.setText("CEP:");
 
         BotaoAtualizarCEP.setText("jButton1");
+        BotaoAtualizarCEP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAtualizarCEPActionPerformed(evt);
+            }
+        });
 
         ComboBoxEstado.setEditable(true);
 
@@ -587,6 +592,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private void BotaoApagarCamposCadastroEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoApagarCamposCadastroEnderecoActionPerformed
         controller.apagarCamposCadastroEndereco();
     }//GEN-LAST:event_BotaoApagarCamposCadastroEnderecoActionPerformed
+
+    private void BotaoAtualizarCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarCEPActionPerformed
+        
+    }//GEN-LAST:event_BotaoAtualizarCEPActionPerformed
 
     /**
      * @param args the command line arguments
