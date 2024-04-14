@@ -35,7 +35,6 @@ public class VendaPane extends javax.swing.JPanel {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-        System.out.println(getCpf());
     }
 
     public JTable getTabelaProduto() {

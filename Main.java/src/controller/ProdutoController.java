@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Produto;
@@ -142,12 +143,17 @@ public class ProdutoController {
 
     public void adicionaProdutoCarrinho() throws SQLException {
         int quantidade = Integer.parseInt(view.getCampoQuantidade().getText());
+        int novaQuantidade = Integer.parseInt((view.getTabelaProduto().getValueAt(view.getTabelaProduto().getSelectedRow(), 3)).toString()) - quantidade;
         if (quantidade >= 1) {
 
             Produto produtoSelecionado = readProdutosSelecionados(view.getTabelaProduto().getValueAt(view.getTabelaProduto().getSelectedRow(), 0).toString());
-            if (quantidade <= produtoSelecionado.getQuantidade()) {
+
+            DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+            DefaultTableModel modeloProduto = (DefaultTableModel) view.getTabelaProduto().getModel();
+
+            if (Integer.parseInt((modeloProduto.getValueAt(view.getTabelaProduto().getSelectedRow(), 3)).toString()) - quantidade >= 0) {
                 // Adiciona os dados do produto à tabela de carrinho
-                DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
+
                 modeloCarrinho.addRow(new Object[]{
                     produtoSelecionado.getNome(),
                     produtoSelecionado.getCategoria(),
@@ -159,17 +165,17 @@ public class ProdutoController {
 
                 //isso serve para atualizar o valor total dos itens do carrinho
                 view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
-                
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                // Diminui a quantidade adicionada ao carrinho do estoque
-                produtoDAO.diminuirQuantidade(Integer.parseInt(view.getCampoQuantidade().getText()), produtoSelecionado.getNome());
-                // Para atualizar a lista de produtos
-                readTabelaProduto();
+
+                modeloProduto.setValueAt(novaQuantidade, view.getTabelaProduto().getSelectedRow(), 3);
             } else {
-                JOptionPane.showMessageDialog(null, "Quantidade máxima de '" + produtoSelecionado.getNome() + "' disponível: " + produtoSelecionado.getQuantidade());
-                view.getCampoQuantidade().setText(String.valueOf(produtoSelecionado.getQuantidade()));
-                float valorTotal = Float.parseFloat(view.getCampoQuantidade().getText()) * produtoSelecionado.getPreco();
-                view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
+                if (Integer.parseInt((modeloProduto.getValueAt(view.getTabelaProduto().getSelectedRow(), 3)).toString()) == 0) {
+                    JOptionPane.showMessageDialog(null, "Estoque de '" + produtoSelecionado.getNome() + "' vazio.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Quantidade máxima de '" + produtoSelecionado.getNome() + "' disponível: " + Math.abs(novaQuantidade));
+                    view.getCampoQuantidade().setText(String.valueOf(Math.abs(novaQuantidade)));
+                    float valorTotal = Math.abs(novaQuantidade) * produtoSelecionado.getPreco();
+                    view.getCampoValorTotal().setText(String.format("%.2f", valorTotal));
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "A quantidade precisa ser maior/igual a 1.");
@@ -177,36 +183,40 @@ public class ProdutoController {
     }
 
     public void removerProdutoCarrinho() throws SQLException {
-        // pega a linha selecionada na tabelaProdutos
+        // Pega a linha selecionada na tabela de carrinho
         int linhaSelecionada = view.getTabelaCarrinho().getSelectedRow();
 
-        // Verifica se uma linha está selecionada na tabela de carrinho
-        if (linhaSelecionada != -1) { // Se uma linha estiver selecionada
+        // Verifica se tem uma linha selecionada
+        if (linhaSelecionada != -1) {
+            DefaultTableModel modeloProduto = (DefaultTableModel) view.getTabelaProduto().getModel();
+            DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
 
-            ProdutoDAO produtoDAO = new ProdutoDAO();
+            // nome do produto que ta sendo removido do carrinho
+            String nomeProduto = (String) modeloCarrinho.getValueAt(linhaSelecionada, 0);
 
-            // Retorna a quantidade removida para o carrinho
-            // pega o valor da coluna quantidade da tabela na linha selecionada
-            Object quantidadeProduto = view.getTabelaCarrinho().getValueAt(linhaSelecionada, 3);
+            // quantidade a ser removida
+            int quantidadeRemovida = (int) modeloCarrinho.getValueAt(linhaSelecionada, 3);
 
-            // transforma a quantidade que retorna como objeto em String
-            int quantidade = (Integer) quantidadeProduto;
+            // Itera sobre as linhas da tabela de produtos para encontrar o produto com o mesmo nome
+            for (int i = 0; i < modeloProduto.getRowCount(); i++) {
+                if (modeloProduto.getValueAt(i, 0).equals(nomeProduto)) {
+                    // quantidade atual do produto na tabela de produtos
+                    int quantidadeAtual = (int) modeloProduto.getValueAt(i, 3);
 
-            Object nomeProduto = view.getTabelaCarrinho().getValueAt(linhaSelecionada, 0);
-            String nome = (String) nomeProduto;
-            produtoDAO.aumentarQuantidade(quantidade, nome);
+                    // atualiza a quantidade na tabela de produtos menos a quantidade removida
+                    modeloProduto.setValueAt(quantidadeAtual + quantidadeRemovida, i, 3);
+                    break; // Sai do loop
+                }
+            }
 
             // Remove a linha selecionada da tabela de carrinho
-            DefaultTableModel model = (DefaultTableModel) view.getTabelaCarrinho().getModel();
-            model.removeRow(linhaSelecionada);
+            modeloCarrinho.removeRow(linhaSelecionada);
 
-            //isso serve para atualizar o valor total dos itens do carrinho
+            // Isso serve para atualizar o valor total dos itens do carrinho
             view.getCampoValorTotalCarrinho().setText(calcularValorTotalCarrinho());
 
-            // Para atualizar a lista de produtos
-            readTabelaProduto();
         } else {
-            // Se nenhuma linha estiver selecionada, exiba uma mensagem de alerta
+            // Se nenhuma linha estiver selecionada, exibe uma mensagem de alerta
             JOptionPane.showMessageDialog(null, "Selecione um item para remover.");
         }
     }
@@ -241,16 +251,6 @@ public class ProdutoController {
 
             // Itera sobre todas as linhas da tabela
             for (int i = modeloCarrinho.getRowCount() - 1; i >= 0; i--) {
-
-                Object nomeProduto = modeloCarrinho.getValueAt(i, 0);
-                Object quantidadeProduto = modeloCarrinho.getValueAt(i, 3);
-
-                int quantidade = Integer.parseInt(quantidadeProduto.toString());
-                String nome = nomeProduto.toString();
-
-                // Atualiza a quantidade no estoque no banco de dados
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                produtoDAO.aumentarQuantidade(quantidade, nome);
 
                 // Remove a linha da tabela
                 modeloCarrinho.removeRow(i);
@@ -293,6 +293,10 @@ public class ProdutoController {
 
                     CompraDAO compraDAO = new CompraDAO();
                     compraDAO.adicionarCarrinhoCompra(produtoSelecionado.getPreco(), produtoSelecionado.getUnidade(), quantidade, id_historico, produtoSelecionado.getId_produto());
+
+                    ProdutoDAO produtoDAO = new ProdutoDAO();
+                    // Diminui a quantidade de produtos vendidos do estoque
+                    produtoDAO.diminuirQuantidade(quantidade, produtoSelecionado.getNome());
                 }
                 limparCarrinho();
             } else {
@@ -302,10 +306,13 @@ public class ProdutoController {
             JOptionPane.showMessageDialog(null, "Carrinho Vazio.");
         }
     }
-    
-    public void limparCarrinho(){
+
+    public void limparCarrinho() {
         DefaultTableModel modeloCarrinho = (DefaultTableModel) view.getTabelaCarrinho().getModel();
         modeloCarrinho.setRowCount(0);
+        JTextField campoValorTotal = new JTextField();
+        campoValorTotal.setText("");
+        view.setCampoValorTotal(campoValorTotal);
     }
 
 }
