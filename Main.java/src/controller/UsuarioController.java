@@ -1,3 +1,4 @@
+
 package controller;
 
 import dao.Conexao;
@@ -12,9 +13,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Endereco;
 import model.Usuario;
+import org.jdesktop.swingx.sort.SortUtils;
 import view.AtualizarUsuarioView;
 import view.CadastroUsuarioView;
 import view.UsuarioPanel;
+
 
 public class UsuarioController extends EnderecoController{
 
@@ -398,65 +401,35 @@ public class UsuarioController extends EnderecoController{
     //Cadastro de usuario
     public void realizarCadastroUsuarioSemEndereco() throws SQLException {
 
-        boolean campoEmBranco;
-        boolean existe;
-        boolean senhaCorreta;
+        boolean campoEmBranco, existe, senhaCorreta, cpfValido;
 
-        String nome = viewCadastro.getCampoTextoNome().getText();
-        String cpf = viewCadastro.getCampoTextoCpf().getText();
-        char[] senhaChar = viewCadastro.getCampoTextoSenhaUsuario().getPassword();
-        char[] senhaCharConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();
-        String telefone = viewCadastro.getCampoTextoTelefone().getText();
-        String observacao = viewCadastro.getCampoCadastroObservacaoUsuario().getText();
-        boolean admin = viewCadastro.getCheckAdmin().isSelected();
+        char[] senhaCharConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();//Pega o que foi escrito de senha confirma
 
-        //Transforma a senha character em string
-        String senha = new String(senhaChar);
-        String senhaConfirma = new String(senhaCharConfirma);
+        String senhaConfirma = new String(senhaCharConfirma);//Transforma a senha character em string
+        
+        Usuario usuarioCadastrar = informacaoDosCamposPessoais();//Cria variável usuário e armazena as informações colocadas nos campos de cadastro
 
-        Usuario usuarioCadastrar = new Usuario(nome, senha, cpf, telefone, admin, observacao);//Cria variável usuário
-
-        //Peaga a conexao e envia para usuarioDao
+        //Realiza a conexao e envia para usuarioDao
         Connection conexao = new Conexao().getConnection();
         UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
 
-        campoEmBranco = verificaCampoPreenchido(nome, cpf, senha, senhaConfirma, telefone); //verifica se os campos estão preenchidos
+        campoEmBranco = verificaCampoPreenchido(); //verifica se os campos estão preenchidos
         existe = usuarioDao.verificaExistencia(usuarioCadastrar); //Verifica a existencia do usuario
-        senhaCorreta = comparacaoStrings(senha, senhaConfirma); //Verifica se a senha esta compativel nos dois bancos
+        senhaCorreta = comparacaoStrings(usuarioCadastrar.getSenha(), senhaConfirma); //Verifica se a senha esta compativel nos dois bancos
+        cpfValido = verificaCPFvalido(usuarioCadastrar.getCpf());// Verifica se o CPF é valido
 
-        // se o campo  não esta em branco
-        if (!campoEmBranco) {
-            //Se não existe o usuário 
-            if (!existe) {
-                //Verifica se as senhas estão iguais
-                if (senhaCorreta) {
-                    usuarioDao.insert(usuarioCadastrar);
-                    JOptionPane.showMessageDialog(null, "Usuário foi cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    viewCadastro.dispose();//fecha a tela de cadastro
-                } //Se as senhas não estiverem iguais informar o usuário
-                else {
-                    JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            } //Caso o usuário já existe ele informa ao usuário
-            else {
-                int resposta = JOptionPane.showConfirmDialog(null, "Usuario ja existe! Deseja atualizar o usuario?", "Alerta", JOptionPane.YES_NO_OPTION);
+        //Se os campos não estiverem de acordo com as validações ele entra e avisa o erro
+        if(campoEmBranco || existe || !senhaCorreta || !cpfValido){
+            avisosErro(campoEmBranco, existe, !senhaCorreta, !cpfValido);
+        }
+        //Caso contrário ele insere!
+        else{
+            usuarioDao.insert(usuarioCadastrar);
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            viewCadastro.dispose();//fecha a tela de cadastro
 
-                //Caso o usuario aperte o botão yes, ele fará o update
-                if (resposta == JOptionPane.YES_OPTION) {
-                    if (senhaCorreta) {
-                        usuarioDao.update(usuarioCadastrar);
-                        JOptionPane.showMessageDialog(null, "Usuário foi atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                        viewCadastro.dispose();//fecha a tela de cadastro
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Senha está incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        }   else {
-            JOptionPane.showMessageDialog(null, "Campo(s) em branco!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
     //Função para pegar as informações dos campos pessoais
     public Usuario informacaoDosCamposPessoais(){
         String nome, cpf, telefone, observacao,senha;
@@ -484,8 +457,34 @@ public class UsuarioController extends EnderecoController{
     }
     
     // verifica se a algum campo em branco antes de cadastrar o usuario
-    public boolean verificaCampoPreenchido(String nome, String cpf, String senha, String senhaConfirma, String telefone) {
-        return nome.isEmpty() || cpf.isEmpty() || senha.isEmpty() || senhaConfirma.isEmpty() || telefone.isEmpty(); //Se algum desses campos for vazio será retornado true
+    public boolean verificaCampoPreenchido() {
+        String nome = viewCadastro.getCampoTextoNome().getText();
+        String cpf = viewCadastro.getCampoTextoCpf().getText();
+        char[] senha = viewCadastro.getCampoTextoSenhaUsuario().getPassword();
+        char[] senhaConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();
+        String telefone = viewCadastro.getCampoTextoTelefone().getText();
+                
+        return nome.isEmpty() || cpf.isEmpty() || senha.length==0 || senhaConfirma.length==0 || telefone.isEmpty(); //Se algum desses campos for vazio será retornado true
     }
     
+    //Função para verificar o se o cpf é valido
+    public boolean verificaCPFvalido(String cpf){
+        return cpf.length() == 14;
+    }
+
+    //Função para mandar os avisos de erro de acordo com os erros
+    public void avisosErro(boolean campoEmBranco, boolean usuarioExiste, boolean senhaIncorreta, boolean cpfInvalido){
+    if(campoEmBranco){
+        JOptionPane.showMessageDialog(null, "Campo(s) em branco!", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    else if(cpfInvalido){
+        JOptionPane.showMessageDialog(null, "CPF invalido", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    else if(usuarioExiste){
+        JOptionPane.showMessageDialog(null, "Usuário já existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    else if(senhaIncorreta){
+        JOptionPane.showMessageDialog(null, "Campos de senha discrepantes!", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    }
 }
