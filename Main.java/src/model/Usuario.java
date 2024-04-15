@@ -15,6 +15,7 @@ public class Usuario {
     private String cpf;
     private String telefone;
     private boolean admin;
+    private String observacao;
 
     public Usuario(String nome, String cpf, boolean admin) {
         this.nome = nome;
@@ -31,12 +32,13 @@ public class Usuario {
         this.id = id;
     }
 
-    public Usuario(String nome, String senha, String cpf, String telefone, boolean admin) {
+    public Usuario(String nome, String senha, String cpf, String telefone, boolean admin, String observacao) {
         this.nome = nome;
         this.senha = senha;
         this.cpf = cpf;
         this.telefone = telefone;
         this.admin = admin;
+        this.observacao = observacao;
     }
 
     public Usuario(int id, String nome, String cpf, String telefone, boolean admin) {
@@ -45,6 +47,14 @@ public class Usuario {
         this.cpf = cpf;
         this.telefone = telefone;
         this.admin = admin;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
     
     public Usuario(String cpf) {

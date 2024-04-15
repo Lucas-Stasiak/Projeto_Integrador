@@ -23,7 +23,7 @@ public class UsuarioDAO {
 
     //Esta comentada para evitar ficar inserindo usuario atoa
     public void insert(Usuario usuario) throws SQLException {
-        String sql = "insert into usuario(nome, cpf, senha, telefone, admin) values(?, ?, ?, ?, ?); ";
+        String sql = "insert into usuario(nome, cpf, senha, telefone, admin, observacao) values(?, ?, ?, ?, ?, ?); ";
 
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, usuario.getNome());
@@ -31,17 +31,32 @@ public class UsuarioDAO {
         statement.setString(3, usuario.getSenha());
         statement.setString(4, usuario.getTelefone());
         statement.setBoolean(5, usuario.isAdmin());
+        statement.setString(6, usuario.getObservacao());
         statement.execute();
 
     }
+    
+    public void insertComEndereco(Usuario usuario, int id_endereco) throws SQLException{
+        String sql = "insert into usuario(nome, cpf, senha, telefone, admin, observacao, fk_id_endereco) values(?, ?, ?, ?, ?, ?, ?); ";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getCpf());
+        statement.setString(3, usuario.getSenha());
+        statement.setString(4, usuario.getTelefone());
+        statement.setBoolean(5, usuario.isAdmin());
+        statement.setString(6, usuario.getObservacao());
+        statement.setInt(7, id_endereco);
+        statement.execute();
+    }
 
     public void delete(Usuario usuario) throws SQLException {
-        /*String sql = "delete from usuario where id_usuario = ?";
+        String sql = "delete from usuario where id_usuario = ?";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, usuario.getId());
         statement.execute();
-         */
+        
     }
 
     public void update(Usuario usuario) throws SQLException {

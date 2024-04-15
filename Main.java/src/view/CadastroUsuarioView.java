@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import model.Endereco;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -25,6 +27,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
     private UsuarioController controller;
     private TextoController controllerTexto;
+    private int estadoSelecionado, bairroSelecionado, cidadeSelecionada;
+    
     
     /**
      * Creates new form CadastroUsuarioView
@@ -33,6 +37,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         initComponents();
         controllerTexto = new TextoController();
         this.setLocationRelativeTo(null);  //centraliza tela do cadastro 
+        AutoCompleteDecorator.decorate(ComboBoxEstado);
+        AutoCompleteDecorator.decorate(ComboBoxCidade);
+        AutoCompleteDecorator.decorate(ComboBoxBairro);
+        AutoCompleteDecorator.decorate(ComboBoxLogradouro);
     }
 
     /**
@@ -177,18 +185,47 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         });
 
         ComboBoxEstado.setEditable(true);
+        ComboBoxEstado.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                ComboBoxEstadoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        ComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxEstadoActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Estado:");
 
         ComboBoxUF.setEditable(true);
+        ComboBoxUF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxUFActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("UF:");
 
         ComboBoxCidade.setEditable(true);
+        ComboBoxCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxCidadeActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Cidade:");
 
         ComboBoxBairro.setEditable(true);
+        ComboBoxBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxBairroActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Bairro:");
 
@@ -511,7 +548,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     public JComboBox getComboBoxCidade() {
         return ComboBoxCidade;
     }
-
+    
     public void setComboBoxCidade(JComboBox ComboBoxCidade) {
         this.ComboBoxCidade = ComboBoxCidade;
     }
@@ -539,11 +576,36 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     public void setComboBoxUF(JComboBox ComboBoxUF) {
         this.ComboBoxUF = ComboBoxUF;
     }
+
+    public int getEstadoSelecionado() {
+        return estadoSelecionado;
+    }
+
+    public void setEstadoSelecionado(int estadoSelecionado) {
+        this.estadoSelecionado = estadoSelecionado;
+    }
+
+    public int getBairroSelecionado() {
+        return bairroSelecionado;
+    }
+
+    public void setBairroSelecionado(int bairroSelecionado) {
+        this.bairroSelecionado = bairroSelecionado;
+    }
+
+    public int getCidadeSelecionada() {
+        return cidadeSelecionada;
+    }
+
+    public void setCidadeSelecionada(int cidadeSelecionada) {
+        this.cidadeSelecionada = cidadeSelecionada;
+    }
+    
     
 
     private void BotaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastroActionPerformed
         try {
-            controller.cadastrarUsuario();
+            controller.realizarCadastro(BotaoRadioEndereco.isSelected());
             controller.readTabelaUsuario();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
@@ -594,8 +656,85 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoApagarCamposCadastroEnderecoActionPerformed
 
     private void BotaoAtualizarCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarCEPActionPerformed
+        String cep = CampoCadastroCEP.getText();
+        String logradouro = (String) ComboBoxLogradouro.getSelectedItem();
+        String cidade = (String) ComboBoxCidade.getSelectedItem();
+        String uf = (String) ComboBoxUF.getSelectedItem();
+        Endereco endereco = new Endereco(logradouro, cidade, uf);
         
+        if (!cep.isEmpty()){
+            try {
+                controller.preencherCamposEndereco(cep);
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+           if(!logradouro.isEmpty() && !cidade.isEmpty() && !uf.isEmpty()){
+               try {
+                   controller.preencherCEP();
+               } catch (SQLException ex) {
+                   Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
+            else{
+               //erro "CEP NÃO ENCONTRADO"
+            }
+        }
     }//GEN-LAST:event_BotaoAtualizarCEPActionPerformed
+
+    private void ComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEstadoActionPerformed
+        if(getComboBoxEstado().getSelectedIndex()>=0 && this.estadoSelecionado != getComboBoxEstado().getSelectedIndex() && getComboBoxEstado().getItemCount()>=26){
+            this.estadoSelecionado = getComboBoxEstado().getSelectedIndex();    
+            controller.atualizaComboBoxEstado();
+            ComboBoxLogradouro.removeAllItems();
+            this.cidadeSelecionada = -1;
+            this.bairroSelecionado = -1;
+            ComboBoxBairro.removeAllItems();
+        }
+    }//GEN-LAST:event_ComboBoxEstadoActionPerformed
+
+    private void ComboBoxEstadoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ComboBoxEstadoAncestorAdded
+        try {
+            controller.comboBoxEstados();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ComboBoxEstadoAncestorAdded
+
+    private void ComboBoxUFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxUFActionPerformed
+        if(getComboBoxUF().getSelectedIndex()>=0 && this.estadoSelecionado != getComboBoxUF().getSelectedIndex() && getComboBoxUF().getItemCount()>=26){
+            this.estadoSelecionado = getComboBoxUF().getSelectedIndex();    
+            controller.atualizaComboBoxEstado();
+            ComboBoxLogradouro.removeAllItems();
+            this.cidadeSelecionada = -1;
+            this.bairroSelecionado = -1;
+            ComboBoxBairro.removeAllItems();
+        }
+    }//GEN-LAST:event_ComboBoxUFActionPerformed
+
+    private void ComboBoxCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCidadeActionPerformed
+
+        if(this.cidadeSelecionada != getComboBoxCidade().getSelectedIndex() && getComboBoxCidade().getSelectedIndex()>=0){
+            this.cidadeSelecionada = getComboBoxCidade().getSelectedIndex();
+            try {
+                controller.comboBoxBairros();
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ComboBoxCidadeActionPerformed
+
+    private void ComboBoxBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxBairroActionPerformed
+        if(this.bairroSelecionado != getComboBoxBairro().getSelectedIndex() && getComboBoxBairro().getSelectedIndex()>=0){
+            this.bairroSelecionado = getComboBoxBairro().getSelectedIndex();
+            try {
+                controller.comboBoxLogradouros();
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ComboBoxBairroActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,9 +4,13 @@ import dao.Conexao;
 import dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.Endereco;
 import model.Usuario;
 import view.AtualizarUsuarioView;
 import view.CadastroUsuarioView;
@@ -56,7 +60,7 @@ public class UsuarioController extends EnderecoController{
         else{
             desabilitarEndereco();
         }
-    }
+    }   
      
     public void habilitarEndereco(){
         viewCadastro.getCampoCadastroCEP().setEnabled(true);
@@ -129,6 +133,126 @@ public class UsuarioController extends EnderecoController{
         viewCadastro.getCampoTextoConfirmaSenhaUsuario().setText("");
         viewCadastro.getCampoCadastroObservacaoUsuario().setText("");
         viewCadastro.getCheckAdmin().setSelected(false);
+    }
+    
+    @SuppressWarnings("unchecked") //Preenche os comboboxs dos estados e UF
+    public void comboBoxEstados() throws SQLException{
+        ArrayList<Endereco> estadosParaCB = estados();
+
+        
+        for(Endereco estado : estadosParaCB){
+            viewCadastro.getComboBoxEstado().addItem(estado.getEstado());
+            viewCadastro.getComboBoxUF().addItem(estado.getSigla());
+         }  
+        viewCadastro.getComboBoxEstado().setSelectedIndex(-1);//Não seleciona nenhuma linha
+        viewCadastro.getComboBoxUF().setSelectedIndex(-1);//Não seleciona nenhuma linha
+    }
+    
+    
+    public void atualizaComboBoxEstado(){
+        //Seleciona o combo box de estado e uf respectivamente ao seu estado ou uf selecionado
+        viewCadastro.getComboBoxEstado().setSelectedIndex(viewCadastro.getEstadoSelecionado());
+        viewCadastro.getComboBoxUF().setSelectedIndex(viewCadastro.getEstadoSelecionado());
+        
+        try {
+            comboBoxCidades();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void comboBoxCidades() throws SQLException{
+        
+        String sigla = (String) viewCadastro.getComboBoxUF().getSelectedItem();
+        ArrayList<String> cidadesParaCB = cidades(sigla);
+        
+        viewCadastro.getComboBoxCidade().removeAllItems();//remove todos os itens do Combo Box
+        for(String cidade : cidadesParaCB){
+            viewCadastro.getComboBoxCidade().addItem(cidade);
+        }
+        viewCadastro.getComboBoxCidade().setSelectedIndex(-1);
+    }
+    
+    
+    //Preenche o Combo Box de bairro
+    @SuppressWarnings("unchecked")
+    public void comboBoxBairros() throws SQLException{
+        
+        String nome_cidade = (String) viewCadastro.getComboBoxCidade().getSelectedItem(); //Pega o nome da cidade selecionada
+        String uf = (String) viewCadastro.getComboBoxUF().getSelectedItem();
+        
+        ArrayList<String> bairrosParaCB = bairros(nome_cidade, uf);
+        
+        viewCadastro.getComboBoxBairro().removeAllItems();
+        for(String bairro : bairrosParaCB){
+            viewCadastro.getComboBoxBairro().addItem(bairro);
+        }
+        viewCadastro.getComboBoxBairro().setSelectedIndex(-1);
+        
+    }
+    
+    //Preenche o Combo Box de logradouro
+    @SuppressWarnings("unchecked")
+    public void comboBoxLogradouros() throws SQLException{
+        String bairro = (String) viewCadastro.getComboBoxBairro().getSelectedItem();
+        String sigla = (String) viewCadastro.getComboBoxUF().getSelectedItem();
+        String cidade = (String) viewCadastro.getComboBoxCidade().getSelectedItem();
+        
+        ArrayList<String> logradourosParaCB = logradouro(bairro, sigla, cidade);
+        
+        viewCadastro.getComboBoxLogradouro().removeAllItems();
+        for(String logradouro : logradourosParaCB){
+            viewCadastro.getComboBoxLogradouro().addItem(logradouro);
+        }
+        viewCadastro.getComboBoxLogradouro().setSelectedIndex(-1);
+    }
+    
+    //Preenche tudo com o endereco do cep
+    public void preencherCamposEndereco(String cep) throws SQLException {
+        Endereco endereco = buscarEndereco(cep);
+        
+        if (endereco != null) {
+            // Define os valores nos campos JTextField com os dados do endereço
+            viewCadastro.getComboBoxUF().setSelectedItem(endereco.getSigla());
+            viewCadastro.getComboBoxEstado().setSelectedIndex(viewCadastro.getComboBoxUF().getSelectedIndex());
+            viewCadastro.getComboBoxCidade().setSelectedItem(endereco.getCidade());
+            viewCadastro.getComboBoxBairro().setSelectedItem(endereco.getBairro());
+            viewCadastro.getComboBoxLogradouro().setSelectedItem(endereco.getLogradouro());
+            viewCadastro.getCampoCadastroNumero().setText(endereco.getNumero());
+        } else {
+            // Se o endereço não for encontrado, limpe os campos
+            viewCadastro.getComboBoxBairro().setSelectedIndex(-1);
+            viewCadastro.getComboBoxCidade().setSelectedIndex(-1);
+            viewCadastro.getComboBoxUF().setSelectedIndex(-1);
+            viewCadastro.getComboBoxEstado().setSelectedIndex(-1);
+            viewCadastro.getComboBoxLogradouro().setSelectedIndex(-1);
+            viewCadastro.getCampoCadastroNumero().setText("");
+        }
+    }
+    
+    //Pega o que está escrito nos campos de endereco
+    public Endereco enderecoDosCamposPreenchidos() throws SQLException{
+        
+        String cep = viewCadastro.getCampoCadastroCEP().getText();
+        String logradouro = (String) viewCadastro.getComboBoxLogradouro().getSelectedItem();
+        String cidade = (String) viewCadastro.getComboBoxCidade().getSelectedItem();
+        String uf = (String) viewCadastro.getComboBoxUF().getSelectedItem();
+        String bairro = (String) viewCadastro.getComboBoxBairro().getSelectedItem();
+        String numero = viewCadastro.getCampoCadastroNumero().getText();
+        String complemento = viewCadastro.getCampoCadastroComplemento().getText();
+
+        Endereco endereco = new Endereco(logradouro, bairro, cidade, cep, numero, uf, complemento);
+        return endereco;
+        
+    }
+    
+    //Função para preenchar o CEP com informações do endereço
+    public void preencherCEP() throws SQLException{
+        
+        Endereco endereco = buscarCEP(enderecoDosCamposPreenchidos());//Chama a função para buscar o CEP pelas informções do endereço
+        viewCadastro.getCampoCadastroCEP().setText(endereco.getCep());
+        viewCadastro.getComboBoxBairro().setSelectedItem(endereco.getBairro());
+        viewCadastro.getCampoCadastroNumero().setText(endereco.getNumero());
     }
     
     //Leitura da tabela
@@ -219,8 +343,60 @@ public class UsuarioController extends EnderecoController{
         }
     }
     
+    //Função para realizar o cadastro do endereço -- retorna o id_endereço
+    public int realizarCadastroEndereco() throws SQLException{
+        int id_endereco;
+        Endereco endereco = enderecoDosCamposPreenchidos();//Pega as informações dos campos de endereçp
+        id_endereco = cadastroEndereco(endereco, campoNuloEndereco());//Chama a função para cadastrar o endereço e armazena o id retornado
+        
+        return id_endereco;
+    }
+    
+    //Verifica se tem campo nulo em endereço -- retorna true or false
+    public boolean campoNuloEndereco(){
+        String cep = viewCadastro.getCampoCadastroCEP().getText();
+        String numero = viewCadastro.getCampoCadastroNumero().getText();
+        String estado = (String) viewCadastro.getComboBoxEstado().getSelectedItem();
+        String bairro = (String) viewCadastro.getComboBoxBairro().getSelectedItem();
+        String logradouro = (String) viewCadastro.getComboBoxLogradouro().getSelectedItem();
+        String complemento = viewCadastro.getCampoCadastroComplemento().getText();
+        
+        return (cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty() || complemento.isEmpty());
+        
+    }
+    
+    //Função para realização do cadastro do cliente, ela recebe um true or false do Radio Button para habilitar ou não o endereço
+    public void realizarCadastro(boolean ativado) throws SQLException{
+        int id_endereco = -1;//id do endereço é setado como -1
+        
+        //Se os campos de endereço estejam ativados ele entra
+        if(ativado){
+            id_endereco = realizarCadastroEndereco(); //Insere o endereço no banco de dados e pega o seu id
+            
+            //Caso o id do endereço for maior do que 0 significa que o cadastro pode continuar
+            if(id_endereco>=0){
+                realizarCadastroUsuarioComEndereco(id_endereco);//Função para o cadastro do cliente com endereço, é necessário enviar o id_endereco
+            }
+        }
+        //Caso o Radio Button esteja desativo o cadastro será realizado sem endereço
+        else{
+            realizarCadastroUsuarioSemEndereco();//Função para cadastro sem endereço
+        }
+    }
+    
+
+    public void realizarCadastroUsuarioComEndereco(int id_endereco) throws SQLException{
+        Usuario usuarioCadastrar = informacaoDosCamposPessoais();//Pega os campos pessoais preenchidos
+        
+        //Realiza a conexão
+        Connection conexao = new Conexao().getConnection();
+        UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
+        
+        usuarioDao.insertComEndereco(usuarioCadastrar, id_endereco);//Função para inserir usuario sem endereço
+    }
+    
     //Cadastro de usuario
-    public void cadastrarUsuario() throws SQLException {
+    public void realizarCadastroUsuarioSemEndereco() throws SQLException {
 
         boolean campoEmBranco;
         boolean existe;
@@ -231,13 +407,14 @@ public class UsuarioController extends EnderecoController{
         char[] senhaChar = viewCadastro.getCampoTextoSenhaUsuario().getPassword();
         char[] senhaCharConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();
         String telefone = viewCadastro.getCampoTextoTelefone().getText();
+        String observacao = viewCadastro.getCampoCadastroObservacaoUsuario().getText();
         boolean admin = viewCadastro.getCheckAdmin().isSelected();
 
         //Transforma a senha character em string
         String senha = new String(senhaChar);
         String senhaConfirma = new String(senhaCharConfirma);
 
-        Usuario usuarioCadastrar = new Usuario(nome, senha, cpf, telefone, admin);//Cria variável usuário
+        Usuario usuarioCadastrar = new Usuario(nome, senha, cpf, telefone, admin, observacao);//Cria variável usuário
 
         //Peaga a conexao e envia para usuarioDao
         Connection conexao = new Conexao().getConnection();
@@ -278,6 +455,27 @@ public class UsuarioController extends EnderecoController{
         }   else {
             JOptionPane.showMessageDialog(null, "Campo(s) em branco!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    //Função para pegar as informações dos campos pessoais
+    public Usuario informacaoDosCamposPessoais(){
+        String nome, cpf, telefone, observacao,senha;
+        char[] senhaChar;
+        boolean admin;
+        
+        nome = viewCadastro.getCampoTextoNome().getText();
+        cpf = viewCadastro.getCampoTextoCpf().getText();
+        telefone = viewCadastro.getCampoTextoTelefone().getText();
+        observacao = viewCadastro.getCampoCadastroObservacaoUsuario().getText();
+        senhaChar = viewCadastro.getCampoTextoSenhaUsuario().getPassword();
+        admin = viewCadastro.getCheckAdmin().isSelected();
+           
+        //Transforma a senha character em string
+        senha = new String(senhaChar);
+
+        Usuario clienteComDados = new Usuario(nome, senha, cpf, telefone, admin, observacao);
+        return clienteComDados;
+
     }
 
     //Comparar strings e ver se são iguais
