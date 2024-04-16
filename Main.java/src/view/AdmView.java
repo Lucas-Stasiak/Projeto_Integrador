@@ -26,6 +26,7 @@ public class AdmView extends javax.swing.JFrame {
     public AdmView() {
       
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setExtendedState(AdmView.MAXIMIZED_BOTH);//resolução do monitor
         
         MainPane.add(usuarioPane);

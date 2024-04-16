@@ -284,6 +284,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
             }
         });
 
+        CampoTelefoneCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CampoTelefoneClienteKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Nome Completo:");
 
         jLabel4.setText("Telefone:");
@@ -612,6 +618,15 @@ public class CadastroClienteView extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_CampoCpfClienteKeyTyped
+
+    private void CampoTelefoneClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoTelefoneClienteKeyTyped
+        if(controllerTexto.formatacaoTelefone(evt, getCampoTelefoneCliente().getText())){
+            getCampoTelefoneCliente().setText(controllerTexto.mascaraTelefone(getCampoTelefoneCliente().getText()));
+        }
+        else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_CampoTelefoneClienteKeyTyped
 
     /**
      * @param args the command line arguments
