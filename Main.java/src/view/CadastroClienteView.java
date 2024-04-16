@@ -6,6 +6,7 @@ package view;
 
 import controller.ClienteController;
 import controller.EnderecoController;
+import controller.TextoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ public class CadastroClienteView extends javax.swing.JFrame {
     
     private EnderecoController controllerEndereco;
     private ClienteController controller;
+    private TextoController controllerTexto = new TextoController();
     private int estadoSelecionado = -1;
     private int cidadeSelecionada = -1;
     private int bairroSelecionado = -1;
@@ -82,10 +84,8 @@ public class CadastroClienteView extends javax.swing.JFrame {
         BotaoAtualizarCEP = new javax.swing.JButton();
         BotaoApagarCamposIndentificacaoCliente = new javax.swing.JButton();
         BotaoRadioEndereco = new javax.swing.JRadioButton();
-        CampoRgCliente = new javax.swing.JTextField();
         CampoTelefoneCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -94,6 +94,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
         CampoNomeCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoNomeClienteActionPerformed(evt);
+            }
+        });
+
+        CampoCpfCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CampoCpfClienteKeyTyped(evt);
             }
         });
 
@@ -280,8 +286,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
         jLabel3.setText("Nome Completo:");
 
-        jLabel1.setText("RG:");
-
         jLabel4.setText("Telefone:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -354,25 +358,24 @@ public class CadastroClienteView extends javax.swing.JFrame {
                                     .addGap(84, 84, 84))))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel14))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+                                    .addGap(212, 212, 212))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(CampoNomeCliente)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel3)
                                             .addGap(0, 0, Short.MAX_VALUE)))
-                                    .addGap(18, 18, 18)
+                                    .addGap(69, 69, 69)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
-                                        .addComponent(CampoCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(CampoRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1))
-                            .addGap(18, 18, 18)
+                                        .addComponent(CampoCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(61, 61, 61)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
                                 .addComponent(CampoTelefoneCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -389,13 +392,11 @@ public class CadastroClienteView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CampoNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CampoRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CampoTelefoneCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel15)
@@ -603,6 +604,14 @@ public class CadastroClienteView extends javax.swing.JFrame {
         controller.enderecoHabilitado();
     }//GEN-LAST:event_BotaoRadioEnderecoActionPerformed
 
+    private void CampoCpfClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoCpfClienteKeyTyped
+        if(controllerTexto.formatacaoCPF(evt, getCampoCpfCliente().getText())){
+            getCampoCpfCliente().setText(controllerTexto.mascaraCPF(getCampoCpfCliente().getText()));
+        }else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_CampoCpfClienteKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -662,14 +671,6 @@ public class CadastroClienteView extends javax.swing.JFrame {
 
     public void setCampoNomeCliente(JTextField CampoNomeCliente) {
         this.CampoNomeCliente = CampoNomeCliente;
-    }
-
-    public JTextField getCampoRgCliente() {
-        return CampoRgCliente;
-    }
-
-    public void setCampoRgCliente(JTextField CampoRgCliente) {
-        this.CampoRgCliente = CampoRgCliente;
     }
 
     public JTextField getCampoTelefoneCliente() {
@@ -808,14 +809,12 @@ public class CadastroClienteView extends javax.swing.JFrame {
     private javax.swing.JTextField CampoNomeCliente;
     private javax.swing.JTextField CampoNumero;
     private javax.swing.JTextArea CampoObservacaoCliente;
-    private javax.swing.JTextField CampoRgCliente;
     private javax.swing.JTextField CampoTelefoneCliente;
     private javax.swing.JComboBox ComboBoxBairro;
     private javax.swing.JComboBox ComboBoxCidade;
     private javax.swing.JComboBox ComboBoxEstado;
     private javax.swing.JComboBox ComboBoxLogradouro;
     private javax.swing.JComboBox ComboBoxUF;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

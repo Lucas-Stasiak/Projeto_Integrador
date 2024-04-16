@@ -90,7 +90,8 @@ public class UsuarioController extends EnderecoController{
         viewCadastro.getComboBoxLogradouro().setEnabled(false);
         viewCadastro.getBotaoApagarCamposCadastroEndereco().setEnabled(false);
     }
-            //Apagar campos de informacoes do endereço
+    
+    //Apagar campos de informacoes do endereço
     public void apagarCamposCadastroEndereco(){
        viewCadastro.getComboBoxBairro().setSelectedIndex(-1);
        viewCadastro.getComboBoxCidade().setSelectedIndex(-1);
@@ -164,6 +165,7 @@ public class UsuarioController extends EnderecoController{
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void comboBoxCidades() throws SQLException{
         
         String sigla = (String) viewCadastro.getComboBoxUF().getSelectedItem();
@@ -299,6 +301,7 @@ public class UsuarioController extends EnderecoController{
     @SuppressWarnings("unchecked")
     public void buscarUsuario() throws SQLException {
         
+        view.getCampoPesquisaId().setText("");//Seta o campo de id como vazio
         
         DefaultTableModel modelo = (DefaultTableModel) view.getTabelaUsuario().getModel(); //Pega o modelo da tabela 
          modelo.setNumRows(0);
@@ -362,10 +365,8 @@ public class UsuarioController extends EnderecoController{
         String estado = (String) viewCadastro.getComboBoxEstado().getSelectedItem();
         String bairro = (String) viewCadastro.getComboBoxBairro().getSelectedItem();
         String logradouro = (String) viewCadastro.getComboBoxLogradouro().getSelectedItem();
-        String complemento = viewCadastro.getCampoCadastroComplemento().getText();
         
-        return (cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty() || complemento.isEmpty());
-        
+        return cep.isEmpty() || numero.isEmpty() || estado.isEmpty() || bairro.isEmpty() || logradouro.isEmpty();//Caso algum campos está nulo ele retorna true    
     }
     
     //Função para realização do cadastro do cliente, ela recebe um true or false do Radio Button para habilitar ou não o endereço
@@ -390,12 +391,30 @@ public class UsuarioController extends EnderecoController{
 
     public void realizarCadastroUsuarioComEndereco(int id_endereco) throws SQLException{
         Usuario usuarioCadastrar = informacaoDosCamposPessoais();//Pega os campos pessoais preenchidos
+        boolean campoEmBranco, existe, senhaCorreta, cpfValido;
+        
+        char[] senhaCharConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();//Pega o que foi escrito de senha confirma
+        String senhaConfirma = new String(senhaCharConfirma);//Transforma a senha character em string
         
         //Realiza a conexão
         Connection conexao = new Conexao().getConnection();
         UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
         
-        usuarioDao.insertComEndereco(usuarioCadastrar, id_endereco);//Função para inserir usuario sem endereço
+        campoEmBranco = verificaCampoPreenchido(); //verifica se os campos estão preenchidos
+        existe = usuarioDao.verificaExistencia(usuarioCadastrar); //Verifica a existencia do usuario
+        senhaCorreta = comparacaoStrings(usuarioCadastrar.getSenha(), senhaConfirma); //Verifica se a senha esta compativel nos dois bancos
+        cpfValido = verificaCPFvalido(usuarioCadastrar.getCpf());// Verifica se o CPF é valido
+        
+        //Se os campos não estiverem de acordo com as validações ele entra e avisa o erro
+        if(campoEmBranco || existe || !senhaCorreta || !cpfValido){
+            avisosErro(campoEmBranco, existe, !senhaCorreta, !cpfValido);
+        }
+        //Caso contrário ele insere!
+        else{
+            usuarioDao.insertComEndereco(usuarioCadastrar, id_endereco);//Função para inserir usuario sem endereço
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            viewCadastro.dispose();//fecha a tela de cadastro
+        }
     }
     
     //Cadastro de usuario
@@ -404,7 +423,6 @@ public class UsuarioController extends EnderecoController{
         boolean campoEmBranco, existe, senhaCorreta, cpfValido;
 
         char[] senhaCharConfirma = viewCadastro.getCampoTextoConfirmaSenhaUsuario().getPassword();//Pega o que foi escrito de senha confirma
-
         String senhaConfirma = new String(senhaCharConfirma);//Transforma a senha character em string
         
         Usuario usuarioCadastrar = informacaoDosCamposPessoais();//Cria variável usuário e armazena as informações colocadas nos campos de cadastro
@@ -436,6 +454,7 @@ public class UsuarioController extends EnderecoController{
         char[] senhaChar;
         boolean admin;
         
+        //Pega o que foi inserido nos campos e armazena em váriaveis
         nome = viewCadastro.getCampoTextoNome().getText();
         cpf = viewCadastro.getCampoTextoCpf().getText();
         telefone = viewCadastro.getCampoTextoTelefone().getText();
@@ -469,7 +488,7 @@ public class UsuarioController extends EnderecoController{
     
     //Função para verificar o se o cpf é valido
     public boolean verificaCPFvalido(String cpf){
-        return cpf.length() == 14;
+        return cpf.length() == 14; //Se o tamanho do cpf for 14 retorna true
     }
 
     //Função para mandar os avisos de erro de acordo com os erros

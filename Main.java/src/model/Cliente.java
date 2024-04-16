@@ -6,14 +6,12 @@ public class Cliente {
     private int id;
     private String nome;
     private String cpf;
-    private String rg;
     private String telefone;
     private String observacao;
 
-    public Cliente(String nome, String cpf, String rg, String telefone, String observacao) {
+    public Cliente(String nome, String cpf, String telefone, String observacao) {
         this.nome = nome;
         this.cpf = cpf;
-        this.rg = rg;
         this.telefone = telefone;
         this.observacao = observacao;
     }
@@ -40,14 +38,6 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
     }
 
     public String getTelefone() {

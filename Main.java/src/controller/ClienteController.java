@@ -47,7 +47,6 @@ public class ClienteController extends EnderecoController{
     public void apagarCamposInformacaoCliente(){
         cadastroView.getCampoNomeCliente().setText("");
         cadastroView.getCampoCpfCliente().setText("");
-        cadastroView.getCampoRgCliente().setText("");
         cadastroView.getCampoTelefoneCliente().setText("");
         cadastroView.getCampoObservacaoCliente().setText("");
     }
@@ -249,16 +248,15 @@ public class ClienteController extends EnderecoController{
     
     //Função para pegar as informações dos campos pessoais
     public Cliente informacaoDosCamposPessoais(){
-        String nome, cpf, rg, telefone, observacao;
+        String nome, cpf, telefone, observacao;
         
         nome = cadastroView.getCampoNomeCliente().getText();
         cpf = cadastroView.getCampoCpfCliente().getText();
-        rg = cadastroView.getCampoRgCliente().getText();
         telefone = cadastroView.getCampoTelefoneCliente().getText();
         observacao = cadastroView.getCampoObservacaoCliente().getText();
        
         
-        Cliente clienteComDados = new Cliente(nome, cpf, rg, telefone, observacao);
+        Cliente clienteComDados = new Cliente(nome, cpf, telefone, observacao);
         
         return clienteComDados;  
     }

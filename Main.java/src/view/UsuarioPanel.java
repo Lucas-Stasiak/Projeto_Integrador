@@ -307,29 +307,33 @@ public class UsuarioPanel extends javax.swing.JPanel {
         //Preencher campos com os dados da linha
         if(TabelaUsuario.getSelectedRow() != -1){
             CampoPesquisaId.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 0).toString());
-            CampoPesquisaNome.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 1).toString());
-            CampoPesquisaCPF.setText(TabelaUsuario.getValueAt(TabelaUsuario.getSelectedRow(), 2).toString());   
-            ComboBoxPesquisa.setSelectedIndex(controller.comboBoxPreenchimento());
         }
     }//GEN-LAST:event_TabelaUsuarioMouseClicked
 
     private void BotaoAtualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAtualizarUsuarioActionPerformed
-        viewAtualizarUsuario.setController(this.controller);
-        viewAtualizarUsuario.setLocationRelativeTo(null);//Centraliza
-        viewAtualizarUsuario.setVisible(true);
+        //Verifica se tem alguma linha selecionada
+        if(getTabelaUsuario().getSelectedRow()!=-1){
+            viewAtualizarUsuario.setController(this.controller);
+            viewAtualizarUsuario.setLocationRelativeTo(null);//Centraliza
+            viewAtualizarUsuario.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Nenhum usuário selecionado!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BotaoAtualizarUsuarioActionPerformed
 
     private void BotaoRemoverUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverUsuarioActionPerformed
-        if(CampoPesquisaId.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Nenhum usuário selecionado!", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        else{    
+         
+        if(getTabelaUsuario().getSelectedRow()!=-1){
             try {
                 controller.removerUsuario();
             } catch (SQLException ex) {
                 Logger.getLogger(UsuarioPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum usuário selecionado!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        
      
     }//GEN-LAST:event_BotaoRemoverUsuarioActionPerformed
 
@@ -352,7 +356,7 @@ public class UsuarioPanel extends javax.swing.JPanel {
 
     private void CampoPesquisaCPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoPesquisaCPFKeyTyped
       //Verifica validação da escrita no campo do cpf
-      if(controllerTexto.validacaoCPF(evt, getCampoPesquisaCPF().getText())){
+      if(controllerTexto.formatacaoCPF(evt, getCampoPesquisaCPF().getText())){
          CampoPesquisaCPF.setText(controllerTexto.mascaraCPF(getCampoPesquisaCPF().getText()));
       }
       else{

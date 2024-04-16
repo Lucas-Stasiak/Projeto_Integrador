@@ -110,6 +110,17 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         });
 
+        CampoTextoTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoTextoTelefoneActionPerformed(evt);
+            }
+        });
+        CampoTextoTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CampoTextoTelefoneKeyTyped(evt);
+            }
+        });
+
         BotaoCadastro.setText("Cadastrar");
         BotaoCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -639,7 +650,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
     private void CampoTextoCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoTextoCpfKeyTyped
         //Verifica validação da escrita no campo do cpf
-        if(controllerTexto.validacaoCPF(evt, getCampoTextoCpf().getText())){
+        if(controllerTexto.formatacaoCPF(evt, getCampoTextoCpf().getText())){
             CampoTextoCpf.setText(controllerTexto.mascaraCPF(getCampoTextoCpf().getText()));
         }
         else{
@@ -735,6 +746,19 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ComboBoxBairroActionPerformed
+
+    private void CampoTextoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoTextoTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoTextoTelefoneActionPerformed
+
+    private void CampoTextoTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CampoTextoTelefoneKeyTyped
+        if(controllerTexto.formatacaoTelefone(evt, getCampoTextoTelefone().getText())){
+            getCampoTextoTelefone().setText(controllerTexto.mascaraTelefone(getCampoTextoTelefone().getText()));
+        }
+        else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_CampoTextoTelefoneKeyTyped
 
     /**
      * @param args the command line arguments
