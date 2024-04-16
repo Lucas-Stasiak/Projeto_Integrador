@@ -64,21 +64,21 @@ public class LoginView extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CPF");
-        jLabel1.setMaximumSize(null);
         getContentPane().add(jLabel1);
         jLabel1.setBounds(900, 440, 40, 16);
 
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Senha");
-        jLabel2.setMaximumSize(null);
-        jLabel2.setMinimumSize(null);
         getContentPane().add(jLabel2);
         jLabel2.setBounds(900, 490, 60, 16);
         getContentPane().add(CampoSenhaLogin);
         CampoSenhaLogin.setBounds(900, 510, 124, 22);
 
+        BotaoLoginEntrar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoLoginEntrar.setText("Entrar");
         BotaoLoginEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,12 +88,12 @@ public class LoginView extends javax.swing.JFrame {
         getContentPane().add(BotaoLoginEntrar);
         BotaoLoginEntrar.setBounds(900, 560, 124, 23);
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 40)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Portal de Vendas");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(0, 340, 1920, 50);
+        jLabel4.setBounds(0, 340, 1920, 45);
 
         try {
             CampoCPFLogin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -110,11 +110,10 @@ public class LoginView extends javax.swing.JFrame {
         getContentPane().add(CampoCPFLogin);
         CampoCPFLogin.setBounds(900, 460, 124, 22);
 
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Caso esteja com problemas no login contate um administrador");
-        jLabel3.setMaximumSize(null);
-        jLabel3.setMinimumSize(null);
         getContentPane().add(jLabel3);
         jLabel3.setBounds(0, 620, 1920, 16);
 

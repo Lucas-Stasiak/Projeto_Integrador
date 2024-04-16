@@ -53,19 +53,11 @@ public class FuncionarioView extends javax.swing.JFrame {
         jLayeredPane1.setMinimumSize(new java.awt.Dimension(1570, 1000));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/img2.jpg"))); // NOI18N
-
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jLabel1.setMaximumSize(new java.awt.Dimension(1570, 1000));
+        jLabel1.setMinimumSize(null);
+        jLabel1.setPreferredSize(new java.awt.Dimension(1570, 1000));
+        jLayeredPane1.add(jLabel1);
+        jLabel1.setBounds(0, 0, 1570, 940);
 
         getContentPane().add(jLayeredPane1);
         jLayeredPane1.setBounds(310, 30, 1570, 1000);
