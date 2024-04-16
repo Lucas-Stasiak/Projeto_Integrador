@@ -27,72 +27,80 @@ public class FuncionarioView extends javax.swing.JFrame {
 
         BotaoAbrirPaneHome = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel1 = new javax.swing.JLabel();
         BotaoAbrirPaneVenda = new javax.swing.JButton();
         BotaoAbrirPaneProdutos = new javax.swing.JButton();
         BotaoAbrirPaneSuasVendas = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        setSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(null);
 
+        BotaoAbrirPaneHome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneHome.setText("Home");
+        BotaoAbrirPaneHome.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneHomeActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneHome);
+        BotaoAbrirPaneHome.setBounds(80, 30, 150, 37);
+
+        jLayeredPane1.setMaximumSize(new java.awt.Dimension(1570, 1000));
+        jLayeredPane1.setMinimumSize(new java.awt.Dimension(1570, 1000));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/img2.jpg"))); // NOI18N
+
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 312, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        getContentPane().add(jLayeredPane1);
+        jLayeredPane1.setBounds(310, 30, 1570, 1000);
+
+        BotaoAbrirPaneVenda.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneVenda.setText("Iniciar uma Venda");
+        BotaoAbrirPaneVenda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneVendaActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneVenda);
+        BotaoAbrirPaneVenda.setBounds(80, 70, 150, 37);
 
+        BotaoAbrirPaneProdutos.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneProdutos.setText("Produtos");
+        BotaoAbrirPaneProdutos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(BotaoAbrirPaneProdutos);
+        BotaoAbrirPaneProdutos.setBounds(80, 110, 150, 36);
 
+        BotaoAbrirPaneSuasVendas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneSuasVendas.setText("Suas Vendas");
+        BotaoAbrirPaneSuasVendas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        BotaoAbrirPaneSuasVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAbrirPaneSuasVendasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BotaoAbrirPaneSuasVendas);
+        BotaoAbrirPaneSuasVendas.setBounds(80, 150, 150, 37);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneSuasVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(106, 106, 106)
-                .addComponent(jLayeredPane1)
-                .addGap(169, 169, 169))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneSuasVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLayeredPane1))
-                .addGap(58, 58, 58))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/img2.jpg"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 0, 1920, 1080);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -112,6 +120,10 @@ public class FuncionarioView extends javax.swing.JFrame {
     private void BotaoAbrirPaneVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneVendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotaoAbrirPaneVendaActionPerformed
+
+    private void BotaoAbrirPaneSuasVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAbrirPaneSuasVendasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoAbrirPaneSuasVendasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,6 +165,8 @@ public class FuncionarioView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoAbrirPaneProdutos;
     private javax.swing.JButton BotaoAbrirPaneSuasVendas;
     private javax.swing.JButton BotaoAbrirPaneVenda;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     // End of variables declaration//GEN-END:variables
 }
