@@ -57,93 +57,91 @@ public class AdmView extends javax.swing.JFrame {
         BotaoAbrirPaneVenda = new javax.swing.JButton();
         MainPane = new javax.swing.JLayeredPane();
         BotaoAbrirPaneHome = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        setSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(null);
 
+        BotaoAbrirPaneUsuario.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneUsuario.setText("Usuarios");
+        BotaoAbrirPaneUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneUsuarioActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneUsuario);
+        BotaoAbrirPaneUsuario.setBounds(45, 150, 150, 37);
 
+        CampoAbrirPaneProduto.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         CampoAbrirPaneProduto.setText("Produtos");
+        CampoAbrirPaneProduto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         CampoAbrirPaneProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoAbrirPaneProdutoActionPerformed(evt);
             }
         });
+        getContentPane().add(CampoAbrirPaneProduto);
+        CampoAbrirPaneProduto.setBounds(45, 205, 150, 37);
 
+        BotaoAbrirPaneClientes.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneClientes.setText("Clientes");
+        BotaoAbrirPaneClientes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneClientesActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneClientes);
+        BotaoAbrirPaneClientes.setBounds(45, 260, 150, 37);
 
+        BotaoAbrirPaneHistorico.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneHistorico.setText("Histórico de vendas");
+        BotaoAbrirPaneHistorico.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneHistorico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneHistoricoActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneHistorico);
+        BotaoAbrirPaneHistorico.setBounds(45, 315, 150, 37);
 
+        BotaoAbrirPaneVenda.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneVenda.setText("Iniciar uma venda");
+        BotaoAbrirPaneVenda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneVendaActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneVenda);
+        BotaoAbrirPaneVenda.setBounds(45, 95, 150, 37);
 
         MainPane.setLayout(new java.awt.CardLayout());
+        getContentPane().add(MainPane);
+        MainPane.setBounds(295, 40, 1570, 930);
 
+        BotaoAbrirPaneHome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         BotaoAbrirPaneHome.setText("Home");
+        BotaoAbrirPaneHome.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         BotaoAbrirPaneHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoAbrirPaneHomeActionPerformed(evt);
             }
         });
+        getContentPane().add(BotaoAbrirPaneHome);
+        BotaoAbrirPaneHome.setBounds(45, 40, 150, 37);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(100, 100, 100)
-                .addComponent(MainPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                .addGap(174, 174, 174))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BotaoAbrirPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(CampoAbrirPaneProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoAbrirPaneHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(MainPane))
-                .addGap(188, 188, 188))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/img2.jpg"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1920, 1080);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public String getCpf() {
@@ -270,6 +268,7 @@ public class AdmView extends javax.swing.JFrame {
     private javax.swing.JButton BotaoAbrirPaneVenda;
     private javax.swing.JButton CampoAbrirPaneProduto;
     private javax.swing.JLayeredPane MainPane;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
    
